@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'chat001-web-angular';
+  tests = [];
+  constructor() {
+    for (let i = 0; i < 1000; i++) {
+      this.tests.push(`var-${i}`);
+    }
+  }
 }

@@ -1,0 +1,17 @@
+@import './common';
+// * { border: 1px solid red; }
+
+mat-sidenav-container {
+  position: absolute;
+  height: 100%;
+  border: 3px solid red;
+}
+
+mat-sidenav {
+  // border: 3px solid red;
+  overflow: scroll;
+}
+
+mat-sidenav-content {
+  border: 3px solid yellow;
+}

@@ -1,0 +1,12 @@
+@import '../common';
+
+// * { border: 1px solid red; }
+
+mat-toolbar {
+  height: $height-header;
+  padding: $padding-header;
+}
+
+.main {
+  @include header-main;
+}
