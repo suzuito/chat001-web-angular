@@ -1,9 +1,12 @@
 <mat-sidenav-container hasBackdrop="true">
-  <mat-sidenav fixedInViewport="true" position="end" mode="over" opened>
+  <mat-sidenav fixedInViewport="true" position="end" mode="push" #sidenav>
+    a
     <div *ngFor="let i of tests">Drawer content youyouyouyouyou</div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header-main title="header 1 && header 2 && header 3"></app-header-main>
-    <div *ngFor="let i of tests">Drawer content youyouyouyouyou</div>
+    <app-header-main title="header 1 && header 2 && header 3" (clickMenu)='openSidenav()'></app-header-main>
+    <div class='content'>
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
