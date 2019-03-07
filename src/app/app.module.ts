@@ -15,6 +15,7 @@ import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-a
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { ListAgentComponent } from './parts/list-agent/list-agent.component';
 import { TopComponent } from './top/top.component';
+import { ProfileTextAllWithIconComponent } from './parts/profile-text-all-with-icon/profile-text-all-with-icon.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TopComponent } from './top/top.component';
     ProfileTextAllComponent,
     SideMenuComponent,
     ListAgentComponent,
-    TopComponent
+    TopComponent,
+    ProfileTextAllWithIconComponent
   ],
   imports: [
     BrowserModule,

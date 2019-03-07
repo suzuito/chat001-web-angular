@@ -1,0 +1,19 @@
+// * { border: 1px solid red; }
+
+.main {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0px;
+  padding: 0px;
+
+  // background: yellow; // debug
+}
+
+.left {
+  padding-right: 8px;
+}
+
+app-profile-text-all{
+  margin: 0px;
+}

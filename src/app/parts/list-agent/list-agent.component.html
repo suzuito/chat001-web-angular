@@ -6,10 +6,17 @@
     </div>
   </div>
   <div>
-    <div>
-      <app-profile-text-all agentName='name001' agentDescription='desc001' padding='0px' linesDescription='1'
-        [displayAvatar]='true' [displayEditButton]='false'>
-      </app-profile-text-all>
+    <div class='row'>
+      <div class='left'>
+        <app-profile-text-all-with-icon linesDescription='1' agentName='hello' width='80%'
+          agentDescription='しかし、全ての文字列を表示するには長過ぎてレイアウトが崩れてしまうといった場合には、何らかの方法で文字列を省略する必要があります。'>
+        </app-profile-text-all-with-icon>
+      </div>
+      <div class='right'>
+        <button mat-icon-button>
+          <mat-icon>message</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </mat-card>

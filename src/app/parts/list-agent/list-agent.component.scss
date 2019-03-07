@@ -8,6 +8,7 @@
 
 }
 
-.each {
-  padding: 0px;
+.row {
+  display: flex;
+  flex-direction: row;
 }

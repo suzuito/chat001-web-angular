@@ -1,0 +1,12 @@
+<div class='main' [style.width]='width' #main>
+  <div class='left' #left>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div class='right'>
+    <app-profile-text-all [nameOnly]='nameOnly' [agentName]='agentName' [agentDescription]='agentDescription'
+      [linesDescription]='linesDescription'>
+    </app-profile-text-all>
+  </div>
+</div>

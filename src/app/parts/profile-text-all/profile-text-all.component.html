@@ -1,23 +1,8 @@
-<div class='main' #card>
-  <mat-card [style.padding]='padding'>
-    <div *ngIf='displayAvatar'>
-      <div class='avatar' mat-card-avatar>
-      </div>
-    </div>
-    <div>
-      <mat-card-title>
-        <div class='name' #name>
-          {{agentName}}
-        </div>
-      </mat-card-title>
-      <mat-card-content *ngIf='!nameOnly'>
-        <div class='description mat-body-2' #description>
-          {{agentDescription}}
-        </div>
-      </mat-card-content>
-      <mat-card-actions color='primary' *ngIf='displayEditButton'>
-        <button mat-button color="primary" (click)='clickEdit.emit()'>編集する</button>
-      </mat-card-actions>
-    </div>
-  </mat-card>
+<div class='main' [style.width]='width'>
+  <div class='name mat-title' [style.width]='width'>
+    {{agentName}}
+  </div>
+  <div class='description mat-body-2' *ngIf='!nameOnly' #description>
+    {{agentDescription}}
+  </div>
 </div>

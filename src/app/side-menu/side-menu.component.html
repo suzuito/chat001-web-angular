@@ -1,7 +1,13 @@
 <div class='profile'>
-  <app-profile-text-all linesDescription='5' padding='5px' displayEditButton='true' agentName='hello'
-    (clickEdit)='clickEditProfile()'
-    agentDescription='しかし、全ての文字列を表示するには長過ぎてレイアウトが崩れてしまうといった場合には、何らかの方法で文字列を省略する必要があります。'></app-profile-text-all>
+  <mat-card>
+    <app-profile-text-all-with-icon linesDescription='5' padding='5px' displayEditButton='true' agentName='hello'
+      (clickEdit)='clickEditProfile()'
+      agentDescription='しかし、全ての文字列を表示するには長過ぎてレイアウトが崩れてしまうといった場合には、何らかの方法で文字列を省略する必要があります。'>
+    </app-profile-text-all-with-icon>
+    <mat-card-actions>
+      <button mat-button color='primary'>編集する</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 <div class='recomends'>
   <mat-list>

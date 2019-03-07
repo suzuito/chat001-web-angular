@@ -1,37 +1,13 @@
 // * { border: 1px solid red; }
 
-mat-card {
-  display: flex;
-  flex-direction: row;
-  padding: 0px;
-}
-
-.avatar {
-  margin: 5px;
-  text-align: center;
-  // border: 1px solid blueviolet;
-}
-
-mat-card-title {
-  margin-bottom: 0px;
-}
-
 .name {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
   font-weight: normal;
-}
 
-mat-card-content {
-  margin-bottom: 0px;
-  // border: 3px solid blue;
-}
-
-mat-card-actions {
   margin: 0px;
-  text-align: right;
 }
 
 .description {
@@ -42,4 +18,6 @@ mat-card-actions {
   -moz-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+
+  margin: 0px;
 }
