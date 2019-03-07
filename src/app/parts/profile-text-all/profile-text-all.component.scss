@@ -1,29 +1,40 @@
 * { border: 1px solid red; }
 
-.main {
-  padding: 10px;
-}
-
 mat-card {
   padding: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar {
+  margin: 5px;
+  text-align: center;
+  border: 1px solid blueviolet;
 }
 
 mat-card-title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  font-weight: normal;
+
+  margin-bottom: 0px;
 }
 
 mat-card-content {
-  overflow: scroll;
-  height: 100%;
+  margin-bottom: 0px;
+  // border: 3px solid blue;
 }
 
 .description {
-  // overflow-wrap: break-word;
-  // word-wrap: break-word;
-  // hyphens: auto;
+  overflow: hidden;
+  font-weight: normal;
 
-  // height: 100px;
-  
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+
+  // border: 3px solid blue;
 }
