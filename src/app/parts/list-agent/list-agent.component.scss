@@ -1,0 +1,13 @@
+// * { border: 1px solid blue; }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+
+}
+
+.each {
+  padding: 0px;
+}

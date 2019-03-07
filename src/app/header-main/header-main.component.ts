@@ -20,4 +20,9 @@ export class HeaderMainComponent implements OnInit {
   ngOnInit() {
   }
 
+  public clickOpenMenu(): void {
+    console.log('hello');
+    this.clickMenu.emit();
+  }
+
 }

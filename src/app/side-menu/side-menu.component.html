@@ -1,0 +1,37 @@
+<div class='profile'>
+  <app-profile-text-all linesDescription='5' padding='5px' displayEditButton='true' agentName='hello'
+    (clickEdit)='clickEditProfile()'
+    agentDescription='しかし、全ての文字列を表示するには長過ぎてレイアウトが崩れてしまうといった場合には、何らかの方法で文字列を省略する必要があります。'></app-profile-text-all>
+</div>
+<div class='recomends'>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>search</mat-icon>
+      <h4 mat-line>部屋の検索</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>autorenew</mat-icon>
+      <h4 mat-line>新着順</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>whatshot</mat-icon>
+      <h4 mat-line>人気順</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>add</mat-icon>
+      <h4 mat-line>部屋の作成</h4>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div class='extra'>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>settings</mat-icon>
+      <h4 mat-line>設定</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>feedback</mat-icon>
+      <h4 mat-line>フィードバック</h4>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -1,7 +1,6 @@
 <mat-sidenav-container hasBackdrop="true">
-  <mat-sidenav fixedInViewport="true" position="end" mode="push" #sidenav>
-    a
-    <div *ngFor="let i of tests">Drawer content youyouyouyouyou</div>
+  <mat-sidenav fixedInViewport="true" position="end" mode="push" autoFocus='false' [style.width]="'90%'" #sidenav>
+    <app-side-menu></app-side-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header-main title="header 1 && header 2 && header 3" (clickMenu)='openSidenav()'></app-header-main>

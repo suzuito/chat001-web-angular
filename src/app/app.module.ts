@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {
-  MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatCardModule,
+  MatToolbarModule, MatIconModule, MatButtonModule, MatSidenavModule, MatCardModule, MatListModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,9 @@ import { HeaderSubMainComponent } from './header-sub-main/header-sub-main.compon
 import { ButtonIconComponent } from './parts/button-icon/button-icon.component';
 import { ExamplesComponent } from './examples/examples.component';
 import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-all.component';
+import { SideMenuComponent } from './side-menu/side-menu.component';
+import { ListAgentComponent } from './parts/list-agent/list-agent.component';
+import { TopComponent } from './top/top.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-a
     HeaderSubMainComponent,
     ButtonIconComponent,
     ExamplesComponent,
-    ProfileTextAllComponent
+    ProfileTextAllComponent,
+    SideMenuComponent,
+    ListAgentComponent,
+    TopComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +37,7 @@ import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-a
     MatButtonModule,
     MatSidenavModule,
     MatCardModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
