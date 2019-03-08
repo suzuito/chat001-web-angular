@@ -1,4 +1,14 @@
-// * { border: 1px solid blue; }
+* { border: 1px solid blue; }
+
+mat-card {
+  position: relative;
+  height: 280px;
+  width: 100%;
+  overflow: hidden;
+  padding: 0px;
+}
+
+// $height-list-header: 40px;
 
 .header {
   display: flex;
@@ -6,9 +16,39 @@
   align-items: flex-start;
   justify-content: space-between;
 
+  // position: absolute;
+  // top: 0px;
+  // width: 100%;
+  // height: $height-list-header;
+
+  // background: yellow;
+}
+
+.picture {
+  border-radius: 50%;
 }
 
 .row {
   display: flex;
   flex-direction: row;
 }
+
+/*
+
+.list {
+  position: absolute;
+  top: $height-list-header;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  overflow: scroll;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+*/

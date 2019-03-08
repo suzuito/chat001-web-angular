@@ -1,22 +1,38 @@
-<mat-card>
+<mat-list [style.width]='width' #list>
   <div class='header'>
     <div class='mat-caption'>アクティブユーザー</div>
     <div class=''>
       <button mat-button color='primary'>全て</button>
     </div>
   </div>
-  <div>
-    <div class='row'>
-      <div class='left'>
-        <app-profile-text-all-with-icon linesDescription='1' agentName='hello' width='80%'
-          agentDescription='しかし、全ての文字列を表示するには長過ぎてレイアウトが崩れてしまうといった場合には、何らかの方法で文字列を省略する必要があります。'>
+  <div class='list'>
+    <div class='row' *ngFor='let agent of agents'>
+      <!--div class='left'>
+        <app-profile-text-all-with-icon linesDescription='1' [agentName]='agent.name' width='80%'
+          [agentDescription]='agent.description'>
         </app-profile-text-all-with-icon>
       </div>
       <div class='right'>
         <button mat-icon-button>
           <mat-icon>message</mat-icon>
         </button>
+      </div-->
+      <!--
+      -->
+      <div class='left'>
+        <img [width]='sizeImage' [height]='sizeImage' class='picture'
+          src='https://images-na.ssl-images-amazon.com/images/I/51gEk-P2nAL.jpg'>
       </div>
+      <div class='center'>
+        <div>{{agent.name}}</div>
+        <div>{{agent.description}}</div>
+      </div>
+      <div class='right'>
+        <button mat-icon-button>
+          <mat-icon>message</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
     </div>
   </div>
-</mat-card>
+</mat-list>
