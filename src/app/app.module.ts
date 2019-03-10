@@ -43,7 +43,7 @@ import { ListAgentMessageComponent } from './parts/list-agent-message/list-agent
 import { AgentMessageComponent } from './parts/agent-message/agent-message.component';
 import { AgentMessagesSearchOptionComponent } from './agent-messages/agent-messages-search-option/agent-messages-search-option.component';
 import { RoomComponent } from './room/room.component';
-import { RoomInfoComponent } from './parts/room-info/room-info.component';
+import { RoomInfoComponent } from './room/room-info/room-info.component';
 import { DatetimeStringPipe } from './pipe/date';
 
 @NgModule({

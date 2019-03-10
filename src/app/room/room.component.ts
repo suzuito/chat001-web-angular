@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from '../data.service';
+import { Room } from '../model/room';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-room',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  public room: Room;
 
-  ngOnInit() {
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService,
+  ) { }
+
+  ngOnInit(
+  ) {
+    this.route.params.subscribe((params: Params) => {
+      this.room = this.dataService.getRoomRaw(params.roomId);
+    });
   }
 
 }

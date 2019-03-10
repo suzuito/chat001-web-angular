@@ -20,6 +20,14 @@ export class DataService {
     this.agentsInRoom = new DataStores<AgentInRoom>();
   }
 
+  public hasRoom(roomId: string): boolean {
+    return this.rooms.has(roomId);
+  }
+
+  public getRoomRaw(roomId: string): Room {
+    return this.rooms.get(roomId).data;
+  }
+
   public setRoom(...rooms: Room[]): void {
     rooms.forEach((r: Room) => this.rooms.set(r.id, r));
   }
