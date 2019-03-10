@@ -1,38 +1,13 @@
-<mat-list [style.width]='width' #list>
-  <div class='header'>
-    <div class='mat-caption'>アクティブユーザー</div>
-    <div class=''>
-      <button mat-button color='primary'>全て</button>
+<mat-list [style.width]='width'>
+  <app-list-header *ngIf='!disableHeader' [caption]='caption' (clickAll)='clickAll.emit()'></app-list-header>
+  <div class='list' [style.height]='heightList'>
+    <div class='list-each' *ngFor='let agent of agents'>
+      <app-profile-list-each [agent]='agent' [sizeImg]='sizeImg'
+        urlImg='https://images-na.ssl-images-amazon.com/images/I/51gEk-P2nAL.jpg'>
+      </app-profile-list-each>
     </div>
   </div>
-  <div class='list'>
-    <div class='row' *ngFor='let agent of agents'>
-      <!--div class='left'>
-        <app-profile-text-all-with-icon linesDescription='1' [agentName]='agent.name' width='80%'
-          [agentDescription]='agent.description'>
-        </app-profile-text-all-with-icon>
-      </div>
-      <div class='right'>
-        <button mat-icon-button>
-          <mat-icon>message</mat-icon>
-        </button>
-      </div-->
-      <!--
-      -->
-      <div class='left'>
-        <img [width]='sizeImage' [height]='sizeImage' class='picture'
-          src='https://images-na.ssl-images-amazon.com/images/I/51gEk-P2nAL.jpg'>
-      </div>
-      <div class='center'>
-        <div>{{agent.name}}</div>
-        <div>{{agent.description}}</div>
-      </div>
-      <div class='right'>
-        <button mat-icon-button>
-          <mat-icon>message</mat-icon>
-        </button>
-      </div>
-      <mat-divider></mat-divider>
-    </div>
+  <div class='action' *ngIf='!disableMore'>
+    <button mat-button color='primary' (click)='clickMore.emit()'>もっと読み込む...</button>
   </div>
 </mat-list>

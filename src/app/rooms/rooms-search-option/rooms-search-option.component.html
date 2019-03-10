@@ -1,0 +1,44 @@
+<mat-divider></mat-divider>
+<div class='main'>
+  <div class='item'>
+    <div class='item-sub-header mat-caption'>
+      フィルター
+    </div>
+    <div>
+      <div>
+        <app-checkbox-with-icon paddingBetween='5px' icon='lock' text='パスワードなし' [(checked)]='opt.chkUnlocked'>
+        </app-checkbox-with-icon>
+      </div>
+      <div>
+        <app-checkbox-with-icon paddingBetween='5px' icon='meeting_room' text='入室可' [(checked)]='opt.chkCanEnter'>
+        </app-checkbox-with-icon>
+      </div>
+      <div>
+        <mat-checkbox [(ngModel)]='opt.chkMembers'>
+          <div [style.display]='flex' [style.flex-direction]='row'>
+            <mat-form-field [style.padding-left]='5'>
+              <span matPrefix>人数</span>
+              <span matSuffix>人</span>
+              <input matInput class='button-input' type='number' min='1' [(ngModel)]='opt.members'>
+            </mat-form-field>
+          </div>
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class='item'>
+    <div class='item-sub-header mat-caption'>
+      並べ替え
+    </div>
+    <div>
+      <mat-radio-group [(ngModel)]='opt.selectedOrderId'>
+        <div *ngFor='let order of opt.selectOrder'>
+          <mat-radio-button [value]='order.id'>
+            {{order.name}}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>

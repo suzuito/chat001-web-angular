@@ -1,11 +1,1 @@
-<mat-sidenav-container hasBackdrop="true">
-  <mat-sidenav fixedInViewport="true" position="end" mode="push" autoFocus='false' [style.width]="'90%'" #sidenav>
-    <app-side-menu></app-side-menu>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <app-header-main title="header 1" (clickMenu)='openSidenav()'></app-header-main>
-    <div class='content'>
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<router-outlet></router-outlet>

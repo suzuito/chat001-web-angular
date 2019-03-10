@@ -1,0 +1,15 @@
+<div class='row'>
+  <div class='name mat-title' [style.padding-left]='sizeImgLeftPx()' [style.padding-right]='sizeImgRightPx()'>
+    {{agent.name}}
+  </div>
+  <div class='description mat-body-2' [style.padding-left]='sizeImgLeftPx()' [style.padding-right]='sizeImgRightPx()'>
+    {{agent.description}}</div>
+  <div class='picture'>
+    <img [width]='sizeImg' [height]='sizeImg' [src]='urlImg'>
+  </div>
+  <div class='action'>
+    <button mat-icon-button>
+      <mat-icon>message</mat-icon>
+    </button>
+  </div>
+</div>

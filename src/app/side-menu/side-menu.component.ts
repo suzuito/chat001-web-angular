@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet, MatDialog } from '@angular/material';
+import { ProfileEditorComponent } from '../parts/profile-editor/profile-editor.component';
 
 @Component({
   selector: 'app-side-menu',
@@ -7,12 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
   }
 
-  public clickEditProfile(): void {
+  public openEditProfile(): void {
+    this.dialog.open(ProfileEditorComponent, {
+      autoFocus: false,
+    });
   }
 
 }

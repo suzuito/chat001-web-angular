@@ -1,0 +1,6 @@
+<app-searcher [icon]='iconExpander()' (clickExpand)='clickExpand()' [(txt)]='searchOptService.txtWord'></app-searcher>
+<app-rooms-search-option *ngIf='isSearchOptionOpened'></app-rooms-search-option>
+<div class='list'>
+  <app-list-room width='100%' heightList='100%' [disableHeader]='true' [disableMore]='false' [rooms]='rooms()'>
+  </app-list-room>
+</div>

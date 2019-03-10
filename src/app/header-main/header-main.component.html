@@ -1,12 +1,15 @@
 <mat-toolbar color='primary'>
   <div class='main'>
-    <div class='left'>
+    <div class='left' (click)='clickTitle.emit()'>
       <div class='padding'></div>
       <div class='title'>{{title}}</div>
     </div>
     <div class='center'>
     </div>
     <div class='right'>
+      <button mat-icon-button (click)='clickNotification.emit()'>
+        <mat-icon>notifications</mat-icon>
+      </button>
       <button mat-icon-button (click)='clickOpenMenu()'>
         <mat-icon>menu</mat-icon>
       </button>

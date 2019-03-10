@@ -1,0 +1,13 @@
+// * { border: 1px solid red; }
+
+$padding: 10px;
+
+.main {
+  padding-left: $padding * 2;
+  padding-top: $padding;
+  padding-bottom: $padding;
+}
+
+.item-sub-header {
+  padding-bottom: $padding * 1;
+}

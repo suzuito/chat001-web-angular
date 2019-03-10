@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { EasyAgent } from 'src/app/model/agent';
-import { testAgents } from 'src/app/model/testdata';
 import { MatList } from '@angular/material';
 
 @Component({
@@ -17,14 +16,34 @@ export class ListAgentComponent implements OnInit {
   public width: string;
 
   @Input()
-  public sizeImage: string;
+  public caption: string;
 
-  @ViewChild('list')
-  public elemList: MatList;
+  @Input()
+  public heightList: string;
+
+  @Input()
+  public sizeImg: string;
+
+  @Input()
+  public disableHeader: boolean;
+
+  @Input()
+  public disableMore: boolean;
+
+  @Output()
+  public clickAll: EventEmitter<void>;
+
+  @Output()
+  public clickMore: EventEmitter<void>;
 
   constructor() {
-    this.agents = testAgents;
+    this.agents = [];
     this.width = '100%';
+    this.sizeImg = '50';
+    this.disableHeader = false;
+    this.disableMore = true;
+    this.clickAll = new EventEmitter<void>();
+    this.clickMore = new EventEmitter<void>();
   }
 
   ngOnInit() {

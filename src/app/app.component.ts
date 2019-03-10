@@ -1,5 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { Component } from '@angular/core';
+import { AgentService } from './agent.service';
+import { DataService } from './data.service';
+import { setTestAgents, setTestRooms, setTestAgentMessages } from './model/testdata';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +10,12 @@ import { MatSidenav } from '@angular/material';
 })
 export class AppComponent {
 
-  public tests: string[];
-
-  @ViewChild('sidenav')
-  public sidenav: MatSidenav;
-
-  constructor() {
-    this.tests = [];
-    for (let i = 0; i < 1000; i++) {
-      this.tests.push(`var-${i}`);
-    }
-  }
-
-  public openSidenav(): void {
-    this.sidenav.toggle();
+  constructor(
+    private agentService: AgentService,
+    private dataService: DataService,
+  ) {
+    setTestAgents(this.dataService);
+    setTestRooms(this.dataService);
+    setTestAgentMessages(this.agentService);
   }
 }

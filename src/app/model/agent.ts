@@ -9,4 +9,5 @@ export interface EasyAgent {
   color: string;
   name: string;
   description: string;
+  updatedAt: number;
 }

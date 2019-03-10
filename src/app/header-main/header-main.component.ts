@@ -13,15 +13,22 @@ export class HeaderMainComponent implements OnInit {
   @Output()
   public clickMenu: EventEmitter<void>;
 
+  @Output()
+  public clickTitle: EventEmitter<void>;
+
+  @Output()
+  public clickNotification: EventEmitter<void>;
+
   constructor() {
     this.clickMenu = new EventEmitter<void>();
+    this.clickTitle = new EventEmitter<void>();
+    this.clickNotification = new EventEmitter<void>();
   }
 
   ngOnInit() {
   }
 
   public clickOpenMenu(): void {
-    console.log('hello');
     this.clickMenu.emit();
   }
 
