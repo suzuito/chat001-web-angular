@@ -1,3 +1,5 @@
+@import '../common';
+
 // * { border: 1px solid red; }
 
 .header-main {
@@ -6,4 +8,23 @@
   justify-content: space-around;
 
   width: 100%;
+}
+
+.row {
+  position: absolute;
+  width: 100%;
+  top: $height-header;
+  bottom: 0;
+}
+
+.left {
+  left: -100%;
+}
+
+.center {
+  left: 0;
+}
+
+.right {
+  left: +100%;
 }

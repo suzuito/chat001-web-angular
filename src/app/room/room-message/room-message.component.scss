@@ -1,0 +1,19 @@
+// * { border: 1px solid red; }
+
+.inputter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.inputter-form {
+  width: 90%;
+}
+
+.inputter-input {
+  width: 100%;
+}
