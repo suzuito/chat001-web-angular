@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Room } from 'src/app/model/room';
 
 @Component({
@@ -11,7 +11,12 @@ export class RoomInfoComponent implements OnInit {
   @Input()
   public room: Room;
 
-  constructor() { }
+  @Output()
+  public edit: EventEmitter<void>;
+
+  constructor() {
+    this.edit = new EventEmitter<void>();
+  }
 
   ngOnInit() {
   }

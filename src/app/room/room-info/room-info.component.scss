@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+
+* { border: 1px solid red; }
+
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+
+.description {
+  font-weight: normal;
+}
+
+mat-card-actions {
+  text-align: right;
+}

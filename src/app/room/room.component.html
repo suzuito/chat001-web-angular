@@ -1,1 +1,22 @@
+<mat-toolbar color='primary'>
+  <div class='header-main'>
+    <div>
+      <button mat-icon-button (click)='switchToInfo()'>
+        <mat-icon>info</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button (click)='switchToMessage()'>
+        <mat-icon>message</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button (click)='switchToMember()'>
+        <mat-icon>group</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
 <app-room-info [room]='room'></app-room-info>
+<app-room-message></app-room-message>
+<app-room-member></app-room-member>

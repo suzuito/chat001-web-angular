@@ -13,6 +13,7 @@ import {
   MatRadioModule,
   MatBottomSheetModule,
   MatDialogModule,
+  MatTabsModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +46,8 @@ import { AgentMessagesSearchOptionComponent } from './agent-messages/agent-messa
 import { RoomComponent } from './room/room.component';
 import { RoomInfoComponent } from './room/room-info/room-info.component';
 import { DatetimeStringPipe } from './pipe/date';
+import { RoomMemberComponent } from './room/room-member/room-member.component';
+import { RoomMessageComponent } from './room/room-message/room-message.component';
 
 @NgModule({
   declarations: [
@@ -75,8 +78,9 @@ import { DatetimeStringPipe } from './pipe/date';
     AgentMessagesSearchOptionComponent,
     RoomComponent,
     RoomInfoComponent,
-    // Pipe
     DatetimeStringPipe,
+    RoomMemberComponent,
+    RoomMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +98,7 @@ import { DatetimeStringPipe } from './pipe/date';
     MatRadioModule,
     MatBottomSheetModule,
     MatDialogModule,
+    MatTabsModule,
   ],
   providers: [
   ],

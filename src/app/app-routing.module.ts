@@ -8,6 +8,9 @@ import { AppRootComponent } from './app-root/app-root.component';
 import { AgentMessagesComponent } from './agent-messages/agent-messages.component';
 import { RoomComponent } from './room/room.component';
 import { RoomResolverService } from './room/room-resolver.service';
+import { RoomInfoComponent } from './room/room-info/room-info.component';
+import { RoomMemberComponent } from './room/room-member/room-member.component';
+import { RoomMessageComponent } from './room/room-message/room-message.component';
 
 const routes: Routes = [
   {

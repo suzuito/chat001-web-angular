@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
 import { Room } from '../model/room';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-room',
@@ -14,6 +14,7 @@ export class RoomComponent implements OnInit {
   public room: Room;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
   ) { }
@@ -24,5 +25,13 @@ export class RoomComponent implements OnInit {
       this.room = this.dataService.getRoomRaw(params.roomId);
     });
   }
+
+  public switchToInfo(): void {
+  }
+
+  public switchToMessage(): void {
+  }
+
+  public switchToMember(): void { }
 
 }
