@@ -8,10 +8,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class CheckboxWithIconComponent implements OnInit {
 
   @Input()
-  public text: string;
+  public textOn: string;
+  @Input()
+  public textOff: string;
 
   @Input()
-  public icon: string;
+  public iconOn: string;
+  @Input()
+  public iconOff: string;
 
   @Input()
   public paddingBetween: string;
@@ -27,6 +31,15 @@ export class CheckboxWithIconComponent implements OnInit {
 
   public change() {
     this.checkedChange.emit(this.checked);
+  }
+
+  public get icon(): string {
+    if (this.checked) { return this.iconOn; }
+    return this.iconOff;
+  }
+  public get text(): string {
+    if (this.checked) { return this.textOn; }
+    return this.textOff;
   }
 
   ngOnInit() {

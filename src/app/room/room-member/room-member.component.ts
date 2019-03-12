@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Room } from 'src/app/model/room';
+import { DataService } from 'src/app/data.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { RoomService } from '../room.service';
 
 @Component({
   selector: 'app-room-member',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomMemberComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    private roomService: RoomService,
+  ) { }
 
   ngOnInit() {
   }
 
+  public get room(): Room {
+    return this.roomService.room;
+  }
 }

@@ -25,6 +25,9 @@ export class DataService {
   }
 
   public getRoomRaw(roomId: string): Room {
+    if (!this.hasRoom(roomId)) {
+      return null;
+    }
     return this.rooms.get(roomId).data;
   }
 

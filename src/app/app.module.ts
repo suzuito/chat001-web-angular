@@ -44,10 +44,13 @@ import { ListAgentMessageComponent } from './parts/list-agent-message/list-agent
 import { AgentMessageComponent } from './parts/agent-message/agent-message.component';
 import { AgentMessagesSearchOptionComponent } from './agent-messages/agent-messages-search-option/agent-messages-search-option.component';
 import { RoomComponent } from './room/room.component';
-import { RoomInfoComponent } from './room/room-info/room-info.component';
+import { RoomInfoComponent } from './parts/room-info/room-info.component';
 import { DatetimeStringPipe } from './pipe/date';
 import { RoomMemberComponent } from './room/room-member/room-member.component';
 import { RoomMessageComponent } from './room/room-message/room-message.component';
+import { RoomHeaderComponent } from './room/room-header/room-header.component';
+import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
+import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,9 @@ import { RoomMessageComponent } from './room/room-message/room-message.component
     DatetimeStringPipe,
     RoomMemberComponent,
     RoomMessageComponent,
+    RoomHeaderComponent,
+    RoomInputterComponent,
+    RoomInfoEditorComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,28 +1,4 @@
-<mat-toolbar color='primary'>
-  <div class='header-main'>
-    <div>
-      <button mat-icon-button (click)='switchToLeft()'>
-        <mat-icon>info</mat-icon>
-      </button>
-    </div>
-    <div>
-      <button mat-icon-button (click)='switchToCenter()'>
-        <mat-icon>message</mat-icon>
-      </button>
-    </div>
-    <div>
-      <button mat-icon-button (click)='switchToRight()'>
-        <mat-icon>group</mat-icon>
-      </button>
-    </div>
-  </div>
-</mat-toolbar>
-<div class='row left' #rowLeft>
-  <app-room-info [room]='room'></app-room-info>
-</div>
-<div class='row center' #rowCenter>
-  <app-room-message></app-room-message>
-</div>
-<div class='row right' #rowRight>
-  <app-room-member></app-room-member>
+<app-room-header (clickTab)='clickTab($event)'></app-room-header>
+<div class='main'>
+  <router-outlet></router-outlet>
 </div>

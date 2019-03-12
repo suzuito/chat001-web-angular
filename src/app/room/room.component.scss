@@ -2,29 +2,14 @@
 
 // * { border: 1px solid red; }
 
-.header-main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-  width: 100%;
-}
-
-.row {
-  position: absolute;
-  width: 100%;
+app-room-header {
+  position: fixed;
   top: $height-header;
-  bottom: 0;
+  width: 100%;
 }
 
-.left {
-  left: -100%;
-}
-
-.center {
-  left: 0;
-}
-
-.right {
-  left: +100%;
+.main {
+  position: absolute;
+  top: $height-header;
+  width: 100%;
 }

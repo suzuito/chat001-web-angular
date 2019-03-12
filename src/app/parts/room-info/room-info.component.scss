@@ -3,16 +3,17 @@
 // * { border: 1px solid red; }
 
 .name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: normal;
+  width: 100%;
 }
 
 .description {
-  font-weight: normal;
+  width: 100%;
 }
 
 mat-card-actions {
   text-align: right;
+}
+
+.padding {
+  height: 10px;
 }

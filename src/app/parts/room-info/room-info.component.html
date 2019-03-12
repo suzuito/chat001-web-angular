@@ -1,0 +1,27 @@
+<div class='main' *ngIf='room'>
+  <mat-card>
+    <mat-form-field class='name'>
+      <input type='text' matInput [(ngModel)]='room.name' placeholder='名前' />
+      <mat-hint>{{lengthName()}} / {{maxLengthName}}</mat-hint>
+    </mat-form-field>
+    <div class='padding'></div>
+    <mat-card-content>
+      <mat-form-field class='description'>
+        <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows='1' cdkAutosizeMaxRows='10' placeholder='一言メッセージ'
+          [(ngModel)]='room.description'>
+        </textarea>
+      </mat-form-field>
+      <mat-hint>{{lengthDescription()}} / {{maxLengthDescription}}</mat-hint>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <div class='padding'></div>
+    <mat-card-content>
+      <app-checkbox-with-icon textOn='パスワードあり' textOff='パスワードなし' iconOn='lock' iconOff='lock_open' paddingBetween='5px'
+        [(checked)]='room.password'>
+      </app-checkbox-with-icon>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color='primary' (click)='save()'>{{textDoneButton}}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
