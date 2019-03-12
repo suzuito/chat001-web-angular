@@ -1,14 +1,14 @@
 <div class='main' *ngIf='room'>
   <mat-card>
     <mat-form-field class='name'>
-      <input type='text' matInput [(ngModel)]='room.name' placeholder='名前' />
+      <input type='text' matInput [(ngModel)]='name' placeholder='名前' [readonly]='!changable' />
       <mat-hint>{{lengthName()}} / {{maxLengthName}}</mat-hint>
     </mat-form-field>
     <div class='padding'></div>
     <mat-card-content>
       <mat-form-field class='description'>
         <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows='1' cdkAutosizeMaxRows='10' placeholder='一言メッセージ'
-          [(ngModel)]='room.description'>
+          [(ngModel)]='description' [readonly]='!changable'>
         </textarea>
       </mat-form-field>
       <mat-hint>{{lengthDescription()}} / {{maxLengthDescription}}</mat-hint>
@@ -17,11 +17,16 @@
     <div class='padding'></div>
     <mat-card-content>
       <app-checkbox-with-icon textOn='パスワードあり' textOff='パスワードなし' iconOn='lock' iconOff='lock_open' paddingBetween='5px'
-        [(checked)]='room.password'>
+        [(checked)]='password' [disabled]='!changable'>
       </app-checkbox-with-icon>
+      <div *ngIf='password'>
+        <mat-form-field>
+          <input type='password' matInput placeholder='パスワード' [(ngModel)]='passwordRaw' [readonly]='!changable' />
+        </mat-form-field>
+      </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color='primary' (click)='save()'>{{textDoneButton}}</button>
+      <button mat-raised-button color='primary' (click)='save()' [disabled]='!isChanged()'>{{textDoneButton}}</button>
     </mat-card-actions>
   </mat-card>
 </div>

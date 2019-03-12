@@ -1,4 +1,4 @@
-<mat-checkbox [(ngModel)]='checked' (change)='change()'>
+<mat-checkbox [(ngModel)]='checked' (change)='change()' [disabled]='disabled'>
   <div class='checkbox'>
     <mat-icon>{{icon}}</mat-icon>
     <div [style.padding-left]='paddingBetween'>{{text}}</div>

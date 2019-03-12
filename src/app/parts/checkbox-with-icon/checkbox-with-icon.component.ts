@@ -25,8 +25,12 @@ export class CheckboxWithIconComponent implements OnInit {
   @Output()
   public checkedChange: EventEmitter<boolean>;
 
+  @Input()
+  public disabled: boolean;
+
   constructor() {
     this.checkedChange = new EventEmitter<boolean>();
+    this.disabled = false;
   }
 
   public change() {

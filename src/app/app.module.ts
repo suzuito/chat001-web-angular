@@ -51,6 +51,7 @@ import { RoomMessageComponent } from './room/room-message/room-message.component
 import { RoomHeaderComponent } from './room/room-header/room-header.component';
 import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
 import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
+import { PasswordInputterComponent } from './parts/password-inputter/password-inputter.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-edito
     RoomHeaderComponent,
     RoomInputterComponent,
     RoomInfoEditorComponent,
+    PasswordInputterComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,6 +112,7 @@ import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-edito
   ],
   entryComponents: [
     ProfileEditorComponent,
+    PasswordInputterComponent,
   ],
   bootstrap: [AppComponent]
 })
