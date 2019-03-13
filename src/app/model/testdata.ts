@@ -11,8 +11,12 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function randomBoolean() {
+function randomBoolean(): boolean {
   return getRandomInt(2) % 2 === 0;
+}
+
+function randomImage(): string {
+  return 'https://picsum.photos/300/300/?random';
 }
 
 export function setTestAgents(s: DataService) {
@@ -26,6 +30,7 @@ export function setTestAgents(s: DataService) {
       color: '#000000',
       description: `agent${i}_description Use MatSelectionList's selectionChange event.`,
       updatedAt: getRandomInt(10000000000),
+      urlImage: randomImage(),
     });
   }
   s.setAgent(...ret);
@@ -74,10 +79,9 @@ export function setTestRoomMessages(s: RoomMessageService, d: DataService): void
     for (let i = 0; i < 100; i++) {
       s.pushMessage(room.id, {
         id: `message${room.id}.${i}`,
-        body: `message${room.id}.${i}.body`,
-        agentName: `message${room.id}.${i}.agentName`,
+        body: `message${room.id}.${i}.body: 今後ジョブの中間出力に対してデフォルトで zstd による圧縮を適用させるための設定変更メンテナンスを実施予定です。
+        zstd デフォルト化後にジョブが実行できなくなる可能性を事前に排除するため、下記の2点に関してご確認いただくようお願い致します。`,
         agentExternalId: `message${room.id}.${i}.agentExternalId`,
-        agentColor: `message${room.id}.${i}.agentColor`,
         type: MessageType.Message,
         createdAt: getRandomInt(10000000000),
         extra: {},

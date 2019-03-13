@@ -25,7 +25,4 @@ export interface AgentInRoom {
   readonly role: number;
   readonly createdAt: number;
   readonly updatedAt: number;
-  readonly postedAt: number;
-  readonly accessedAt: number;
-  readonly order: number;
 }

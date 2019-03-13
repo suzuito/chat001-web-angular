@@ -5,7 +5,7 @@
   <div class='description mat-body-2' [style.padding-left]='sizeImgLeftPx()' [style.padding-right]='sizeImgRightPx()'>
     {{agent.description}}</div>
   <div class='picture'>
-    <img [width]='sizeImg' [height]='sizeImg' [src]='urlImg'>
+    <app-profile-img mode='small' [src]='urlImg'></app-profile-img>
   </div>
   <div class='action'>
     <button mat-icon-button>

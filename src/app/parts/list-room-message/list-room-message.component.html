@@ -1,5 +1,7 @@
 <div class='main'>
-  <div *ngFor='let d of messages'>
-    {{d.id}}
+  <div *ngFor='let message of messages'>
+    <app-list-room-message-each [message]='message'>
+    </app-list-room-message-each>
+    <mat-divider></mat-divider>
   </div>
 </div>

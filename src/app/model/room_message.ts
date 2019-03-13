@@ -14,9 +14,7 @@ export enum MessageType {
 export interface Message {
   readonly id: string;
   readonly body: string;
-  readonly agentName: string;
   readonly agentExternalId: string;
-  readonly agentColor: string;
   readonly type: MessageType;
   readonly createdAt: number;
   readonly extra: any;

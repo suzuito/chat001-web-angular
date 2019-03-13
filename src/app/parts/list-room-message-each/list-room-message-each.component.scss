@@ -1,0 +1,35 @@
+// * { border: 1px solid red; }
+
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.user {
+  overflow: hidden;
+  padding: 5px;
+  width: 30%;
+}
+
+.body {
+  font-weight: normal;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  padding: 5px;
+  width: 70%;
+}
+
+.user-name {
+  font-weight: normal;
+}
+
+.user-left {
+  text-align: right;
+}
+
+.user-right {
+  text-align: left;
+}

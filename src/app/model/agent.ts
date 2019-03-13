@@ -10,4 +10,5 @@ export interface EasyAgent {
   readonly name: string;
   readonly description: string;
   readonly updatedAt: number;
+  readonly urlImage: string;
 }

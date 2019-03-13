@@ -53,6 +53,8 @@ import { RoomInputterComponent } from './room/room-inputter/room-inputter.compon
 import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
 import { PasswordInputterComponent } from './parts/password-inputter/password-inputter.component';
 import { ListRoomMessageComponent } from './parts/list-room-message/list-room-message.component';
+import { ListRoomMessageEachComponent } from './parts/list-room-message-each/list-room-message-each.component';
+import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { ListRoomMessageComponent } from './parts/list-room-message/list-room-me
     RoomInfoEditorComponent,
     PasswordInputterComponent,
     ListRoomMessageComponent,
+    ListRoomMessageEachComponent,
+    ProfileImgComponent,
   ],
   imports: [
     BrowserModule,

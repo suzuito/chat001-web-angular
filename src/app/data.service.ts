@@ -31,6 +31,17 @@ export class DataService {
     return this.rooms.get(roomId).data;
   }
 
+  public getAgentInRoom(roomId: string, externalId: string): AgentInRoom {
+    if (!this.agentsInRoom.has(roomId, externalId)) {
+      return null;
+    }
+    return this.agentsInRoom.get(roomId, externalId).data;
+  }
+
+  public getAgentsInRoom(roomId: string): AgentInRoom[] {
+    return this.agentsInRoom.getParent(roomId).map((v: DataWrapper<AgentInRoom>) => v.data);
+  }
+
   public setRoom(...rooms: Room[]): void {
     rooms.forEach((r: Room) => this.rooms.set(r.id, r));
   }
