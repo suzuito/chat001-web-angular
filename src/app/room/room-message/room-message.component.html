@@ -1,6 +1,8 @@
 <div class='main'>
-  <app-list-room-message [messages]='messages()'></app-list-room-message>
+  <app-list-room-message [roomId]='room.id' [messages]='messages()' [dataService]='dataService'>
+  </app-list-room-message>
 </div>
+<div class='padding'></div>
 <mat-toolbar class='inputter' color='primary' #inputterToolbar>
   <div class='inputter-form'>
     <mat-form-field class='inputter-input'>

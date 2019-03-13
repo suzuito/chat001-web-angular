@@ -13,9 +13,6 @@ export class ProfileListEachComponent implements OnInit {
   public agent: EasyAgent;
 
   @Input()
-  public urlImg: string;
-
-  @Input()
   public sizeImg: string;
 
   constructor() { }

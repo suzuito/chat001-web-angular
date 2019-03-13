@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { getRealStyle } from 'src/app/util';
+import { Agent } from 'src/app/model/agent';
 
 @Component({
   selector: 'app-profile-text-all-with-icon',
@@ -15,10 +15,7 @@ export class ProfileTextAllWithIconComponent implements OnInit {
   public linesDescription: number;
 
   @Input()
-  public agentName: string;
-
-  @Input()
-  public agentDescription: string;
+  public agent: Agent;
 
   @Input()
   public nameOnly: boolean;

@@ -1,10 +1,10 @@
 <div class='main' *ngIf='isLeft()'>
   <div class='user user-left mat-caption'>
     <div class='user-name'>
-      {{message.agentName}}
+      {{agent.agent.name}}
     </div>
     <div>
-      <app-profile-img mode='small' [src]='message.agentUrlImage'></app-profile-img>
+      <app-profile-img mode='small' [src]='agent.agent.urlImage'></app-profile-img>
     </div>
   </div>
   <div class='body mat-body-2'>{{message.body}}</div>
@@ -13,10 +13,10 @@
   <div class='body mat-body-2'>{{message.body}}</div>
   <div class='user user-right mat-caption'>
     <div class='user-name'>
-      {{message.agentName}}
+      {{agent.agent.name}}
     </div>
     <div class='user-img'>
-      <app-profile-img mode='small' [src]='message.agentUrlImage'></app-profile-img>
+      <app-profile-img mode='small' [src]='agent.agent.urlImage'></app-profile-img>
     </div>
   </div>
 </div>

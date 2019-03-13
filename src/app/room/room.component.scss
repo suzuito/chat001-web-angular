@@ -6,6 +6,8 @@ app-room-header {
   position: fixed;
   top: $height-header;
   width: 100%;
+
+  z-index: 4;
 }
 
 .main {

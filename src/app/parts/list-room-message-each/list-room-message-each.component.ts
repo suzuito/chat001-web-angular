@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Message } from 'src/app/model/room_message';
+import { AgentInRoom } from 'src/app/model/room';
 
 @Component({
   selector: 'app-list-room-message-each',
@@ -10,6 +11,9 @@ export class ListRoomMessageEachComponent implements OnInit {
 
   @Input()
   public message: Message;
+
+  @Input()
+  public agent: AgentInRoom;
 
   constructor() { }
 

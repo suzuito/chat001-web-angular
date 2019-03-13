@@ -38,7 +38,7 @@ export class TopComponent implements OnInit {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataService.filterAgent({
+    return this.dataService.filterTemporaryAgent({
       txtWord: '',
       selectedOrderId: AgentOrderId.Updated,
     });

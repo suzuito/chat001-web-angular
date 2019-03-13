@@ -19,7 +19,7 @@ export class AgentsComponent implements OnInit {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataService.filterAgent(this.opt);
+    return this.dataService.filterTemporaryAgent(this.opt);
   }
 
 }

@@ -4,10 +4,13 @@ export interface Agent extends EasyAgent {
   readonly maxOwnedRoom: number;
 }
 
+export interface TemporaryAgent extends EasyAgent {
+  readonly id: string;
+}
+
 export interface EasyAgent {
-  readonly externalId: string;
-  readonly color: string;
   readonly name: string;
+  readonly color: string;
   readonly description: string;
   readonly updatedAt: number;
   readonly urlImage: string;

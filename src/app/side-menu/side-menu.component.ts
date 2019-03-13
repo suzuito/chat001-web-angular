@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { ProfileEditorComponent } from '../parts/profile-editor/profile-editor.component';
+import { AgentService } from '../agent.service';
+import { Agent } from '../model/agent';
 
 @Component({
   selector: 'app-side-menu',
@@ -10,6 +12,7 @@ import { ProfileEditorComponent } from '../parts/profile-editor/profile-editor.c
 export class SideMenuComponent implements OnInit {
 
   constructor(
+    private agentService: AgentService,
     private dialog: MatDialog,
   ) { }
 
@@ -22,4 +25,7 @@ export class SideMenuComponent implements OnInit {
     });
   }
 
+  public agent(): Agent {
+    return this.agentService.get();
+  }
 }

@@ -19,10 +19,17 @@ export interface Room {
   readonly createdAt: number;
 }
 
+export enum AgentRoleInRoom {
+  Lower = 1,
+  Member = 50,
+  Owner = 100,
+}
+
 export interface AgentInRoom {
-  readonly agent: EasyAgent;
   readonly externalId: string;
-  readonly role: number;
+  readonly role: AgentRoleInRoom;
   readonly createdAt: number;
   readonly updatedAt: number;
+  readonly deletedAt: number;
+  readonly agent: EasyAgent;
 }

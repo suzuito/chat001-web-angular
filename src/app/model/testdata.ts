@@ -1,5 +1,5 @@
-import { Agent } from './agent';
-import { Room, RoomStatus } from './room';
+import { Agent, TemporaryAgent } from './agent';
+import { Room, RoomStatus, AgentInRoom, AgentRoleInRoom } from './room';
 import { AgentMessage, LineType } from './agent_message';
 import { DataService } from '../data.service';
 import { AgentService } from '../agent.service';
@@ -15,34 +15,44 @@ function randomBoolean(): boolean {
   return getRandomInt(2) % 2 === 0;
 }
 
-function randomImage(): string {
-  return 'https://picsum.photos/300/300/?random';
+function randomImage(i: number): string {
+  return `https://picsum.photos/300/300/?image=${i}`;
 }
 
-export function setTestAgents(s: DataService) {
-  const ret: Agent[] = [];
+export function setTestAgent(s: AgentService) {
+  s.set({
+    id: `agent00001`,
+    name: `ケンシロウ`,
+    maxOwnedRoom: 10,
+    color: '#000000',
+    description: `お前はもう死んでいる.........。...今日より明日......。久しぶりに人間にあった気がする...。`,
+    updatedAt: getRandomInt(10000000000),
+    urlImage: 'https://dic.nicovideo.jp/oekaki/21598.png',
+  });
+}
+
+export function setTestTemporaryAgents(s: DataService) {
+  const ret: TemporaryAgent[] = [];
   for (let i = 0; i < 100; i++) {
     ret.push({
-      id: `agent${i}`,
-      name: `agent${i}_name Where did you get the indeterminateChange event from?`,
-      maxOwnedRoom: 10,
-      externalId: `agent${i}_externalId`,
+      id: `temporaryAgent${i}`,
+      name: `temporaryAgent${i}_name Where did you get the indeterminateChange event from?`,
       color: '#000000',
-      description: `agent${i}_description Use MatSelectionList's selectionChange event.`,
+      description: `temporaryAgent${i}_description Use MatSelectionList's selectionChange event.`,
       updatedAt: getRandomInt(10000000000),
-      urlImage: randomImage(),
+      urlImage: randomImage(i),
     });
   }
-  s.setAgent(...ret);
+  s.setTemporaryAgent(...ret);
 }
 
 const defaultMaxAgents = 100;
 
 export function setTestRooms(s: DataService) {
-  const ret: Room[] = [];
   for (let i = 0; i < 100; i++) {
-    ret.push({
-      id: `room${i}`,
+    const roomId = `room${i}`;
+    s.setRoom({
+      id: roomId,
       name: `room${i}_name Where did you get the indeterminateChange event from?`,
       description: `room${i}_description Use MatSelectionList's selectionChange event.`,
       maxAgents: defaultMaxAgents,
@@ -53,8 +63,24 @@ export function setTestRooms(s: DataService) {
       password: randomBoolean(),
       createdAt: getRandomInt(10000000000),
     });
+    const n = getRandomInt(100) + 1;
+    for (let j = 0; j < n; j++) {
+      s.setAgentInRoom(roomId, {
+        externalId: `extId-${roomId}-${j}`,
+        role: AgentRoleInRoom.Member,
+        createdAt: getRandomInt(10000000000),
+        updatedAt: getRandomInt(10000000000),
+        deletedAt: 0,
+        agent: {
+          name: `agent${j}_name Where did you get the indeterminateChange event from?`,
+          color: '#000000',
+          description: `agent${j}_description Use MatSelectionList's selectionChange event.`,
+          updatedAt: getRandomInt(10000000000),
+          urlImage: randomImage(j),
+        },
+      });
+    }
   }
-  s.setRoom(...ret);
 }
 
 export function setTestAgentMessages(s: AgentService): void {
@@ -76,12 +102,14 @@ export function setTestAgentMessages(s: AgentService): void {
 export function setTestRoomMessages(s: RoomMessageService, d: DataService): void {
   const rooms = d.filterRoom(RoomSearchOptionNull);
   rooms.forEach((room: Room) => {
+    const agents = d.getAgentsInRoom(room.id);
     for (let i = 0; i < 100; i++) {
+      const agentI = getRandomInt(agents.length);
       s.pushMessage(room.id, {
         id: `message${room.id}.${i}`,
         body: `message${room.id}.${i}.body: 今後ジョブの中間出力に対してデフォルトで zstd による圧縮を適用させるための設定変更メンテナンスを実施予定です。
         zstd デフォルト化後にジョブが実行できなくなる可能性を事前に排除するため、下記の2点に関してご確認いただくようお願い致します。`,
-        agentExternalId: `message${room.id}.${i}.agentExternalId`,
+        agentExternalId: agents[agentI].externalId,
         type: MessageType.Message,
         createdAt: getRandomInt(10000000000),
         extra: {},

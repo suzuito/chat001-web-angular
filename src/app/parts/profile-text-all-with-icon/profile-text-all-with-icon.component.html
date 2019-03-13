@@ -1,11 +1,9 @@
 <div class='main' [style.width]='width' #main>
   <div class='left' #left>
-    <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
+    <app-profile-img [src]='agent.urlImage' [mode]='small'></app-profile-img>
   </div>
   <div class='right'>
-    <app-profile-text-all [nameOnly]='nameOnly' [agentName]='agentName' [agentDescription]='agentDescription'
+    <app-profile-text-all [nameOnly]='nameOnly' [agentName]='agent.name' [agentDescription]='agent.description'
       [linesDescription]='linesDescription'>
     </app-profile-text-all>
   </div>
