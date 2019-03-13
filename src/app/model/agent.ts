@@ -1,13 +1,13 @@
 
 export interface Agent extends EasyAgent {
-  id: string;
-  maxOwnedRoom: number;
+  readonly id: string;
+  readonly maxOwnedRoom: number;
 }
 
 export interface EasyAgent {
-  externalId: string;
-  color: string;
-  name: string;
-  description: string;
-  updatedAt: number;
+  readonly externalId: string;
+  readonly color: string;
+  readonly name: string;
+  readonly description: string;
+  readonly updatedAt: number;
 }

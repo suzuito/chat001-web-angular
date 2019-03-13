@@ -93,3 +93,20 @@ export class DataStores<T> {
     return false;
   }
 }
+
+export class SortedArray<T> {
+  public data: T[];
+  public compareFunction: (a: T, b: T) => number;
+
+  constructor(
+    compareFunction: (a: T, b: T) => number,
+  ) {
+    this.data = [];
+    this.compareFunction = compareFunction;
+  }
+
+  public push(...elements: T[]): void {
+    this.data.push(...elements);
+    this.data.sort(this.compareFunction);
+  }
+}

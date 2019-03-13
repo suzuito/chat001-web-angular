@@ -7,25 +7,25 @@ export enum RoomStatus {
 }
 
 export interface Room {
-  id: string;
-  name: string;
-  description: string;
-  maxAgents: number;
-  status: RoomStatus;
-  public: boolean;
-  fixed: boolean;
-  agents: number;
-  password: boolean;
-  createdAt: number;
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly maxAgents: number;
+  readonly status: RoomStatus;
+  readonly public: boolean;
+  readonly fixed: boolean;
+  readonly agents: number;
+  readonly password: boolean;
+  readonly createdAt: number;
 }
 
 export interface AgentInRoom {
-  agent: EasyAgent;
-  externalId: string;
-  role: number;
-  createdAt: number;
-  updatedAt: number;
-  postedAt: number;
-  accessedAt: number;
-  order: number;
+  readonly agent: EasyAgent;
+  readonly externalId: string;
+  readonly role: number;
+  readonly createdAt: number;
+  readonly updatedAt: number;
+  readonly postedAt: number;
+  readonly accessedAt: number;
+  readonly order: number;
 }

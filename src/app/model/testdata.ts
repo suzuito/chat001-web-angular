@@ -3,6 +3,9 @@ import { Room, RoomStatus } from './room';
 import { AgentMessage, LineType } from './agent_message';
 import { DataService } from '../data.service';
 import { AgentService } from '../agent.service';
+import { RoomMessageService } from '../room-message.service';
+import { RoomMessage, MessageType } from './room_message';
+import { RoomSearchOptionNull } from '../rooms/rooms-search-option/rooms-search-option.service';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -63,4 +66,22 @@ export function setTestAgentMessages(s: AgentService): void {
     });
   }
   s.setMessage(...ret);
+}
+
+export function setTestRoomMessages(s: RoomMessageService, d: DataService): void {
+  const rooms = d.filterRoom(RoomSearchOptionNull);
+  rooms.forEach((room: Room) => {
+    for (let i = 0; i < 100; i++) {
+      s.pushMessage(room.id, {
+        id: `message${room.id}.${i}`,
+        body: `message${room.id}.${i}.body`,
+        agentName: `message${room.id}.${i}.agentName`,
+        agentExternalId: `message${room.id}.${i}.agentExternalId`,
+        agentColor: `message${room.id}.${i}.agentColor`,
+        type: MessageType.Message,
+        createdAt: getRandomInt(10000000000),
+        extra: {},
+      });
+    }
+  });
 }

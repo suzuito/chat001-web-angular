@@ -20,6 +20,15 @@ export interface RoomsSearchOption {
   selectedOrderId: OrderId;
 }
 
+export const RoomSearchOptionNull: RoomsSearchOption = {
+  txtWord: '',
+  members: 0,
+  chkCanEnter: false,
+  chkUnlocked: false,
+  chkMembers: false,
+  selectedOrderId: OrderId.Newed,
+};
+
 @Injectable({
   providedIn: 'root'
 })

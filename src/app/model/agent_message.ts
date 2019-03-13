@@ -6,13 +6,13 @@ export enum LineType {
 }
 
 export interface Line {
-  type: LineType;
-  body: any;
+  readonly type: LineType;
+  readonly body: any;
 }
 
 export interface AgentMessage {
-  id: string;
-  lines: Line[];
-  createdAt: number;
-  read: boolean;
+  readonly id: string;
+  readonly lines: Line[];
+  readonly createdAt: number;
+  readonly read: boolean;
 }
