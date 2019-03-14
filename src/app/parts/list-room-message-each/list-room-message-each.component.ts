@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Message } from 'src/app/model/room_message';
 import { AgentInRoom } from 'src/app/model/room';
 
@@ -15,13 +15,42 @@ export class ListRoomMessageEachComponent implements OnInit {
   @Input()
   public agent: AgentInRoom;
 
-  constructor() { }
+  @Input()
+  public isLeft: boolean;
+
+  @Output()
+  public clickUserIcon: EventEmitter<void>;
+
+  @Output()
+  public clickMenuRequest: EventEmitter<void>;
+
+  @Output()
+  public clickMenuUserInfo: EventEmitter<void>;
+
+  constructor() {
+    this.isLeft = true;
+    this.clickUserIcon = new EventEmitter<void>();
+    this.clickMenuRequest = new EventEmitter<void>();
+    this.clickMenuUserInfo = new EventEmitter<void>();
+  }
 
   ngOnInit() {
   }
 
-  public isLeft(): boolean {
-    return false;
+  public flexDirectionMain(): string {
+    if (this.isLeft) {
+      return 'row';
+    } else {
+      return 'row-reverse';
+    }
+  }
+
+  public textAlign(): string {
+    if (this.isLeft) {
+      return 'right';
+    } else {
+      return 'left';
+    }
   }
 
 }

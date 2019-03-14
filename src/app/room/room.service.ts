@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import { Room } from '../model/room';
+import { Room, AgentInRoom } from '../model/room';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,10 @@ export class RoomService {
       return null;
     }
     return this.dataService.getRoomRaw(this.roomId);
+  }
+
+  public getAgents(): AgentInRoom[] {
+    return this.dataService.getAgentsInRoom(this.roomId);
   }
 
 }

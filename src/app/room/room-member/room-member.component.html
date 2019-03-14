@@ -1,3 +1,3 @@
-<p>
-  room-member works!
-</p>
+<app-searcher [icon]='iconExpander()' (clickExpand)='clickExpand()' [(txt)]='searchOptService.txtWord'></app-searcher>
+<app-list-agent-in-room width='100%' heightList='100%' [disableHeader]='true' [agentsInRoom]='getAgentsInRoom()'>
+</app-list-agent-in-room>

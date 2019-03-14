@@ -7,7 +7,7 @@
   <div class='picture'>
     <app-profile-img mode='small' [src]='agent.urlImage'></app-profile-img>
   </div>
-  <div class='action'>
+  <div class='action' *ngIf='!disableAction'>
     <button mat-icon-button>
       <mat-icon>message</mat-icon>
     </button>

@@ -14,6 +14,7 @@ import {
   MatBottomSheetModule,
   MatDialogModule,
   MatTabsModule,
+  MatMenuModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +56,8 @@ import { PasswordInputterComponent } from './parts/password-inputter/password-in
 import { ListRoomMessageComponent } from './parts/list-room-message/list-room-message.component';
 import { ListRoomMessageEachComponent } from './parts/list-room-message-each/list-room-message-each.component';
 import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
+import { ListAgentInRoomComponent } from './parts/list-agent-in-room/list-agent-in-room.component';
+import { RoomMemberSearchOptionComponent } from './room/room-member/room-member-search-option/room-member-search-option.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +98,8 @@ import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
     ListRoomMessageComponent,
     ListRoomMessageEachComponent,
     ProfileImgComponent,
+    ListAgentInRoomComponent,
+    RoomMemberSearchOptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,6 +118,7 @@ import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
     MatBottomSheetModule,
     MatDialogModule,
     MatTabsModule,
+    MatMenuModule,
   ],
   providers: [
   ],

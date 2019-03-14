@@ -2,7 +2,6 @@
 
 .main {
   display: flex;
-  flex-direction: row;
 }
 
 .user {
@@ -27,12 +26,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.user-left {
-  text-align: right;
-}
-
-.user-right {
-  text-align: left;
 }

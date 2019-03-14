@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { getRealStyle } from 'src/app/util';
 import { EasyAgent } from 'src/app/model/agent';
+import { AgentRoleInRoom } from 'src/app/model/room';
 
 @Component({
   selector: 'app-profile-list-each',
@@ -10,12 +11,22 @@ import { EasyAgent } from 'src/app/model/agent';
 export class ProfileListEachComponent implements OnInit {
 
   @Input()
+  public role: AgentRoleInRoom;
+
+  @Input()
   public agent: EasyAgent;
 
   @Input()
   public sizeImg: string;
 
-  constructor() { }
+  @Input()
+  public disableAction: boolean;
+
+  constructor(
+  ) {
+    this.role = null;
+    this.disableAction = false;
+  }
 
   ngOnInit() {
   }

@@ -1,8 +1,8 @@
 <mat-list [style.width]='width'>
   <app-list-header *ngIf='!disableHeader' [caption]='caption' (clickAll)='clickAll.emit()'></app-list-header>
   <div class='list' [style.height]='heightList'>
-    <div class='list-each' *ngFor='let agent of agents'>
-      <app-profile-list-each [agent]='agent' [sizeImg]='sizeImg'>
+    <div class='list-each' *ngFor='let agentInRoom of agentsInRoom'>
+      <app-profile-list-each [agent]='agentInRoom.agent' [sizeImg]='sizeImg' disableAction=true>
       </app-profile-list-each>
     </div>
   </div>

@@ -1,22 +1,21 @@
-<div class='main' *ngIf='isLeft()'>
-  <div class='user user-left mat-caption'>
-    <div class='user-name'>
+<div class='main' [style.flex-direction]='flexDirectionMain()'>
+  <div class='user' [style.text-align]='textAlign()'>
+    <div class='user-name mat-caption' [matMenuTriggerFor]='menu'>
       {{agent.agent.name}}
     </div>
     <div>
-      <app-profile-img mode='small' [src]='agent.agent.urlImage'></app-profile-img>
+      <app-profile-img mode='small' [src]='agent.agent.urlImage' (click)='clickUserIcon.emit()'></app-profile-img>
     </div>
   </div>
   <div class='body mat-body-2'>{{message.body}}</div>
 </div>
-<div class='main' *ngIf='!isLeft()'>
-  <div class='body mat-body-2'>{{message.body}}</div>
-  <div class='user user-right mat-caption'>
-    <div class='user-name'>
-      {{agent.agent.name}}
-    </div>
-    <div class='user-img'>
-      <app-profile-img mode='small' [src]='agent.agent.urlImage'></app-profile-img>
-    </div>
-  </div>
-</div>
+<mat-menu #menu='matMenu'>
+  <button mat-menu-item (click)='clickMenuRequest.emit()'>
+    <mat-icon>person</mat-icon>
+    <span>ユーザー</span>
+  </button>
+  <button mat-menu-item (click)='clickMenuUserInfo.emit()'>
+    <mat-icon>message</mat-icon>
+    <span>リクエスト</span>
+  </button>
+</mat-menu>
