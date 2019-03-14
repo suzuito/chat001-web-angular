@@ -1,8 +1,4 @@
-<div class='main' [style.width]='width'>
-  <div class='name mat-title' [style.width]='width'>
-    {{agentName}}
-  </div>
-  <div class='description mat-body-2' *ngIf='!nameOnly' #description>
-    {{agentDescription}}
-  </div>
+<div [style.width]='width'>
+  <div appAgentName *ngIf='!nameOnly'>{{agentName}}</div>
+  <div appAgentDescription [linesDescription]='linesDescription'>{{agentDescription}}</div>
 </div>

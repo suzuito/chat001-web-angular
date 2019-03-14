@@ -1,0 +1,9 @@
+<mat-list [style.width]='width'>
+  <app-list-header *ngIf='!disableHeader' [caption]='caption' (clickAll)='clickAll.emit()'></app-list-header>
+  <div class='list' [style.height]='heightList'>
+    <ng-content></ng-content>
+  </div>
+  <div class='action' *ngIf='!disableMore'>
+    <button mat-button color='primary' (click)='clickMore.emit()'>もっと読み込む...</button>
+  </div>
+</mat-list>

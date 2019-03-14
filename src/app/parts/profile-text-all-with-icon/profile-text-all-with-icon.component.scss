@@ -1,6 +1,7 @@
 // * { border: 1px solid red; }
 
 .main {
+  position: relative;
   display: flex;
   flex-direction: row;
 
@@ -11,7 +12,17 @@
 }
 
 .left {
-  padding-right: 8px;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 app-profile-text-all{

@@ -22,7 +22,6 @@ import { AppComponent } from './app.component';
 import { HeaderMainComponent } from './header-main/header-main.component';
 import { HeaderSubMainComponent } from './header-sub-main/header-sub-main.component';
 import { ButtonIconComponent } from './parts/button-icon/button-icon.component';
-import { ExamplesComponent } from './examples/examples.component';
 import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-all.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { ListAgentComponent } from './parts/list-agent/list-agent.component';
@@ -58,6 +57,9 @@ import { ListRoomMessageEachComponent } from './parts/list-room-message-each/lis
 import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
 import { ListAgentInRoomComponent } from './parts/list-agent-in-room/list-agent-in-room.component';
 import { RoomMemberSearchOptionComponent } from './room/room-member/room-member-search-option/room-member-search-option.component';
+import { AgentNameDirective } from './parts/agent-name.directive';
+import { AgentDescriptionDirective } from './parts/agent-description.directive';
+import { ListAnyComponent } from './parts/list-any/list-any.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,6 @@ import { RoomMemberSearchOptionComponent } from './room/room-member/room-member-
     HeaderMainComponent,
     HeaderSubMainComponent,
     ButtonIconComponent,
-    ExamplesComponent,
     ProfileTextAllComponent,
     SideMenuComponent,
     ListAgentComponent,
@@ -100,6 +101,9 @@ import { RoomMemberSearchOptionComponent } from './room/room-member/room-member-
     ProfileImgComponent,
     ListAgentInRoomComponent,
     RoomMemberSearchOptionComponent,
+    AgentNameDirective,
+    AgentDescriptionDirective,
+    ListAnyComponent,
   ],
   imports: [
     BrowserModule,

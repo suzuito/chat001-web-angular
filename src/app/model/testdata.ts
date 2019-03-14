@@ -22,7 +22,7 @@ function randomImage(i: number): string {
 export function setTestAgent(s: AgentService) {
   s.set({
     id: `agent00001`,
-    name: `ケンシロウ`,
+    name: `ケンシロウ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     maxOwnedRoom: 10,
     color: '#000000',
     description: `お前はもう死んでいる.........。...今日より明日......。久しぶりに人間にあった気がする...。`,

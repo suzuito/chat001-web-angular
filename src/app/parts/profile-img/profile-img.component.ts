@@ -1,7 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-enum Mode {
+export enum ProfileImageSize {
   Small = 'small',
+}
+
+export function getProfileImageSizePx(s: ProfileImageSize): number {
+  switch (s) {
+    case ProfileImageSize.Small:
+      return 50;
+  }
+  return 50;
 }
 
 @Component({
@@ -12,7 +20,7 @@ enum Mode {
 export class ProfileImgComponent implements OnInit {
 
   @Input()
-  public mode: Mode;
+  public mode: ProfileImageSize;
 
   @Input()
   public src: string;
@@ -23,11 +31,7 @@ export class ProfileImgComponent implements OnInit {
   }
 
   public sizeImg(): number {
-    switch (this.mode) {
-      case Mode.Small:
-        return 50;
-    }
-    return 50;
+    return getProfileImageSizePx(this.mode);
   }
 
   public urlImg(): string {

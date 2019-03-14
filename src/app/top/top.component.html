@@ -1,4 +1,10 @@
 <mat-card>
+  <app-list-any width='100%' heightList='300px' caption='アクティブユーザー' [disableMore]='true' (clickAll)='routeToAgents()'>
+    <app-profile-text-all-with-icon *ngFor='let agent of agents()' [agent]='agent'></app-profile-text-all-with-icon>
+  </app-list-any>
+  <!--app-list-any width='100%' heightList='300px' caption='新着順' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <app-profile-text-all-with-icon *ngFor='let room of roomsNewed()' [agent]='agent'></app-profile-text-all-with-icon>
+  </app-list-any-->
   <app-list-agent width='100%' heightList='300px' sizeImage='50' caption='アクティブユーザー' [disableMore]='true'
     (clickAll)='routeToAgents()' [agents]='agents()'>
   </app-list-agent>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ExamplesComponent } from './examples/examples.component';
 import { TopComponent } from './top/top.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { AgentsComponent } from './agents/agents.component';
@@ -54,10 +53,6 @@ const routes: Routes = [
         ],
       },
     ],
-  },
-  {
-    path: 'examples',
-    component: ExamplesComponent,
   },
 ];
 

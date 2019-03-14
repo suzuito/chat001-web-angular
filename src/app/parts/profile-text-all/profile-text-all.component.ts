@@ -10,12 +10,6 @@ import { MatCard } from '@angular/material';
 export class ProfileTextAllComponent implements OnInit, AfterViewInit {
 
   @Input()
-  public width: string;
-
-  @Input()
-  public linesDescription: number;
-
-  @Input()
   public agentName: string;
 
   @Input()
@@ -24,12 +18,13 @@ export class ProfileTextAllComponent implements OnInit, AfterViewInit {
   @Input()
   public nameOnly: boolean;
 
-  @ViewChild('description')
-  public elemDescription: ElementRef;
+  @Input()
+  public linesDescription: number;
+
+  @Input()
+  public width: string;
 
   constructor() {
-    this.width = '100%';
-    this.linesDescription = null;
     this.nameOnly = false;
   }
 
@@ -37,26 +32,5 @@ export class ProfileTextAllComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.resetDescriptionHeight();
   }
-
-  private resetDescriptionHeight(): void {
-    if (this.nameOnly) {
-      return;
-    }
-    if (!this.linesDescription) {
-      return;
-    }
-    if (this.linesDescription <= 0) {
-      return;
-    }
-    const s: CSSStyleDeclaration = getRealStyle(this.elemDescription);
-    const preLineHeight = parseInt(s.height, 10);
-    const afterLineHeight = parseInt(s.lineHeight, 10);
-    if (preLineHeight < afterLineHeight) {
-      return;
-    }
-    this.elemDescription.nativeElement.style.height = `${afterLineHeight * this.linesDescription}px`;
-  }
-
 }
