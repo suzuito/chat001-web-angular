@@ -3,8 +3,10 @@
     <app-side-menu></app-side-menu>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header-main title="header 1" (clickMenu)='openSidenav()' (clickTitle)='routeToTop()'
-      (clickNotification)='routeToAgentMessages()'></app-header-main>
+    <app-header-main title="header 1" (clickMenu)='toggleSideNav()' (clickTitle)='routeToTop()'
+      (clickNotification)='routeToAgentMessages()' (clickRoomInfo)='routeToRoomInfo()'
+      (clickRoomMessage)='routeToRoomMessage()' (clickRoomMember)='routeToRoomMember()'
+      [displayRoomButtons]='displayRoomButtons()'></app-header-main>
     <div class='content'>
       <router-outlet></router-outlet>
     </div>

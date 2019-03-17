@@ -19,6 +19,25 @@ export interface Room {
   readonly createdAt: number;
 }
 
+export function emptyRoom(
+  id: string,
+  name: string, description: string,
+  maxAgents: number,
+): Room {
+  return {
+    id,
+    name,
+    description,
+    maxAgents,
+    status: RoomStatus.Active,
+    public: true,
+    fixed: false,
+    agents: 0,
+    password: false,
+    createdAt: 0,
+  };
+}
+
 export enum AgentRoleInRoom {
   Lower = 1,
   Member = 50,

@@ -1,0 +1,11 @@
+<div class='main' [style.width]='width'>
+  <div class='profile' (click)='clickProfile.emit()' #profileBox>
+    <app-profile-text-all-with-icon [width]='width' [paddingBetween]='paddingBetween'
+      [linesDescription]='linesDescription' [agent]='agent' [nameOnly]='nameOnly'></app-profile-text-all-with-icon>
+  </div>
+  <div class='button' (click)='clickIconButton.emit()' #buttonBox>
+    <button mat-icon-button>
+      <mat-icon>{{icon}}</mat-icon>
+    </button>
+  </div>
+</div>

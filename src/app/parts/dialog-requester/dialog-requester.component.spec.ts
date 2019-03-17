@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileListEachComponent } from './profile-list-each.component';
+import { DialogRequesterComponent } from './dialog-requester.component';
 
-describe('ProfileListEachComponent', () => {
-  let component: ProfileListEachComponent;
-  let fixture: ComponentFixture<ProfileListEachComponent>;
+describe('DialogRequesterComponent', () => {
+  let component: DialogRequesterComponent;
+  let fixture: ComponentFixture<DialogRequesterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileListEachComponent ]
+      declarations: [ DialogRequesterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileListEachComponent);
+    fixture = TestBed.createComponent(DialogRequesterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -24,13 +24,13 @@ export class ProfileTextAllWithIconComponent implements OnInit, AfterViewInit {
   public nameOnly: boolean;
 
   @ViewChild('leftBox')
-  public domLeft: ElementRef;
+  private domLeft: ElementRef;
 
   @ViewChild('rightBox')
-  public domRight: ElementRef;
+  private domRight: ElementRef;
 
   @ViewChild('mainBox')
-  public domMain: ElementRef;
+  private domMain: ElementRef;
 
   constructor() {
     this.linesDescription = 1;

@@ -6,11 +6,13 @@
     </div>
     <div>
       <div>
-        <app-checkbox-with-icon paddingBetween='5px' icon='lock' text='パスワードなし' [(checked)]='opt.chkUnlocked'>
+        <app-checkbox-with-icon paddingBetween='5px' iconOn='lock_open' textOn='パスワードなし' iconOff='lock_open'
+          textOff='パスワードなし' [(checked)]='opt.chkUnlocked'>
         </app-checkbox-with-icon>
       </div>
       <div>
-        <app-checkbox-with-icon paddingBetween='5px' icon='meeting_room' text='入室可' [(checked)]='opt.chkCanEnter'>
+        <app-checkbox-with-icon paddingBetween='5px' iconOn='meeting_room' textOn='入室可' iconOff='meeting_room'
+          textOff='入室可' [(checked)]='opt.chkCanEnter'>
         </app-checkbox-with-icon>
       </div>
       <div>

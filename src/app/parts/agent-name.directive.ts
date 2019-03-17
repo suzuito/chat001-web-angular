@@ -6,17 +6,17 @@ import { Directive, ElementRef, HostListener, OnInit, Input } from '@angular/cor
 export class AgentNameDirective implements OnInit {
 
   @Input()
-  private oneLine: boolean;
+  public oneLine: boolean;
 
   @Input()
-  private width: string;
+  public width: string;
 
   constructor(
     private el: ElementRef,
   ) {
     this.oneLine = true;
     this.el.nativeElement.className = 'mat-body-2';
-    this.el.nativeElement.style['font-weight'] = 'normal';
+    // this.el.nativeElement.style['font-weight'] = 'normal';
   }
 
   ngOnInit(): void {

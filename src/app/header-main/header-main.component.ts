@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { RoomService } from '../room/room.service';
 
 @Component({
   selector: 'app-header-main',
@@ -19,10 +20,27 @@ export class HeaderMainComponent implements OnInit {
   @Output()
   public clickNotification: EventEmitter<void>;
 
+  @Output()
+  public clickRoomInfo: EventEmitter<void>;
+
+  @Output()
+  public clickRoomMessage: EventEmitter<void>;
+
+  @Output()
+  public clickRoomMember: EventEmitter<void>;
+
+  @Input()
+  public displayRoomButtons: boolean;
+
   constructor() {
     this.clickMenu = new EventEmitter<void>();
     this.clickTitle = new EventEmitter<void>();
     this.clickNotification = new EventEmitter<void>();
+    this.clickRoomInfo = new EventEmitter<void>();
+    this.clickRoomMember = new EventEmitter<void>();
+    this.clickRoomMessage = new EventEmitter<void>();
+
+    this.displayRoomButtons = false;
   }
 
   ngOnInit() {

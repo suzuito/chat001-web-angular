@@ -10,6 +10,10 @@ import { RoomResolverService } from './room/room-resolver.service';
 import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
 import { RoomMemberComponent } from './room/room-member/room-member.component';
 import { RoomMessageComponent } from './room/room-message/room-message.component';
+import { RoomCreatorComponent } from './room-creator/room-creator.component';
+import { RoomCandeactivateService } from './room/room-candeactivate.service';
+import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
+import { RoomEntranceResolverService } from './room-entrance/room-entrance-resolver.service';
 
 const routes: Routes = [
   {
@@ -32,11 +36,25 @@ const routes: Routes = [
         component: AgentMessagesComponent,
       },
       {
+        path: 'room-creator',
+        component: RoomCreatorComponent,
+      },
+      {
+        path: 'room-entrance/:roomId',
+        component: RoomEntranceComponent,
+        resolve: {
+          initRoom: RoomEntranceResolverService,
+        },
+      },
+      {
         path: 'room/:roomId',
         component: RoomComponent,
         resolve: {
           initRoom: RoomResolverService,
         },
+        canDeactivate: [
+          RoomCandeactivateService,
+        ],
         children: [
           {
             path: '',

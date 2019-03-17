@@ -7,6 +7,15 @@
     <div class='center'>
     </div>
     <div class='right'>
+      <button *ngIf='displayRoomButtons' (click)='clickRoomInfo.emit()' mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+      <button *ngIf='displayRoomButtons' (click)='clickRoomMessage.emit()' mat-icon-button>
+        <mat-icon>message</mat-icon>
+      </button>
+      <button *ngIf='displayRoomButtons' (click)='clickRoomMember.emit()' mat-icon-button>
+        <mat-icon>group</mat-icon>
+      </button>
       <button mat-icon-button (click)='clickNotification.emit()'>
         <mat-icon>notifications</mat-icon>
       </button>

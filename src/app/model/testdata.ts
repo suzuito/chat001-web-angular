@@ -1,5 +1,5 @@
 import { Agent, TemporaryAgent } from './agent';
-import { Room, RoomStatus, AgentInRoom, AgentRoleInRoom } from './room';
+import { Room, RoomStatus, AgentInRoom, AgentRoleInRoom, emptyRoom } from './room';
 import { AgentMessage, LineType } from './agent_message';
 import { DataService } from '../data.service';
 import { AgentService } from '../agent.service';
@@ -29,6 +29,18 @@ export function setTestAgent(s: AgentService) {
     updatedAt: getRandomInt(10000000000),
     urlImage: 'https://dic.nicovideo.jp/oekaki/21598.png',
   });
+  for (let i = 0; i < 5; i++) {
+    const r = emptyRoom(`room${i}`, `room${i}`, `room${i}_Desc`, 100);
+    s.setRoom(
+      {
+        room: r,
+        externalId: 'ext001',
+        role: AgentRoleInRoom.Member,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    );
+  }
 }
 
 export function setTestTemporaryAgents(s: DataService) {
@@ -103,7 +115,7 @@ export function setTestRoomMessages(s: RoomMessageService, d: DataService): void
   const rooms = d.filterRoom(RoomSearchOptionNull);
   rooms.forEach((room: Room) => {
     const agents = d.getAgentsInRoom(room.id);
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < agents.length; i++) {
       const agentI = getRandomInt(agents.length);
       s.pushMessage(room.id, {
         id: `message${room.id}.${i}`,

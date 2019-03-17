@@ -15,8 +15,8 @@ export class AgentDescriptionDirective implements AfterViewInit {
   constructor(
     private el: ElementRef,
   ) {
-    this.el.nativeElement.className = 'mat-body-2';
-    this.el.nativeElement.style['font-weight'] = 'normal';
+    this.el.nativeElement.className = 'mat-body-1';
+    // this.el.nativeElement.style['font-weight'] = 'normal';
     this.el.nativeElement.style.overflow = 'hidden';
     this.el.nativeElement.style['-webkit-hyphens'] = 'auto';
     this.el.nativeElement.style['-moz-hyphens'] = 'auto';

@@ -1,0 +1,13 @@
+<div class='main'>
+  <div class='profile'>
+    <app-profile-text-all-with-icon [agent]='agentInRoom.agent' linesDescription='1'></app-profile-text-all-with-icon>
+  </div>
+  <div class='role'>
+    <button mat-stroked-button [color]='roleColor()' (click)='clickRole.emit()'>
+      {{role()}}
+    </button>
+  </div>
+  <div class='selector'>
+    <mat-checkbox [(ngModel)]='checked' (change)='change()'></mat-checkbox>
+  </div>
+</div>

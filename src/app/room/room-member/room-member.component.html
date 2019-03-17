@@ -1,3 +1,11 @@
-<app-searcher [icon]='iconExpander()' (clickExpand)='clickExpand()' [(txt)]='searchOptService.txtWord'></app-searcher>
-<app-list-agent-in-room width='100%' heightList='100%' [disableHeader]='true' [agentsInRoom]='getAgentsInRoom()'>
-</app-list-agent-in-room>
+<app-searcher (clickExpand)='clickExpand()' [(txt)]='searchOptService.txtWord'></app-searcher>
+<div class='ops'>
+  <button mat-raised-button color='primary' [disabled]='disableButtonIntr()' (click)='intr()'>招待する</button>
+</div>
+<div class='list'>
+  <app-list-any width='100%' heightList='100%' [disableMore]='false' [disableHeader]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let agentInRoom of getAgentsInRoom()' [style.padding-bottom]="'13px'">
+      <app-profile-in-room-checkbox [agentInRoom]='agentInRoom' #checkBox></app-profile-in-room-checkbox>
+    </div>
+  </app-list-any>
+</div>

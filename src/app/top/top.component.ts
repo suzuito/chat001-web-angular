@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { Room } from '../model/room';
 import { AgentService } from '../agent.service';
 import { DataService } from '../data.service';
-import { ListAgentComponent } from '../parts/list-agent/list-agent.component';
-import { ListRoomComponent } from '../parts/list-room/list-room.component';
 import { EasyAgent } from '../model/agent';
 import { OrderId as RoomOrderId } from '../rooms/rooms-search-option/rooms-search-option.service';
 import { OrderId as AgentOrderId } from '../agents/agents-search-option.service';
+import { MatDialog } from '@angular/material';
+import { DialogProfileComponent } from '../parts/dialog-profile/dialog-profile.component';
+import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
 
 @Component({
   selector: 'app-top',
@@ -20,6 +21,7 @@ export class TopComponent implements OnInit {
     private agentService: AgentService,
     private dataService: DataService,
     private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,14 @@ export class TopComponent implements OnInit {
 
   public routeToRoom(room: Room): void {
     this.router.navigate(['room', room.id]);
+  }
+
+  public openDialogProfile(agent: EasyAgent): void {
+    this.dialog.open(DialogProfileComponent, { data: agent });
+  }
+
+  public openDialogRequester(agent: EasyAgent): void {
+    this.dialog.open(DialogRequesterComponent, { data: agent });
   }
 
   public agents(): EasyAgent[] {

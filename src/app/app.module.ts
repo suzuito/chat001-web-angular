@@ -15,6 +15,7 @@ import {
   MatDialogModule,
   MatTabsModule,
   MatMenuModule,
+  MatSelectModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,10 +25,8 @@ import { HeaderSubMainComponent } from './header-sub-main/header-sub-main.compon
 import { ButtonIconComponent } from './parts/button-icon/button-icon.component';
 import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-all.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { ListAgentComponent } from './parts/list-agent/list-agent.component';
 import { TopComponent } from './top/top.component';
 import { ProfileTextAllWithIconComponent } from './parts/profile-text-all-with-icon/profile-text-all-with-icon.component';
-import { ProfileListEachComponent } from './parts/profile-list-each/profile-list-each.component';
 import { ListHeaderComponent } from './parts/list-header/list-header.component';
 import { ListRoomComponent } from './parts/list-room/list-room.component';
 import { RoomListEachComponent } from './parts/room-list-each/room-list-each.component';
@@ -48,7 +47,6 @@ import { RoomInfoComponent } from './parts/room-info/room-info.component';
 import { DatetimeStringPipe } from './pipe/date';
 import { RoomMemberComponent } from './room/room-member/room-member.component';
 import { RoomMessageComponent } from './room/room-message/room-message.component';
-import { RoomHeaderComponent } from './room/room-header/room-header.component';
 import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
 import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
 import { PasswordInputterComponent } from './parts/password-inputter/password-inputter.component';
@@ -60,6 +58,17 @@ import { RoomMemberSearchOptionComponent } from './room/room-member/room-member-
 import { AgentNameDirective } from './parts/agent-name.directive';
 import { AgentDescriptionDirective } from './parts/agent-description.directive';
 import { ListAnyComponent } from './parts/list-any/list-any.component';
+import { ProfileTextAllWithIcon2Component } from './parts/profile-text-all-with-icon2/profile-text-all-with-icon2.component';
+import { RoomNameDirective } from './parts/room-name.directive';
+import { RoomDescriptionDirective } from './parts/room-description.directive';
+import { RoomProfileComponent } from './parts/room-profile/room-profile.component';
+import { RoomPropertiesComponent } from './parts/room-properties/room-properties.component';
+import { ProfileInRoomCheckboxComponent } from './parts/profile-in-room-checkbox/profile-in-room-checkbox.component';
+import { DialogProfileComponent } from './parts/dialog-profile/dialog-profile.component';
+import { DialogRequesterComponent } from './parts/dialog-requester/dialog-requester.component';
+import { RoomCreatorComponent } from './room-creator/room-creator.component';
+import { DialogIntroducerComponent } from './parts/dialog-introducer/dialog-introducer.component';
+import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
 
 @NgModule({
   declarations: [
@@ -69,10 +78,8 @@ import { ListAnyComponent } from './parts/list-any/list-any.component';
     ButtonIconComponent,
     ProfileTextAllComponent,
     SideMenuComponent,
-    ListAgentComponent,
     TopComponent,
     ProfileTextAllWithIconComponent,
-    ProfileListEachComponent,
     ListHeaderComponent,
     ListRoomComponent,
     RoomListEachComponent,
@@ -92,7 +99,6 @@ import { ListAnyComponent } from './parts/list-any/list-any.component';
     DatetimeStringPipe,
     RoomMemberComponent,
     RoomMessageComponent,
-    RoomHeaderComponent,
     RoomInputterComponent,
     RoomInfoEditorComponent,
     PasswordInputterComponent,
@@ -104,6 +110,17 @@ import { ListAnyComponent } from './parts/list-any/list-any.component';
     AgentNameDirective,
     AgentDescriptionDirective,
     ListAnyComponent,
+    ProfileTextAllWithIcon2Component,
+    RoomNameDirective,
+    RoomDescriptionDirective,
+    RoomProfileComponent,
+    RoomPropertiesComponent,
+    ProfileInRoomCheckboxComponent,
+    DialogProfileComponent,
+    DialogRequesterComponent,
+    RoomCreatorComponent,
+    DialogIntroducerComponent,
+    RoomEntranceComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,12 +140,16 @@ import { ListAnyComponent } from './parts/list-any/list-any.component';
     MatDialogModule,
     MatTabsModule,
     MatMenuModule,
+    MatSelectModule,
   ],
   providers: [
   ],
   entryComponents: [
     ProfileEditorComponent,
     PasswordInputterComponent,
+    DialogProfileComponent,
+    DialogRequesterComponent,
+    DialogIntroducerComponent,
   ],
   bootstrap: [AppComponent]
 })

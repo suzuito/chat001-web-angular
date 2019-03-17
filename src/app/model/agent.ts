@@ -1,3 +1,4 @@
+import { AgentRoleInRoom, Room } from './room';
 
 export interface Agent extends EasyAgent {
   readonly id: string;
@@ -14,4 +15,12 @@ export interface EasyAgent {
   readonly description: string;
   readonly updatedAt: number;
   readonly urlImage: string;
+}
+
+export interface RoomAgentIn {
+  readonly room: Room;
+  readonly externalId: string;
+  readonly role: AgentRoleInRoom;
+  readonly createdAt: number;
+  readonly updatedAt: number;
 }

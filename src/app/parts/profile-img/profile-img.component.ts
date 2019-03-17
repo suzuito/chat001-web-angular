@@ -2,12 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export enum ProfileImageSize {
   Small = 'small',
+  Medium = 'medium',
 }
 
 export function getProfileImageSizePx(s: ProfileImageSize): number {
   switch (s) {
     case ProfileImageSize.Small:
       return 50;
+    case ProfileImageSize.Medium:
+      return 100;
   }
   return 50;
 }

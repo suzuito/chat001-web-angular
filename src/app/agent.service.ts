@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Agent } from './model/agent';
+import { Agent, RoomAgentIn } from './model/agent';
 import { AgentMessage, Line } from './model/agent_message';
 import { DataStore, DataWrapper } from './data.store';
 import { AgentMessagesSearchOption } from './agent-messages/agent-messages-search-option.service';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,14 @@ export class AgentService {
   private agent: Agent;
   private messages: DataStore<AgentMessage>;
 
-  constructor() {
+  private roomsAgentIn: DataStore<RoomAgentIn>;
+
+  constructor(
+    private dataService: DataService,
+  ) {
     this.agent = null;
     this.messages = new DataStore<AgentMessage>();
+    this.roomsAgentIn = new DataStore<RoomAgentIn>();
   }
 
   public set(agent: Agent): void {
@@ -46,6 +52,19 @@ export class AgentService {
           return false;
         }
       }
+      return true;
+    });
+  }
+
+  public setRoom(...args: RoomAgentIn[]): void {
+    args.forEach((v: RoomAgentIn) => {
+      this.roomsAgentIn.set(v.room.id, v);
+      this.dataService.setRoom(v.room);
+    });
+  }
+
+  public filterRoom(): RoomAgentIn[] {
+    return this.roomsAgentIn.findRaw((d: DataWrapper<RoomAgentIn>): boolean => {
       return true;
     });
   }

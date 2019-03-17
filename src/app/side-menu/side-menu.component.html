@@ -21,7 +21,7 @@
       <mat-icon mat-list-icon>whatshot</mat-icon>
       <h4 mat-line>人気順</h4>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item (click)='routeToRoomCreator()'>
       <mat-icon mat-list-icon>add</mat-icon>
       <h4 mat-line>部屋の作成</h4>
     </mat-list-item>
@@ -29,14 +29,14 @@
 </div>
 <mat-divider></mat-divider>
 <div class='list'>
-  <app-list-room width='100%' heightList='500px' caption='入室中'></app-list-room>
+  <app-list-any width='100%' heightList='300px' caption='入室中' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let room of roomsAgentIn()' [style.padding-bottom]="'13px'">
+      <app-room-profile [room]='room'></app-room-profile>
+    </div>
+  </app-list-any>
 </div>
 <div class='extra'>
   <mat-list>
-    <mat-list-item>
-      <mat-icon mat-list-icon>settings</mat-icon>
-      <h4 mat-line>設定</h4>
-    </mat-list-item>
     <mat-list-item>
       <mat-icon mat-list-icon>feedback</mat-icon>
       <h4 mat-line>フィードバック</h4>

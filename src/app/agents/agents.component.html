@@ -1,5 +1,7 @@
 <app-searcher [txt]='opt.txtWord'></app-searcher>
 <div class='list'>
-  <app-list-agent width='100%' heightList='100%' [disableHeader]='true' [disableMore]='false' [agents]='agents()'>
-  </app-list-agent>
+  <app-list-any width='100%' heightList='100%' [disableHeader]='true' [disableMore]='false'>
+    <app-profile-text-all-with-icon2 *ngFor='let agent of agents()' [agent]='agent' icon='message'>
+    </app-profile-text-all-with-icon2>
+  </app-list-any>
 </div>
