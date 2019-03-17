@@ -2,13 +2,12 @@
   <mat-sidenav fixedInViewport="true" position="end" mode="push" autoFocus='false' [style.width]="'90%'" #sidenav>
     <app-side-menu></app-side-menu>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content #sidenavContent>
     <app-header-main title="header 1" (clickMenu)='toggleSideNav()' (clickTitle)='routeToTop()'
       (clickNotification)='routeToAgentMessages()' (clickRoomInfo)='routeToRoomInfo()'
       (clickRoomMessage)='routeToRoomMessage()' (clickRoomMember)='routeToRoomMember()'
       [displayRoomButtons]='displayRoomButtons()'></app-header-main>
-    <div class='content'>
-      <router-outlet></router-outlet>
-    </div>
+    <div class='padding-top'></div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

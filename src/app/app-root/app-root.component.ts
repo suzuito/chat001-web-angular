@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatSidenav, MatSidenavContent } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppRootService } from './app-root.service';
 import { RoomService } from '../room/room.service';
@@ -9,10 +9,13 @@ import { RoomService } from '../room/room.service';
   templateUrl: './app-root.component.html',
   styleUrls: ['./app-root.component.scss']
 })
-export class AppRootComponent {
+export class AppRootComponent implements AfterViewInit {
 
   @ViewChild('sidenav')
   public sidenav: MatSidenav;
+
+  @ViewChild('sidenavContent')
+  public sidenavContent: MatSidenavContent;
 
   constructor(
     private router: Router,
@@ -27,6 +30,11 @@ export class AppRootComponent {
     });
     this.appRootService.event.addListener('closeSideNav', () => {
       this.closeSideNav();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.sidenavContent.elementScrolled().subscribe(() => {
     });
   }
 
