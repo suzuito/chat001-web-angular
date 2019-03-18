@@ -37,7 +37,8 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMessages, this.roomService.roomId));
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMessages, this.roomService.roomId), true);
+    this.prevRoomId = this.roomService.roomId;
   }
 
   ngAfterViewChecked() {
@@ -48,7 +49,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     if (this.prevRoomId === this.roomService.roomId) {
       return;
     }
-    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMessages, this.roomService.roomId));
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMessages, this.roomService.roomId), true);
     this.prevRoomId = this.roomService.roomId;
     return;
   }

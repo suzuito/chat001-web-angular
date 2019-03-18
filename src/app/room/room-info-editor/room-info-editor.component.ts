@@ -23,7 +23,7 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomInfo, this.roomService.roomId));
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomInfo, this.roomService.roomId), false);
   }
 
   ngOnDestroy() {

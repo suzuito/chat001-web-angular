@@ -26,7 +26,7 @@ export class RoomEntranceComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.roomId));
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.roomId), false);
   }
 
   public get room(): Room {

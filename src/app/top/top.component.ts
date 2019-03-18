@@ -30,7 +30,7 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(ScrollIdTop);
+    this.scrollService.loadScrollPos(ScrollIdTop, false);
   }
 
   ngOnDestroy() {

@@ -10,7 +10,7 @@ import { SideMenuScrollService } from '../side-menu/side-menu-scroll.service';
   templateUrl: './app-root.component.html',
   styleUrls: ['./app-root.component.scss']
 })
-export class AppRootComponent implements AfterViewInit {
+export class AppRootComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidenav')
   public sidenav: MatSidenav;
@@ -35,8 +35,11 @@ export class AppRootComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.scrollService.init(this.sidenavContent);
+  }
+
+  ngAfterViewInit(): void {
   }
 
   public toggleSideNav(): void {

@@ -21,7 +21,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(ScrollIdAgents);
+    this.scrollService.loadScrollPos(ScrollIdAgents, false);
   }
 
   ngOnDestroy() {

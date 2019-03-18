@@ -21,7 +21,7 @@ export class AgentMessagesComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(ScrollIdAgentMessages);
+    this.scrollService.loadScrollPos(ScrollIdAgentMessages, false);
   }
 
   ngOnDestroy() {

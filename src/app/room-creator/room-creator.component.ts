@@ -18,7 +18,7 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(ScrollIdRoomCreator);
+    this.scrollService.loadScrollPos(ScrollIdRoomCreator, false);
   }
 
   ngOnDestroy() {
