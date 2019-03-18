@@ -3,6 +3,7 @@ import { MatSidenav, MatSidenavContent } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppRootService } from './app-root.service';
 import { RoomService } from '../room/room.service';
+import { SideMenuScrollService } from '../side-menu/side-menu-scroll.service';
 
 @Component({
   selector: 'app-app-root',
@@ -21,6 +22,7 @@ export class AppRootComponent implements AfterViewInit {
     private router: Router,
     private appRootService: AppRootService,
     private roomService: RoomService,
+    private scrollService: SideMenuScrollService,
   ) {
     this.appRootService.event.addListener('toggleSideNav', () => {
       this.toggleSideNav();
@@ -34,8 +36,7 @@ export class AppRootComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.sidenavContent.elementScrolled().subscribe(() => {
-    });
+    this.scrollService.init(this.sidenavContent);
   }
 
   public toggleSideNav(): void {

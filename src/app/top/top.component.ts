@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Room } from '../model/room';
 import { AgentService } from '../agent.service';
@@ -9,22 +9,32 @@ import { OrderId as AgentOrderId } from '../agents/agents-search-option.service'
 import { MatDialog } from '@angular/material';
 import { DialogProfileComponent } from '../parts/dialog-profile/dialog-profile.component';
 import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
+import { SideMenuScrollService, ScrollIdTop } from '../side-menu/side-menu-scroll.service';
 
 @Component({
   selector: 'app-top',
   templateUrl: './top.component.html',
   styleUrls: ['./top.component.scss']
 })
-export class TopComponent implements OnInit {
+export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private agentService: AgentService,
     private dataService: DataService,
     private router: Router,
     private dialog: MatDialog,
+    private scrollService: SideMenuScrollService,
   ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.scrollService.loadScrollPos(ScrollIdTop);
+  }
+
+  ngOnDestroy() {
+    this.scrollService.saveScrollPos(ScrollIdTop);
   }
 
   public routeToRooms(): void {

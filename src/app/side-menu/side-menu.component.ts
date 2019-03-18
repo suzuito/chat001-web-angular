@@ -42,4 +42,9 @@ export class SideMenuComponent implements OnInit {
   public roomsAgentIn(): Room[] {
     return this.agentService.filterRoom().map((v: RoomAgentIn) => v.room);
   }
+
+  public routeToRoom(room: Room): void {
+    this.router.navigate(['room', room.id]);
+    this.appRootService.closeSideNav();
+  }
 }

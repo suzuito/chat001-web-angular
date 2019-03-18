@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
 import { Room, AgentInRoom } from 'src/app/model/room';
 import { DataService } from 'src/app/data.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -9,13 +9,14 @@ import { MatDialog } from '@angular/material';
 import { DialogIntroducerComponent } from 'src/app/parts/dialog-introducer/dialog-introducer.component';
 import { AgentService } from 'src/app/agent.service';
 import { RoomAgentIn } from 'src/app/model/agent';
+import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
 
 @Component({
   selector: 'app-room-member',
   templateUrl: './room-member.component.html',
   styleUrls: ['./room-member.component.scss']
 })
-export class RoomMemberComponent implements OnInit {
+export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChildren('checkBox')
   public domCheckBox: QueryList<ProfileInRoomCheckboxComponent>;
@@ -27,10 +28,19 @@ export class RoomMemberComponent implements OnInit {
     private roomService: RoomService,
     public searchOptService: RoomMemberSearchOptionService,
     private dialog: MatDialog,
+    private scrollService: SideMenuScrollService,
   ) {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMembers, this.roomService.roomId));
+  }
+
+  ngOnDestroy() {
+    this.scrollService.saveScrollPos(byRoomId(ScrollIdRoomMembers, this.roomService.roomId));
   }
 
   public get room(): Room {

@@ -29,8 +29,8 @@
 </div>
 <mat-divider></mat-divider>
 <div class='list'>
-  <app-list-any width='100%' heightList='300px' caption='入室中' [disableMore]='true' (clickAll)='routeToRooms()'>
-    <div *ngFor='let room of roomsAgentIn()' [style.padding-bottom]="'13px'">
+  <app-list-any width='100%' heightList='100%' caption='入室中' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let room of roomsAgentIn()' (click)='routeToRoom(room)' [style.padding-bottom]="'13px'">
       <app-room-profile [room]='room'></app-room-profile>
     </div>
   </app-list-any>
