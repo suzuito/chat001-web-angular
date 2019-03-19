@@ -69,6 +69,8 @@ import { DialogRequesterComponent } from './parts/dialog-requester/dialog-reques
 import { RoomCreatorComponent } from './room-creator/room-creator.component';
 import { DialogIntroducerComponent } from './parts/dialog-introducer/dialog-introducer.component';
 import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +123,7 @@ import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
     RoomCreatorComponent,
     DialogIntroducerComponent,
     RoomEntranceComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -141,6 +144,7 @@ import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
     MatTabsModule,
     MatMenuModule,
     MatSelectModule,
+    HttpClientModule,
   ],
   providers: [
   ],

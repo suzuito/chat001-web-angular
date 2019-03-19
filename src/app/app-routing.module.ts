@@ -14,10 +14,15 @@ import { RoomCreatorComponent } from './room-creator/room-creator.component';
 import { RoomCandeactivateService } from './room/room-candeactivate.service';
 import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
 import { RoomEntranceResolverService } from './room-entrance/room-entrance-resolver.service';
+import { AppRootResolverService } from './app-root/app-root-resolver.service';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
     path: '', component: AppRootComponent,
+    resolve: {
+      doneInit: AppRootResolverService,
+    },
     children: [
       {
         path: '',
@@ -71,6 +76,10 @@ const routes: Routes = [
         ],
       },
     ],
+  },
+  {
+    path: 'error',
+    component: ErrorComponent,
   },
 ];
 

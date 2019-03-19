@@ -22,10 +22,10 @@ export class AppComponent {
     private dataService: DataService,
     private roomMessageService: RoomMessageService,
   ) {
-    setTestAgent(this.agentService);
+    // setTestAgent(this.agentService);
     setTestTemporaryAgents(this.dataService);
-    setTestRooms(this.dataService);
-    setTestAgentMessages(this.agentService);
-    setTestRoomMessages(this.roomMessageService, this.dataService);
+    // setTestRooms(this.dataService);
+    // setTestAgentMessages(this.agentService);
+    // setTestRoomMessages(this.roomMessageService, this.dataService);
   }
 }

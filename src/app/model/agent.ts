@@ -24,3 +24,8 @@ export interface RoomAgentIn {
   readonly createdAt: number;
   readonly updatedAt: number;
 }
+
+export interface RoomsAgentIn {
+  readonly nextCursor: string;
+  readonly rooms: RoomAgentIn[];
+}

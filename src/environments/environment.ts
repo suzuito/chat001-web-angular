@@ -1,10 +1,22 @@
+import { Environment } from './environment.oc-minilla';
+
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
+  production: false,
+  api: {
+    protocol: 'http',
+    hostname: '192.168.11.5',
+    port: 8085,
+  },
+  ws: {
+    protocol: 'wss',
+    hostname: '192.168.11.5',
+    port: 8086,
+  },
+} as Environment;
 
 /*
  * For easier debugging in development mode, you can import the following file
