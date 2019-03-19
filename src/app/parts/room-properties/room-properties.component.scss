@@ -1,7 +1,13 @@
+@import '../../common';
+
 .main {
   display: flex;
   flex-direction: row;
 
   align-items: center;
 
+}
+
+.padding {
+  padding-left: $padding-content;
 }

@@ -112,7 +112,7 @@ export function setTestAgentMessages(s: AgentService): void {
 }
 
 export function setTestRoomMessages(s: RoomMessageService, d: DataService): void {
-  const rooms = d.filterRoom(RoomSearchOptionNull);
+  const rooms = d.filterRoom(RoomSearchOptionNull, true);
   rooms.forEach((room: Room) => {
     const agents = d.getAgentsInRoom(room.id);
     for (let i = 0; i < agents.length; i++) {

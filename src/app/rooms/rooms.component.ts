@@ -4,6 +4,8 @@ import { RoomsSearchOptionService } from './rooms-search-option/rooms-search-opt
 import { DataService } from '../data.service';
 import { Room } from '../model/room';
 import { SideMenuScrollService, ScrollIdRooms } from '../side-menu/side-menu-scroll.service';
+import { RoomsService } from './rooms.service';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-rooms',
@@ -18,6 +20,8 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
     public searchOptService: RoomsSearchOptionService,
     public dataService: DataService,
     private scrollService: SideMenuScrollService,
+    private roomsService: RoomsService,
+    private appService: AppService,
   ) {
     this.isSearchOptionOpened = false;
   }
@@ -41,6 +45,10 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  public clickMore(): void {
+    this.roomsService.apiGetRooms();
+  }
+
   public iconExpander(): string {
     if (this.isSearchOptionOpened) {
       return 'expand_less';
@@ -49,7 +57,11 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public rooms(): Room[] {
-    return this.dataService.filterRoom(this.searchOptService);
+    return this.dataService.filterRoom(this.searchOptService, false);
+  }
+
+  public routeToRoom(room: Room): void {
+    this.appService.enterRoom(room);
   }
 
 }

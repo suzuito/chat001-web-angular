@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Room } from '../model/room';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomEntranceService {
 
-  public roomId: string;
+  public room: Room;
 
   constructor() {
-    this.roomId = null;
+    this.room = null;
   }
 }

@@ -31,6 +31,17 @@ export class AgentService {
     return this.agent;
   }
 
+  public getRoomAgentIn(roomId: string): RoomAgentIn {
+    if (this.roomsAgentIn.has(roomId)) {
+      return this.roomsAgentIn.get(roomId).data;
+    }
+    return null;
+  }
+
+  public isInRoom(roomId: string): boolean {
+    return this.roomsAgentIn.has(roomId);
+  }
+
   public setMessage(...msg: AgentMessage[]) {
     msg.forEach((v: AgentMessage) => {
       this.messages.set(v.id, v);

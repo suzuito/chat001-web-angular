@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DialogProfileComponent } from '../parts/dialog-profile/dialog-profile.component';
 import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
 import { SideMenuScrollService, ScrollIdTop } from '../side-menu/side-menu-scroll.service';
+import { AppService, CannotEnterRoomError, errCannotEnterRoomError } from '../app.service';
 
 @Component({
   selector: 'app-top',
@@ -24,6 +25,7 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private scrollService: SideMenuScrollService,
+    private appService: AppService,
   ) { }
 
   ngOnInit() {
@@ -45,8 +47,8 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['agents']);
   }
 
-  public routeToRoom(room: Room): void {
-    this.router.navigate(['room', room.id]);
+  public routeToRoom(room: Room) {
+    this.appService.enterRoom(room);
   }
 
   public openDialogProfile(agent: EasyAgent): void {
@@ -72,7 +74,7 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
       chkMembers: false,
       chkUnlocked: false,
       selectedOrderId: RoomOrderId.Newed,
-    });
+    }, false);
   }
 
   public roomsPopulated(): Room[] {
@@ -82,7 +84,7 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
       chkCanEnter: false,
       chkMembers: false,
       chkUnlocked: false,
-      selectedOrderId: RoomOrderId.Popular,
-    });
+      selectedOrderId: RoomOrderId.Newed,
+    }, false);
   }
 }

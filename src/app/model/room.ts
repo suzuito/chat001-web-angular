@@ -1,4 +1,6 @@
-import { EasyAgent } from './agent';
+import { EasyAgent, RoomAgentIn } from './agent';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { RoomMessage } from './room_message';
 
 export enum RoomStatus {
   Deactivate = 1,
@@ -51,4 +53,16 @@ export interface AgentInRoom {
   readonly updatedAt: number;
   readonly deletedAt: number;
   readonly agent: EasyAgent;
+}
+
+export interface Rooms {
+  readonly nextCursor: string;
+  readonly rooms: Room[];
+}
+
+export interface EnterRoom {
+  room: Room;
+  agentInRoom: AgentInRoom;
+  roomAgentIn: RoomAgentIn;
+  message: RoomMessage;
 }

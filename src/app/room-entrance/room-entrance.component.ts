@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { RoomEntranceService } from './room-entrance.service';
 import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from '../side-menu/side-menu-scroll.service';
 import { Scroll } from '@angular/router';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-room-entrance',
@@ -13,8 +14,8 @@ import { Scroll } from '@angular/router';
 export class RoomEntranceComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
-    private dataService: DataService,
     private roomEntService: RoomEntranceService,
+    private appService: AppService,
     private scrollService: SideMenuScrollService,
   ) { }
 
@@ -22,16 +23,18 @@ export class RoomEntranceComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.scrollService.saveScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.roomId));
+    this.scrollService.saveScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.room.id));
   }
 
   ngAfterViewInit() {
-    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.roomId), false);
+    this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMembers, this.roomEntService.room.id), false);
   }
 
   public get room(): Room {
-    return this.dataService.getRoomRaw(this.roomEntService.roomId);
+    return this.roomEntService.room;
   }
 
-  public enterRoom(): void { }
+  public enterRoom(): void {
+    this.appService.enterRoom(this.roomEntService.room);
+  }
 }

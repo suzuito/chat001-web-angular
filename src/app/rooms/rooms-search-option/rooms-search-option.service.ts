@@ -2,8 +2,13 @@ import { Injectable } from '@angular/core';
 
 export enum OrderId {
   Newed = 0,
-  Popular,
-  Entrant,
+}
+
+export function orderIdToQuery(id: OrderId): string {
+  switch (id) {
+    case OrderId.Newed:
+      return '1';
+  }
 }
 
 export interface Order {
@@ -47,8 +52,8 @@ export class RoomsSearchOptionService implements RoomsSearchOption {
   constructor() {
     this.selectOrder = [
       { id: OrderId.Newed, name: '新着順' },
-      { id: OrderId.Popular, name: '人気順' },
-      { id: OrderId.Entrant, name: '入室者順' },
+      // { id: OrderId.Popular, name: '人気順' },
+      // { id: OrderId.Entrant, name: '入室者順' },
     ];
     this.selectedOrderId = this.selectOrder[0].id;
     this.chkCanEnter = false;

@@ -71,8 +71,13 @@ export class DataService {
     });
   }
 
-  public filterRoom(opt: RoomsSearchOption): Room[] {
+  public filterRoom(opt: RoomsSearchOption, includePrivate: boolean): Room[] {
     return this.rooms.findRaw((room: DataWrapper<Room>): boolean => {
+      if (!includePrivate) {
+        if (!room.data.public) {
+          return false;
+        }
+      }
       if (opt.txtWord) {
         if (new RegExp(opt.txtWord).test(room.data.name) === false) {
           return false;
@@ -98,10 +103,10 @@ export class DataService {
       switch (opt.selectedOrderId) {
         case RoomOrderId.Newed:
           return b.createdAt - a.createdAt;
-        case RoomOrderId.Entrant:
-          return b.agents - a.agents;
-        case RoomOrderId.Popular:
-          return b.agents - a.agents;
+        // case RoomOrderId.Entrant:
+        //   return b.agents - a.agents;
+        // case RoomOrderId.Popular:
+        //   return b.agents - a.agents;
       }
       return b.createdAt - a.createdAt;
     });
