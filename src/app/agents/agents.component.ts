@@ -29,7 +29,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataService.filterTemporaryAgent(this.opt);
+    return this.dataService.filterAgent(this.opt);
   }
 
 }

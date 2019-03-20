@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataStore, DataStores, DataWrapper } from './data.store';
 import { Room, AgentInRoom } from './model/room';
-import { Agent, EasyAgent, TemporaryAgent } from './model/agent';
+import { Agent, EasyAgent } from './model/agent';
 import { OrderId as RoomOrderId, RoomsSearchOption } from './rooms/rooms-search-option/rooms-search-option.service';
 import { OrderId as AgentOrderId, AgentsSearchOption } from './agents/agents-search-option.service';
 
@@ -12,11 +12,11 @@ export class DataService {
 
   private rooms: DataStore<Room>;
   private agentsInRoom: DataStores<AgentInRoom>;
-  private temporaryAgents: DataStore<TemporaryAgent>;
+  private agents: DataStore<EasyAgent>;
 
   constructor() {
     this.rooms = new DataStore<Room>();
-    this.temporaryAgents = new DataStore<TemporaryAgent>();
+    this.agents = new DataStore<EasyAgent>();
     this.agentsInRoom = new DataStores<AgentInRoom>();
   }
 
@@ -47,19 +47,19 @@ export class DataService {
   }
 
   public setAgentInRoom(roomId: string, agent: AgentInRoom): void {
-    this.agentsInRoom.set(roomId, agent.externalId, agent);
+    this.agentsInRoom.set(roomId, agent.agent.externalId, agent);
   }
 
   public setRoom(...rooms: Room[]): void {
     rooms.forEach((r: Room) => this.rooms.set(r.id, r));
   }
 
-  public setTemporaryAgent(...agents: TemporaryAgent[]): void {
-    agents.forEach((a: TemporaryAgent) => this.temporaryAgents.set(a.id, a));
+  public setAgent(...agents: EasyAgent[]): void {
+    agents.forEach((a: EasyAgent) => this.agents.set(a.externalId, a));
   }
 
-  public filterTemporaryAgent(opt: AgentsSearchOption): EasyAgent[] {
-    return this.temporaryAgents.findRaw((agent: DataWrapper<Agent>) => {
+  public filterAgent(opt: AgentsSearchOption): EasyAgent[] {
+    return this.agents.findRaw((agent: DataWrapper<Agent>) => {
       if (opt.txtWord) {
         if (new RegExp(opt.txtWord).test(agent.data.name) === false) {
           return false;

@@ -5,8 +5,8 @@ import {
   setTestRooms,
   setTestAgentMessages,
   setTestRoomMessages,
-  setTestTemporaryAgents,
   setTestAgent,
+  setTestAgents,
 } from './model/testdata';
 import { RoomMessageService } from './room-message.service';
 
@@ -23,7 +23,7 @@ export class AppComponent {
     private roomMessageService: RoomMessageService,
   ) {
     // setTestAgent(this.agentService);
-    setTestTemporaryAgents(this.dataService);
+    setTestAgents(this.dataService);
     // setTestRooms(this.dataService);
     // setTestAgentMessages(this.agentService);
     // setTestRoomMessages(this.roomMessageService, this.dataService);

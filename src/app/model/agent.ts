@@ -5,13 +5,9 @@ export interface Agent extends EasyAgent {
   readonly maxOwnedRoom: number;
 }
 
-export interface TemporaryAgent extends EasyAgent {
-  readonly id: string;
-}
-
 export interface EasyAgent {
   readonly name: string;
-  readonly color: string;
+  readonly externalId: string;
   readonly description: string;
   readonly updatedAt: number;
   readonly urlImage: string;
@@ -19,7 +15,6 @@ export interface EasyAgent {
 
 export interface RoomAgentIn {
   readonly room: Room;
-  readonly externalId: string;
   readonly role: AgentRoleInRoom;
   readonly createdAt: number;
   readonly updatedAt: number;
