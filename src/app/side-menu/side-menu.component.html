@@ -1,0 +1,45 @@
+<div class='profile'>
+  <mat-card>
+    <app-profile-text-all-with-icon linesDescription='5' padding='5px' displayEditButton='true' [agent]='agent()'>
+    </app-profile-text-all-with-icon>
+    <mat-card-actions>
+      <button mat-button color='primary' (click)='openEditProfile()'>編集する</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class='recomends'>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>search</mat-icon>
+      <h4 mat-line>部屋の検索</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>autorenew</mat-icon>
+      <h4 mat-line>新着順</h4>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>whatshot</mat-icon>
+      <h4 mat-line>人気順</h4>
+    </mat-list-item>
+    <mat-list-item (click)='routeToRoomCreator()'>
+      <mat-icon mat-list-icon>add</mat-icon>
+      <h4 mat-line>部屋の作成</h4>
+    </mat-list-item>
+  </mat-list>
+</div>
+<mat-divider></mat-divider>
+<div class='list'>
+  <app-list-any width='100%' heightList='100%' caption='入室中' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let room of roomsAgentIn()' (click)='routeToRoom(room)' [style.padding-bottom]="'13px'">
+      <app-room-profile [room]='room'></app-room-profile>
+    </div>
+  </app-list-any>
+</div>
+<div class='extra'>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>feedback</mat-icon>
+      <h4 mat-line>フィードバック</h4>
+    </mat-list-item>
+  </mat-list>
+</div>

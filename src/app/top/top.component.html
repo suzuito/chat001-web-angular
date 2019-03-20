@@ -1,0 +1,22 @@
+<mat-card>
+  <app-list-any width='100%' heightList='300px' caption='アクティブユーザー' [disableMore]='true' (clickAll)='routeToAgents()'>
+    <div *ngFor='let agent of agents()' [style.padding-bottom]="'13px'">
+      <app-profile-text-all-with-icon2 [agent]='agent' icon='message' (clickProfile)='openDialogProfile(agent)'
+        (clickIconButton)='openDialogRequester(agent)'>
+      </app-profile-text-all-with-icon2>
+    </div>
+  </app-list-any>
+  <mat-divider></mat-divider>
+  <app-list-any width='100%' heightList='300px' caption='新着順' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let room of roomsNewed()' [style.padding-bottom]="'13px'" (click)='routeToRoom(room)'>
+      <app-room-profile [room]='room'></app-room-profile>
+    </div>
+  </app-list-any>
+  <mat-divider></mat-divider>
+  <app-list-any width='100%' heightList='300px' caption='人気順' [disableMore]='true' (clickAll)='routeToRooms()'>
+    <div *ngFor='let room of roomsPopulated()' [style.padding-bottom]="'13px'" (click)='routeToRoom(room)'>
+      <app-room-profile [room]='room'></app-room-profile>
+    </div>
+  </app-list-any>
+  <mat-divider></mat-divider>
+</mat-card>

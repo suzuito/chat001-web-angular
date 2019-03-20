@@ -1,0 +1,7 @@
+<div class='main'>
+  <div *ngFor='let message of messages'>
+    <app-list-room-message-each [message]='message' [agent]='agent(message.agentExternalId)'>
+    </app-list-room-message-each>
+    <mat-divider></mat-divider>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+@import '../../common';
+
+// * { border: 1px solid red; }
+
+.name {
+  width: 100%;
+}
+
+.description {
+  width: 100%;
+}
+
+mat-card-actions {
+  text-align: right;
+}
+
+.random-inputter {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.random-inputter-text {
+  width: 100%;
+}
+
+.max-agents-radio-buttons {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+mat-radio-button {
+  padding-top: $padding-content / 2;
+  padding-bottom: $padding-content / 2;
+}
+
+.padding {
+  height: $padding-content;
+}

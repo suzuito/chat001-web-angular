@@ -1,0 +1,42 @@
+@import '../../common';
+// * { border: 1px solid red; }
+
+.main {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.inputter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: row;
+  z-index: 4;
+}
+
+.padding {
+  height: 60px;
+}
+
+.inputter-form {
+  width: 90%;
+}
+
+.inputter-input {
+  width: 100%;
+}
+
+.ops {
+  position: fixed;
+
+  top: $padding-content + $height-header;
+  right: $padding-content;
+}
+
+.padding-ops-buttons {
+  height: 10px;
+}

@@ -1,0 +1,10 @@
+<app-searcher [icon]='iconExpander()' (clickExpand)='clickExpand()' [(txt)]='searchOptService.txtWord'></app-searcher>
+<app-rooms-search-option *ngIf='isSearchOptionOpened'></app-rooms-search-option>
+<div class='list'>
+  <app-list-any width='100%' heightList='100%' caption='新着順' (clickMore)='clickMore()' [disableMore]='false'
+    [disableHeader]='true'>
+    <div *ngFor='let room of rooms()' [style.padding-bottom]="'13px'">
+      <app-room-profile [room]='room' (click)='routeToRoom(room)'></app-room-profile>
+    </div>
+  </app-list-any>
+</div>

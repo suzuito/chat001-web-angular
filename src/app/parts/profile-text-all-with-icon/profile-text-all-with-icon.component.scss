@@ -1,0 +1,30 @@
+// * { border: 1px solid red; }
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+
+  margin: 0px;
+  padding: 0px;
+
+  // background: yellow; // debug
+}
+
+.left {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+app-profile-text-all{
+  margin: 0px;
+}

@@ -1,0 +1,14 @@
+<div class='row' (click)='clickRoom.emit(room)'>
+  <div class='name mat-title'>{{room.name}}</div>
+  <div class='description mat-body-2'>{{room.description}}</div>
+  <div class='property'>
+    <div class='mat-body-2'>作成日: {{room.createdAt | datetimeString:true}}</div>
+    <div class='padding'></div>
+    <div class='mat-body-2'>{{room.agents}}/{{room.maxAgents}}人</div>
+    <div class='padding'></div>
+    <div>
+      <mat-icon>{{iconPublic()}}</mat-icon>
+      <mat-icon>{{iconPassword()}}</mat-icon>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class='main'>
+  <div>
+    <mat-form-field class="example-full-width">
+      <input type="text" matInput (input)='change()' [(ngModel)]='txt'>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div *ngIf='icon'>
+    <button mat-icon-button (click)='clickExpand.emit()'>
+      <mat-icon>{{icon}}</mat-icon>
+    </button>
+  </div>
+</div>

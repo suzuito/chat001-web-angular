@@ -1,0 +1,29 @@
+// * { border: 1px solid red; }
+
+.name {
+  margin-bottom: 0px;
+  font-weight: normal;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description {
+  font-weight: normal;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.property {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+
+.padding {
+  padding: 10px;
+}

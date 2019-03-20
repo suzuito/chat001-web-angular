@@ -1,0 +1,15 @@
+// * {border: 1px solid red;}
+
+.main {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0px;
+  padding: 0px;
+
+  // background: yellow; // debug
+}
+
+.profile {
+  width: 100%;
+}

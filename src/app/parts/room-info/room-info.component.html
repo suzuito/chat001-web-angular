@@ -1,0 +1,81 @@
+<div class='main'>
+  <mat-card>
+    <div class='random-inputter'>
+      <div class='random-inputter-text'>
+        <mat-form-field class='name'>
+          <input type='text' matInput [(ngModel)]='info.name' placeholder='名前' [readonly]='!changable' />
+          <mat-hint>{{lengthName()}} / {{maxLengthName}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-icon-button>
+          <mat-icon (click)='renameAtRandom()'>replay</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class='padding'></div>
+    <mat-card-content>
+      <div class='random-inputter'>
+        <div class='random-inputter-text'>
+          <mat-form-field class='description'>
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows='1' cdkAutosizeMaxRows='10' placeholder='一言メッセージ'
+              [(ngModel)]='info.description' [readonly]='!changable'>
+            </textarea>
+          </mat-form-field>
+          <mat-hint>{{lengthDescription()}} / {{maxLengthDescription}}</mat-hint>
+        </div>
+        <div>
+          <button mat-icon-button>
+            <mat-icon (click)='redescriptionAtRandom()'>replay</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class='padding'></div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class='padding'></div>
+      <div class='mat-caption'>最大人数</div>
+      <div class='padding'></div>
+      <div>
+        <mat-radio-group (input)='changeMaxAgentsSelector()' [(ngModel)]="selectedMaxAgents"
+          class='max-agents-radio-buttons'>
+          <mat-radio-button *ngFor='let ma of recomendMaxAgents' [value]='ma'>{{ma}}人</mat-radio-button>
+          <mat-radio-button [value]='5'>その他</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div *ngIf='selectedMaxAgents > 4'>
+        <mat-form-field class='maxAgents'>
+          <mat-select [(ngModel)]='selectedMaxAgents' (selectionChange)='changeMaxAgentsSelector()'>
+            <mat-option *ngFor='let ma of allMaxAgents' [value]='ma'>{{ma}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-hint>最大で{{maxMaxAgents}}人</mat-hint>
+      </div>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <div class='padding'></div>
+    <mat-card-content>
+      <div class='padding'></div>
+      <div>
+        <app-checkbox-with-icon textOn='パスワードあり' textOff='パスワードなし' iconOn='lock' iconOff='lock_open'
+          paddingBetween='5px' [(checked)]='info.password' [disabled]='!changable'>
+        </app-checkbox-with-icon>
+        <div *ngIf='info.password'>
+          <mat-form-field>
+            <input type='password' matInput placeholder='パスワード' [(ngModel)]='info.passwordRaw'
+              [readonly]='!changable' />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class='padding'></div>
+      <div>
+        <app-checkbox-with-icon textOn='公開' textOff='非公開' iconOn='public' iconOff='vpn_lock' paddingBetween='5px'
+          [(checked)]='info.public' [disabled]='!changable'></app-checkbox-with-icon>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color='primary' (click)='save()' [disabled]='!isChanged()'>{{textDoneButton}}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

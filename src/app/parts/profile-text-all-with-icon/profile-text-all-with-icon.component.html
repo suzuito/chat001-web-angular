@@ -1,0 +1,10 @@
+<div class='main' [style.width]='width' #mainBox>
+  <div class='left' #leftBox>
+    <app-profile-img [src]='agent.urlImage' [mode]='small'></app-profile-img>
+  </div>
+  <div class='right' #rightBox>
+    <app-profile-text-all [nameOnly]='nameOnly' [agentName]='agent.name' [agentDescription]='agent.description'
+      [linesDescription]='linesDescription' [width]='width'>
+    </app-profile-text-all>
+  </div>
+</div>

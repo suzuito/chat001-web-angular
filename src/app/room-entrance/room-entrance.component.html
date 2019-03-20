@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-content>
+    <div appRoomName [oneLine]='false'>{{room.name}}</div>
+    <div appRoomDescription [linesDescription]='5'>{{room.description}}</div>
+    <app-room-properties [room]='room'></app-room-properties>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color='primary' (click)='enterRoom()'>入室する</button>
+  </mat-card-actions>
+</mat-card>

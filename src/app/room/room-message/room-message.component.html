@@ -1,0 +1,24 @@
+<div class='main'>
+  <app-list-room-message [roomId]='room.id' [messages]='messages()' [dataService]='dataService'>
+  </app-list-room-message>
+</div>
+<div class='padding'></div>
+<mat-toolbar class='inputter' color='primary' #inputterToolbar>
+  <div class='inputter-form'>
+    <mat-form-field class='inputter-input'>
+      <input type="text" [(ngModel)]='message' matInput [style.font-size]="'15px'" (keyup)='inputMessage($event)'>
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-icon-button>
+      <mat-icon>photo</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<div class='ops'>
+  <div>
+    <button mat-fab color='primary' (click)='exitRoom()'>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>

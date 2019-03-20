@@ -1,0 +1,8 @@
+// * { border: 1px solid red; }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
