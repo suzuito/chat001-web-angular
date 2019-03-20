@@ -20,20 +20,8 @@ export class RoomEntranceResolverService implements Resolve<boolean> {
 
   public async resolve(
     route: ActivatedRouteSnapshot,
-  ): Promise<boolean> {
-    const roomId = route.params.roomId;
-    // TODO: Rewrite logic into appService method
-    if (!this.dataService.hasRoom(roomId)) {
-      return this.appService.apiGetRoom(roomId).then((room: Room) => {
-        this.roomEntService.room = room;
-        return true;
-      }).catch((err: HttpErrorResponse) => {
-        this.router.navigate(['error']);
-        return false;
-      });
-    }
-    this.roomEntService.room = this.dataService.getRoomRaw(roomId);
-    return true;
+  ): Promise<any> {
+    return this.roomEntService.routeToRoom(route.params.roomId);
   }
 
 }

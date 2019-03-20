@@ -74,6 +74,10 @@ export class AgentService {
     });
   }
 
+  public deleteRoom(roomId: string): void {
+    this.roomsAgentIn.delete(roomId);
+  }
+
   public filterRoom(): RoomAgentIn[] {
     return this.roomsAgentIn.findRaw((d: DataWrapper<RoomAgentIn>): boolean => {
       return true;

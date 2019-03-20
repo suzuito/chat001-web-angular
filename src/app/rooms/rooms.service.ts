@@ -14,6 +14,7 @@ export class RoomsService {
 
   constructor(
     private appService: AppService,
+    private apiService: ApiService,
     private roomsSeartchOpt: RoomsSearchOptionService,
   ) {
     this.nextCursor = '';

@@ -72,6 +72,7 @@ import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
+import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confirmer.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { DialogPasswordInputterComponent } from './parts/dialog-password-inputte
     RoomEntranceComponent,
     ErrorComponent,
     DialogPasswordInputterComponent,
+    DialogConfirmerComponent,
   ],
   imports: [
     BrowserModule,
@@ -157,6 +159,7 @@ import { DialogPasswordInputterComponent } from './parts/dialog-password-inputte
     DialogRequesterComponent,
     DialogIntroducerComponent,
     DialogPasswordInputterComponent,
+    DialogConfirmerComponent,
   ],
   bootstrap: [AppComponent]
 })

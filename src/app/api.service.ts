@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Init } from './model/other';
-import { Rooms, Room, EnterRoom } from './model/room';
+import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom } from './model/room';
 import { RoomAgentIn } from './model/agent';
+import { RoomMessage, Messages } from './model/room_message';
 
 class OptBuilder {
   private o: any;
@@ -103,6 +104,39 @@ export class ApiService {
       url(`/api/rooms/${roomId}/enter`),
       { password },
       new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async putExitRoom(atoken: string, roomId: string): Promise<ExitRoom> {
+    return this.http.put<ExitRoom>(
+      url(`/api/rooms/${roomId}/exit`), null, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async putRoomsMessages(atoken: string, roomId: string, body: string): Promise<RoomMessage> {
+    return this.http.put<RoomMessage>(
+      url(`/api/rooms/${roomId}/messages`), body, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async getRoomMember(atoken: string, roomId: string, externalId: string): Promise<AgentInRoom> {
+    return this.http.get<AgentInRoom>(
+      url(`/api/rooms/${roomId}/members/${externalId}`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async getRoomMessages(atoken: string, roomId: string, nextCursor: string = '', limits: number = -1): Promise<Messages> {
+    let p = `/api/rooms/${roomId}/messages`;
+    const builder = new OptBuilder();
+    builder.atoken(atoken).jsonResponseBody();
+    if (nextCursor !== '') {
+      builder.nextCursor(nextCursor);
+    }
+    if (limits !== -1) {
+      p += `?limits=${limits}`;
+    }
+    return this.http.get<Messages>(
+      url(p), builder.gen(),
     ).toPromise().then((res: any) => res);
   }
 

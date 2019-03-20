@@ -54,9 +54,9 @@
 </head>
 
 <body>
-  <h1>Internal Server Error</h1>
-  <p>Sorry, but service is down.</p>
-  <a href='/'>Reload</a>
+  <h1>{{title()}}</h1>
+  <p>{{body()}}</p>
+  <a [href]='reloadURL()'>{{reload()}}</a>
 </body>
 
 </html>

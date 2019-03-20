@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DialogProfileComponent } from '../parts/dialog-profile/dialog-profile.component';
 import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
 import { SideMenuScrollService, ScrollIdTop } from '../side-menu/side-menu-scroll.service';
-import { AppService, CannotEnterRoomError, errCannotEnterRoomError } from '../app.service';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-top',

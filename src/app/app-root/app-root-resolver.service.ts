@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router, Resolve } from '@angular/router';
+import { ErrorService } from '../error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,16 +9,15 @@ import { Router, Resolve } from '@angular/router';
 export class AppRootResolverService implements Resolve<boolean> {
 
   constructor(
-    private app: AppService,
-    private router: Router,
+    private appService: AppService,
+    private errService: ErrorService,
   ) { }
 
   public async resolve(): Promise<boolean> {
-    return this.app.initialize().then(() => {
+    return this.appService.initialize().then(() => {
       return true;
     }).catch((err) => {
-      console.error(err);
-      this.router.navigate(['error']);
+      this.errService.errp5XX();
       return false;
     });
   }

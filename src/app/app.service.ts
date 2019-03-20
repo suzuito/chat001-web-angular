@@ -5,15 +5,11 @@ import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init } from './model/other';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RoomAgentIn } from './model/agent';
-import { Rooms, Room, EnterRoom } from './model/room';
+import { Rooms, Room, EnterRoom, ExitRoom } from './model/room';
 import { DataService } from './data.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
-
-export class CannotEnterRoomError extends Error {
-  public name = 'CannotEnterRoomError';
-}
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -94,7 +90,19 @@ export class AppService {
       this.agentService.setRoom(enterRoom.roomAgentIn);
       this.router.navigate(['room', room.id]);
       return;
-    }).catch((err: HttpErrorResponse) => {
+    }).catch(err => {
+      // TODO: Notice error message
+    });
+  }
+
+  public async exitRoom(roomId: string): Promise<void> {
+    this.apiService.putExitRoom(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+    ).then((exitRoom: ExitRoom) => {
+      this.agentService.deleteRoom(roomId);
+      this.router.navigate(['']);
+    }).catch(err => {
       // TODO: Notice error message
     });
   }

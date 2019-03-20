@@ -66,3 +66,10 @@ export interface EnterRoom {
   roomAgentIn: RoomAgentIn;
   message: RoomMessage;
 }
+
+export interface ExitRoom {
+  room: Room;
+  agentInRoom: AgentInRoom;
+  roomAgentIn: RoomAgentIn;
+  message: RoomMessage;
+}

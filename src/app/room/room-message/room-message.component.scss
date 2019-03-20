@@ -1,3 +1,4 @@
+@import '../../common';
 // * { border: 1px solid red; }
 
 .main {
@@ -27,4 +28,15 @@
 
 .inputter-input {
   width: 100%;
+}
+
+.ops {
+  position: fixed;
+
+  top: $padding-content + $height-header;
+  right: $padding-content;
+}
+
+.padding-ops-buttons {
+  height: 10px;
 }

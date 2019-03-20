@@ -37,6 +37,20 @@ export class ListRoomMessageEachComponent implements OnInit {
   ngOnInit() {
   }
 
+  public agentName(): string {
+    if (this.agent) {
+      return this.agent.agent.name;
+    }
+    return '';
+  }
+
+  public agentURLImage(): string {
+    if (this.agent) {
+      return this.agent.agent.urlImage;
+    }
+    return '';
+  }
+
   public flexDirectionMain(): string {
     if (this.isLeft) {
       return 'row';

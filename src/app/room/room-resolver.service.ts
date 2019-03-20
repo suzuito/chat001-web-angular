@@ -22,23 +22,7 @@ export class RoomResolverService implements Resolve<boolean> {
 
   public async resolve(
     route: ActivatedRouteSnapshot,
-  ): Promise<boolean> {
-    const roomId = route.params.roomId;
-    // TODO: Rewrite logic into appService method
-    if (!this.agentService.isInRoom(roomId)) {
-      return this.appService.apiGetAgentRoomByID(roomId).then((r: RoomAgentIn) => {
-        this.roomService.roomId = r.room.id;
-        return true;
-      }).catch((err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          this.router.navigate(['room-entrance', roomId]);
-        } else {
-          this.router.navigate(['error']);
-        }
-        return false;
-      });
-    }
-    this.roomService.roomId = route.params.roomId;
-    return true;
+  ): Promise<any> {
+    return this.roomService.routeToRoom(route.params.roomId);
   }
 }

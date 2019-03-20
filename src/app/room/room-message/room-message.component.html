@@ -6,7 +6,7 @@
 <mat-toolbar class='inputter' color='primary' #inputterToolbar>
   <div class='inputter-form'>
     <mat-form-field class='inputter-input'>
-      <input type="text" matInput [style.font-size]="'15px'">
+      <input type="text" [(ngModel)]='message' matInput [style.font-size]="'15px'" (keyup)='inputMessage($event)'>
     </mat-form-field>
   </div>
   <div>
@@ -15,3 +15,10 @@
     </button>
   </div>
 </mat-toolbar>
+<div class='ops'>
+  <div>
+    <button mat-fab color='primary' (click)='exitRoom()'>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</div>

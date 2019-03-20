@@ -3,7 +3,7 @@ import { SortedArray } from './data.store';
 import { Message } from './model/room_message';
 
 function comp(a: Message, b: Message): number {
-  return b.createdAt - a.createdAt;
+  return a.createdAt - b.createdAt;
 }
 
 @Injectable({
@@ -24,10 +24,10 @@ export class RoomMessageService {
     return new SortedArray<Message>(comp);
   }
 
-  public pushMessage(roomId: string, msg: Message): void {
+  public pushMessage(roomId: string, ...msg: Message[]): void {
     if (!this.messages.has(roomId)) {
       this.messages.set(roomId, new SortedArray<Message>(comp));
     }
-    this.messages.get(roomId).push(msg);
+    this.messages.get(roomId).push(...msg);
   }
 }
