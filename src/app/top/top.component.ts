@@ -60,7 +60,7 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataService.filterTemporaryAgent({
+    return this.dataService.filterAgent({
       txtWord: '',
       selectedOrderId: AgentOrderId.Updated,
     });

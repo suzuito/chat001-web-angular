@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import { Room, AgentInRoom } from '../model/room';
+import { Room, AgentInRoom, newEmptyAgentInRoom } from '../model/room';
 import { EventEmitter } from 'events';
 import { AgentService } from '../agent.service';
 import { ApiService } from '../api.service';
@@ -129,17 +129,27 @@ export class RoomService {
   }
 
   public async getUnknownAgentProfile(messages: Message[]) {
+    const extIDs: string[] = [];
     messages.forEach((message: Message) => {
-      if (this.dataService.hasAgentInRoom(this.roomId, message.agentExternalId)) {
+      if (extIDs.find((v: string) => v === message.agentExternalId)) {
+        return;
+      }
+      extIDs.push(message.agentExternalId);
+    });
+    extIDs.forEach((extID: string) => {
+      if (this.dataService.hasAgentInRoom(this.roomId, extID)) {
         return;
       }
       this.apiService.getRoomMember(
         this.localStorageService.get(LocalStorageKey.A),
-        this.roomId, message.agentExternalId,
+        this.roomId, extID,
       ).then((v: AgentInRoom) => {
         this.dataService.setAgentInRoom(this.roomId, v);
+      }).catch((err: HttpErrorResponse) => {
+        if (err.status === 404) {
+          this.dataService.setAgentInRoom(this.roomId, newEmptyAgentInRoom(extID));
+        }
       });
     });
   }
-
 }

@@ -1,5 +1,4 @@
 import { EasyAgent, RoomAgentIn } from './agent';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { RoomMessage } from './room_message';
 
 export enum RoomStatus {
@@ -47,12 +46,27 @@ export enum AgentRoleInRoom {
 }
 
 export interface AgentInRoom {
-  readonly externalId: string;
   readonly role: AgentRoleInRoom;
   readonly createdAt: number;
   readonly updatedAt: number;
   readonly deletedAt: number;
   readonly agent: EasyAgent;
+}
+
+export function newEmptyAgentInRoom(externalId: string): AgentInRoom {
+  return {
+    role: AgentRoleInRoom.Member,
+    createdAt: 0,
+    updatedAt: 0,
+    deletedAt: 0,
+    agent: {
+      externalId,
+      name: externalId,
+      urlImage: null,
+      updatedAt: 0,
+      description: '削除されたユーザー',
+    },
+  };
 }
 
 export interface Rooms {
