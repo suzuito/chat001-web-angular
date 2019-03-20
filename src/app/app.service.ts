@@ -101,6 +101,11 @@ export class AppService {
       roomId,
     ).then((exitRoom: ExitRoom) => {
       this.agentService.deleteRoom(roomId);
+      const roomsAgentIn = this.agentService.filterRoom();
+      if (roomsAgentIn.length > 0) {
+        this.router.navigate(['room', roomsAgentIn[0].room.id]);
+        return;
+      }
       this.router.navigate(['']);
     }).catch(err => {
       // TODO: Notice error message

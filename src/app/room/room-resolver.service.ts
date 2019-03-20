@@ -23,6 +23,7 @@ export class RoomResolverService implements Resolve<boolean> {
   public async resolve(
     route: ActivatedRouteSnapshot,
   ): Promise<any> {
-    return this.roomService.routeToRoom(route.params.roomId);
+    await this.roomService.routeToRoom(route.params.roomId);
+    await this.roomService.initializeRoomsMessages();
   }
 }

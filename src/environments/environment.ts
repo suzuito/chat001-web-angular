@@ -8,12 +8,12 @@ export const environment = {
   production: false,
   api: {
     protocol: 'http',
-    hostname: '172.16.113.139',
+    hostname: '192.168.11.5',
     port: 8085,
   },
   ws: {
     protocol: 'wss',
-    hostname: '172.16.113.139',
+    hostname: '192.168.11.5',
     port: 8086,
   },
 } as Environment;

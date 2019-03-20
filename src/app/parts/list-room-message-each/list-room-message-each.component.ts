@@ -41,7 +41,7 @@ export class ListRoomMessageEachComponent implements OnInit {
     if (this.agent) {
       return this.agent.agent.name;
     }
-    return '';
+    return '名無しのごんべえ';
   }
 
   public agentURLImage(): string {

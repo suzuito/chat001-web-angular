@@ -38,6 +38,10 @@ export class DataService {
     return this.agentsInRoom.get(roomId, externalId).data;
   }
 
+  public hasAgentInRoom(roomId: string, externalId: string): boolean {
+    return this.agentsInRoom.has(roomId, externalId);
+  }
+
   public getAgentsInRoom(roomId: string): AgentInRoom[] {
     return this.agentsInRoom.getParent(roomId).map((v: DataWrapper<AgentInRoom>) => v.data);
   }

@@ -9,7 +9,7 @@ import { RoomAgentIn } from '../model/agent';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ErrorService } from '../error.service';
-import { RoomMessage, Messages } from '../model/room_message';
+import { RoomMessage, Messages, Message } from '../model/room_message';
 import { RoomMessageService } from '../room-message.service';
 
 export enum RoomServiceEventType {
@@ -109,8 +109,10 @@ export class RoomService {
     this.cursors.set(roomId, cursor);
   }
 
-  public isInitializedRoomsMessages(): boolean {
-    return this.getCursor(this.roomId) !== '';
+  public async initializeRoomsMessages(): Promise<void> {
+    if (!this.cursors.has(this.roomId)) {
+      this.getRoomsMessages();
+    }
   }
 
   public async getRoomsMessages(): Promise<void> {
@@ -120,8 +122,23 @@ export class RoomService {
       this.getCursor(this.roomId),
       30,
     ).then((messages: Messages) => {
+      this.getUnknownAgentProfile(messages.messages);
       this.roomMessageService.pushMessage(this.roomId, ...messages.messages);
       this.setCursor(this.roomId, messages.nextCursor);
+    });
+  }
+
+  public async getUnknownAgentProfile(messages: Message[]) {
+    messages.forEach((message: Message) => {
+      if (this.dataService.hasAgentInRoom(this.roomId, message.agentExternalId)) {
+        return;
+      }
+      this.apiService.getRoomMember(
+        this.localStorageService.get(LocalStorageKey.A),
+        this.roomId, message.agentExternalId,
+      ).then((v: AgentInRoom) => {
+        this.dataService.setAgentInRoom(this.roomId, v);
+      });
     });
   }
 
