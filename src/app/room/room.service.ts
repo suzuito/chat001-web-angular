@@ -37,10 +37,8 @@ export class RoomService {
     private dataEasyAgentsService: DataEasyAgentsService,
     private agentService: AgentService,
     private appService: AppService,
-    private roomMessageService: RoomMessageService,
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
-    private errService: ErrorService,
     private router: Router,
   ) {
     this.roomId = null;
@@ -63,6 +61,8 @@ export class RoomService {
     const ret = this.dataAgentsInRoomService.getParent(this.roomId);
     const ret2 = ret.map(v => {
       return newAgentInRoom(v, this.dataEasyAgentsService.get(v.externalID));
+    }).filter(v => {
+      return v.agent.externalId !== this.agentService.get().externalId;
     });
     return ret2;
   }
@@ -87,6 +87,14 @@ export class RoomService {
     ).then((msg: RoomMessage) => {
       return;
     });
+  }
+
+  public async intr(agents: AgentInRoom[], room: Room): Promise<void> {
+    return this.apiService.postRoomByIDIntroduction(
+      this.localStorageService.get(LocalStorageKey.A),
+      room.id,
+      agents.map(v => v.agent.externalId),
+    );
   }
 
 }

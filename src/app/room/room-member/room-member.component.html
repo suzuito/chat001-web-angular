@@ -2,19 +2,17 @@
   <button mat-raised-button color='primary' [disabled]='disableButtonIntr()' (click)='intr()'>招待する</button>
 </div>
 <div class='list'>
-  <app-list-any width='100%' heightList='100%' [disableMore]='false' [disableHeader]='true' (clickAll)='routeToRooms()'>
-    <div class='list-each' *ngFor='let agentInRoom of getAgentsInRoom()' [style.padding-bottom]="'13px'">
-      <!--
-        <app-profile-in-room-checkbox [agentInRoom]='agentInRoom' #checkBox></app-profile-in-room-checkbox>
-      -->
-      <div class='list-each-profile' [style.width]="'100%'">
-        <app-profile-text-all-with-icon width='100%' [agent]='agentInRoom.agent' linesDescription='1'>
-        </app-profile-text-all-with-icon>
-      </div>
-      <div class='list-each-button'><button mat-stroked-button>{{role(agentInRoom)}}</button></div>
-      <div class='list-each-checkbox'>
-        <mat-checkbox [checked]='checkBox(agentInRoom)' (change)='changeCheckbox(agentInRoom)'></mat-checkbox>
-      </div>
+  <div class='list-each' *ngFor='let agentInRoom of getAgentsInRoom()' [style.padding-bottom]="'13px'">
+    <div class='list-each-profile' [style.width]="'100%'">
+      <app-profile-text-all-with-icon width='100%' [agent]='agentInRoom.agent' linesDescription='1'>
+      </app-profile-text-all-with-icon>
     </div>
-  </app-list-any>
+    <div class='list-each-button'><button mat-stroked-button>{{role(agentInRoom)}}</button></div>
+    <div class='list-each-checkbox'>
+      <mat-checkbox (click)='clickChecked(agentInRoom)' [checked]='checked(agentInRoom)'></mat-checkbox>
+    </div>
+  </div>
+  <div class='action'>
+    <button mat-button color='primary' (click)='clickMore()'>もっと読み込む...</button>
+  </div>
 </div>

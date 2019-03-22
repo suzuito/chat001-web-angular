@@ -15,10 +15,17 @@
 }
 
 .list-each-checkbox {
-  padding-left: $padding-content;
-  padding-right: $padding-content;
+  padding-left: $padding-content*2;
+  padding-right: $padding-content*2;
 }
 
 .ops {
   text-align: center;
+  padding: $padding-content;
+  height: $height-header * 2;
+}
+
+.action {
+  text-align: center;
+  width: 100%;
 }
