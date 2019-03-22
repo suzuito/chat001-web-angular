@@ -15,10 +15,10 @@ import { DataRoomsService } from '../data-rooms.service';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { DataEasyAgentsService } from '../data-easy-agents.service';
 
-export enum RoomServiceEventType {
-  RouteInfo = 'routeInfo',
-  RouteMessage = 'routeMessage',
-  RouteMember = 'routeMember',
+export enum CurrentRoomRoute {
+  Info = 'info',
+  Message = 'message',
+  Member = 'member',
 }
 
 @Injectable({
@@ -29,6 +29,7 @@ export class RoomService {
   public roomId: string;
   public roomNameMaxLength: number;
   public roomDescriptionMaxLength: number;
+  public currentRoomRoute: CurrentRoomRoute;
 
   constructor(
     private dataRoomsService: DataRoomsService,
@@ -45,6 +46,7 @@ export class RoomService {
     this.roomId = null;
     this.roomNameMaxLength = 16;
     this.roomDescriptionMaxLength = 200;
+    this.currentRoomRoute = CurrentRoomRoute.Info;
   }
 
   public get room(): Room {

@@ -26,7 +26,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TopComponent,
+        component: RoomsComponent,
       },
       {
         path: 'rooms',

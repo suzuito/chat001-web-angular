@@ -30,6 +30,14 @@ mat-sidenav-content {
   right: 0;
 }
 
-.padding-top {
+.opener {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 4;
+
+  padding: 0px;
+
+  width: 40px;
   height: $height-header;
 }

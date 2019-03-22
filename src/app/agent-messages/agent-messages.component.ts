@@ -3,6 +3,7 @@ import { AgentMessagesSearchOptionService } from './agent-messages-search-option
 import { AgentMessage } from '../model/agent_message';
 import { AgentService } from '../agent.service';
 import { SideMenuScrollService, ScrollIdAgentMessages } from '../side-menu/side-menu-scroll.service';
+import { Header001Service } from '../header001/header001.service';
 
 @Component({
   selector: 'app-agent-messages',
@@ -15,9 +16,11 @@ export class AgentMessagesComponent implements OnInit, AfterViewInit, OnDestroy 
     public agentService: AgentService,
     public opt: AgentMessagesSearchOptionService,
     private scrollService: SideMenuScrollService,
+    private header001Service: Header001Service,
   ) { }
 
   ngOnInit() {
+    this.header001Service.title = 'ダイレクトメッセージ';
   }
 
   ngAfterViewInit() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
 import { Room, AgentInRoom, AgentRoleInRoom } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
-import { RoomService } from '../room.service';
+import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomMemberSearchOptionService } from './room-member-search-option/room-member-search-option.service';
 import { MatDialog } from '@angular/material';
 import { DialogIntroducerComponent } from 'src/app/parts/dialog-introducer/dialog-introducer.component';
@@ -35,6 +35,7 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.roomService.currentRoomRoute = CurrentRoomRoute.Member;
     this.roomMemberFetcher.initialize(this.roomService.roomId);
   }
 

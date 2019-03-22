@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, OnDestroy, OnChanges, AfterViewChecked } from '@angular/core';
 import { Room } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
-import { RoomService } from '../room.service';
+import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomMessageService } from 'src/app/room-message.service';
 import { Message, Messages } from 'src/app/model/room_message';
 import { SideMenuScrollService, ScrollIdRoomMessages, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
@@ -37,6 +37,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   }
 
   ngOnInit() {
+    this.roomService.currentRoomRoute = CurrentRoomRoute.Message;
     this.route.params.subscribe((params: Params): void => {
       if (params.roomId) {
         this.roomMessageFetcher.initialize(params.roomId);

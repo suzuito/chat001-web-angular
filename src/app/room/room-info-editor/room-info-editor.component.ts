@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Room } from 'src/app/model/room';
-import { RoomService } from '../room.service';
+import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomInfo } from 'src/app/parts/room-info/room-info.component';
 import { MatDialog } from '@angular/material';
 import { PasswordInputterComponent } from 'src/app/parts/password-inputter/password-inputter.component';
@@ -20,6 +20,7 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit() {
+    this.roomService.currentRoomRoute = CurrentRoomRoute.Info;
   }
 
   ngAfterViewInit() {

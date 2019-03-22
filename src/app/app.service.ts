@@ -51,7 +51,7 @@ export class AppService {
         this.agentService.setRoom(roomAgentIn);
         this.dataEasyAgentsService.set(v.agent.id, v.agent);
       });
-      this.wsService.initialize(v.agent.id);
+      // this.wsService.initialize(v.agent.id);
     });
   }
 

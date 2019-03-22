@@ -1,10 +1,15 @@
-@import '../common';
+@import '../../common';
+@import '~@angular/material/theming';
 
 // * { border: 1px solid red; }
 
 mat-toolbar {
   height: $height-header;
   padding: $padding-header;
+
+  width: 100%;
+  @include mat-elevation(2);
+  z-index: 2;
 }
 
 .main {

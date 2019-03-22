@@ -54,6 +54,10 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     this.sidenav.close();
   }
 
+  public isOpened(): boolean {
+    return this.sidenav.opened;
+  }
+
   public routeToTop(): void {
     this.router.navigate(['']);
   }

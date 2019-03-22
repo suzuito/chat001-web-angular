@@ -8,6 +8,7 @@ import { AppRootService } from '../app-root/app-root.service';
 import { Room } from '../model/room';
 import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
+import { Header001Service } from '../header001/header001.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -23,6 +24,7 @@ export class SideMenuComponent implements OnInit {
     private appService: AppService,
     private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
+    private header001Service: Header001Service,
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,26 @@ export class SideMenuComponent implements OnInit {
 
   public routeToRoomCreator(): void {
     this.router.navigate(['room-creator']);
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToNewRooms(): void {
+    this.header001Service.routeToNewRooms();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToBoostRooms(): void {
+    this.header001Service.routeToBoostRooms();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToAgents(): void {
+    this.header001Service.routeToAgents();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToAgentMessages(): void {
+    this.header001Service.routeToAgentMessages();
     this.appRootService.closeSideNav();
   }
 

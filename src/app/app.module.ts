@@ -20,8 +20,6 @@ import {
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderMainComponent } from './header-main/header-main.component';
-import { HeaderSubMainComponent } from './header-sub-main/header-sub-main.component';
 import { ButtonIconComponent } from './parts/button-icon/button-icon.component';
 import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-all.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
@@ -71,12 +69,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confirmer.component';
+import { HeaderMainRoomComponent } from './parts/header-main-room/header-main-room.component';
+import { HeaderMainComponent } from './parts/header-main/header-main.component';
+import { HeaderMainSubComponent } from './parts/header-main-sub/header-main-sub.component';
+import { Header001Component } from './header001/header001.component';
+import { Header002Component } from './header002/header002.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderMainComponent,
-    HeaderSubMainComponent,
     ButtonIconComponent,
     ProfileTextAllComponent,
     SideMenuComponent,
@@ -98,6 +99,7 @@ import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confir
     AgentMessagesSearchOptionComponent,
     RoomComponent,
     RoomInfoComponent,
+    HeaderMainComponent,
     DatetimeStringPipe,
     RoomMemberComponent,
     RoomMessageComponent,
@@ -124,6 +126,10 @@ import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confir
     ErrorComponent,
     DialogPasswordInputterComponent,
     DialogConfirmerComponent,
+    HeaderMainRoomComponent,
+    HeaderMainSubComponent,
+    Header001Component,
+    Header002Component,
   ],
   imports: [
     BrowserModule,
