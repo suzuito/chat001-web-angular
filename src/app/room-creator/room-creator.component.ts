@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Room } from '../model/room';
 import { RoomInfo } from '../parts/room-info/room-info.component';
 import { SideMenuScrollService, ScrollIdRoomCreator } from '../side-menu/side-menu-scroll.service';
+import { AppService } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-room-creator',
@@ -12,6 +14,8 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private scrollService: SideMenuScrollService,
+    private appService: AppService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -26,7 +30,7 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public clickDoneRoomInfo(room: RoomInfo): void {
-    console.log(room);
+    this.appService.createRoom(room.name, room.description, room.maxAgents, room.public, room.passwordRaw);
   }
 
 }

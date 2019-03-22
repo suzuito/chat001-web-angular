@@ -1,16 +1,11 @@
-export interface DataWrapper<T> {
-  data: T;
-  updatedAt: number;
-}
-
 export class DataStore<T> {
-  private datas: Map<string, DataWrapper<T>>;
+  private datas: Map<string, T>;
 
   constructor() {
-    this.datas = new Map<string, DataWrapper<T>>();
+    this.datas = new Map<string, T>();
   }
 
-  public get(id: string): DataWrapper<T> {
+  public get(id: string): T {
     return this.datas.get(id);
   }
 
@@ -18,9 +13,9 @@ export class DataStore<T> {
     return this.datas.has(id);
   }
 
-  public find(callback: (d: DataWrapper<T>) => boolean): DataWrapper<T>[] {
+  public find(callback: (d: T) => boolean): T[] {
     const ret: any[] = [];
-    this.datas.forEach((value: DataWrapper<T>, _: string) => {
+    this.datas.forEach((value: T, _: string) => {
       if (callback(value)) {
         ret.push(value);
       }
@@ -28,16 +23,8 @@ export class DataStore<T> {
     return ret;
   }
 
-  public findRaw(callback: (d: DataWrapper<T>) => boolean): T[] {
-    return this.find(callback).map((v: DataWrapper<T>) => v.data);
-  }
-
-  public set(id: string, d: any): void {
-    const dataWrapper: DataWrapper<T> = {
-      updatedAt: Date.now() / 1000,
-      data: d,
-    };
-    this.datas.set(id, dataWrapper);
+  public set(id: string, d: T): void {
+    this.datas.set(id, d);
   }
 
   public delete(id: string): boolean {
@@ -56,7 +43,7 @@ export class DataStores<T> {
     this.datas = new Map<string, DataStore<T>>();
   }
 
-  public get(pid: string, id: string): DataWrapper<T> {
+  public get(pid: string, id: string): T {
     if (this.datas.has(pid)) {
       return this.datas.get(pid).get(id);
     }
@@ -70,14 +57,14 @@ export class DataStores<T> {
     return false;
   }
 
-  public getParent(id: string): DataWrapper<T>[] {
+  public getParent(id: string): T[] {
     if (this.datas.has(id)) {
-      return this.datas.get(id).find((d: DataWrapper<T>): boolean => true);
+      return this.datas.get(id).find((d: T): boolean => true);
     }
     return [];
   }
 
-  public set(pid: string, id: string, d: any): void {
+  public set(pid: string, id: string, d: T): void {
     let ds: DataStore<T> = null;
     if (!this.datas.has(pid)) {
       this.datas.set(pid, new DataStore());

@@ -1,15 +1,16 @@
 import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList, AfterViewInit, OnDestroy } from '@angular/core';
-import { Room, AgentInRoom } from 'src/app/model/room';
-import { DataService } from 'src/app/data.service';
+import { Room, AgentInRoom, AgentRoleInRoom } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RoomService } from '../room.service';
 import { RoomMemberSearchOptionService } from './room-member-search-option/room-member-search-option.service';
-import { ProfileInRoomCheckboxComponent } from 'src/app/parts/profile-in-room-checkbox/profile-in-room-checkbox.component';
 import { MatDialog } from '@angular/material';
 import { DialogIntroducerComponent } from 'src/app/parts/dialog-introducer/dialog-introducer.component';
 import { AgentService } from 'src/app/agent.service';
-import { RoomAgentIn } from 'src/app/model/agent';
+import { RoomAgentIn, RoomAgentInOnlyID } from 'src/app/model/agent';
 import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
+import { DataRoomsService } from 'src/app/data-rooms.service';
+import { CursorManagerRoomMemberService } from '../cursor-manager-room-member.service';
+import { stringPaddedNumber } from 'src/app/util/date';
 
 @Component({
   selector: 'app-room-member',
@@ -18,21 +19,23 @@ import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from 'src/app/si
 })
 export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChildren('checkBox')
-  public domCheckBox: QueryList<ProfileInRoomCheckboxComponent>;
+  private checked: Map<string, boolean>;
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService,
     private agentService: AgentService,
     private roomService: RoomService,
+    private dataRoomsService: DataRoomsService,
+    private roomMemberFetcher: CursorManagerRoomMemberService,
     public searchOptService: RoomMemberSearchOptionService,
     private dialog: MatDialog,
     private scrollService: SideMenuScrollService,
   ) {
+    this.checked = new Map<string, boolean>();
   }
 
   ngOnInit() {
+    this.roomMemberFetcher.initialize(this.roomService.roomId);
   }
 
   ngAfterViewInit() {
@@ -55,27 +58,66 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public disableButtonIntr(): boolean {
-    let ret = true;
-    if (!this.domCheckBox) {
-      return true;
-    }
-    this.domCheckBox.forEach((p: ProfileInRoomCheckboxComponent) => {
-      if (p.checked) {
-        ret = false;
-      }
-    });
-    return ret;
+    // let ret = true;
+    // if (!this.domCheckBox) {
+    //   return true;
+    // }
+    // this.domCheckBox.forEach((p: ProfileInRoomCheckboxComponent) => {
+    //   if (p.checked) {
+    //     ret = false;
+    //   }
+    // });
+    // return ret;
+    return false;
   }
 
   public intr(): void {
-    const agents = this.domCheckBox.filter((p: ProfileInRoomCheckboxComponent): boolean => p.checked);
-    if (agents.length <= 0) { return; }
-    this.dialog.open(DialogIntroducerComponent, {
-      data: {
-        agentNames: agents.map((v: ProfileInRoomCheckboxComponent) => v.agentInRoom.agent.name),
-        rooms: this.agentService.filterRoom().map((v: RoomAgentIn) => v.room),
-      },
-    });
+    // const agents = this.domCheckBox.filter((p: ProfileInRoomCheckboxComponent): boolean => p.checked);
+    // if (agents.length <= 0) { return; }
+    // this.dialog.open(DialogIntroducerComponent, {
+    //   data: {
+    //     agentNames: agents.map((v: ProfileInRoomCheckboxComponent) => v.agentInRoom.agent.name),
+    //     rooms: this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+    //   },
+    // });
+  }
+
+  public role(agentInRoom: AgentInRoom): string {
+    if (agentInRoom.role === AgentRoleInRoom.Member) {
+      return 'member';
+    }
+    if (agentInRoom.role === AgentRoleInRoom.Owner) {
+      return 'owner';
+    }
+    return 'member';
+  }
+
+  public roleColor(agentInRoom: AgentInRoom): string {
+    if (agentInRoom.role === AgentRoleInRoom.Member) {
+      return '';
+    }
+    if (agentInRoom.role === AgentRoleInRoom.Owner) {
+      return 'primary';
+    }
+    return '';
+  }
+
+  public changeCheckbox(agentInRoom: AgentInRoom): void {
+    if (!this.checked.has(agentInRoom.agent.externalId)) {
+      this.checked.set(agentInRoom.agent.externalId, true);
+      return;
+    }
+    this.checked.set(
+      agentInRoom.agent.externalId,
+      !this.checked.get(agentInRoom.agent.externalId),
+    );
+  }
+
+  public checkBox(agentInRoom: AgentInRoom): boolean {
+    if (!this.checked.has(agentInRoom.agent.externalId)) {
+      this.checked.set(agentInRoom.agent.externalId, false);
+    }
+    return this.checked.get(agentInRoom.agent.externalId);
   }
 
 }

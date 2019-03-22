@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AgentService } from './agent.service';
-import { DataService } from './data.service';
 import {
   setTestRooms,
   setTestAgentMessages,
@@ -19,11 +18,10 @@ export class AppComponent {
 
   constructor(
     private agentService: AgentService,
-    private dataService: DataService,
     private roomMessageService: RoomMessageService,
   ) {
     // setTestAgent(this.agentService);
-    setTestAgents(this.dataService);
+    // setTestAgents(this.dataService);
     // setTestRooms(this.dataService);
     // setTestAgentMessages(this.agentService);
     // setTestRoomMessages(this.roomMessageService, this.dataService);

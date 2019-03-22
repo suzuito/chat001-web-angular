@@ -1,7 +1,22 @@
 @import '../../common';
 
+// * { border: 1px solid red; }
+
 .list {
   padding: $padding-content;
+}
+
+.list-each {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  // : 3px solid brown;
+}
+
+.list-each-checkbox {
+  padding-left: $padding-content;
+  padding-right: $padding-content;
 }
 
 .ops {

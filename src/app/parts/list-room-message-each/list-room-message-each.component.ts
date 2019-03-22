@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { Message } from 'src/app/model/room_message';
 import { AgentInRoom } from 'src/app/model/room';
+import { EasyAgent } from 'src/app/model/agent';
 
 @Component({
   selector: 'app-list-room-message-each',
@@ -13,7 +14,7 @@ export class ListRoomMessageEachComponent implements OnInit {
   public message: Message;
 
   @Input()
-  public agent: AgentInRoom;
+  public agent: EasyAgent;
 
   @Input()
   public isLeft: boolean;
@@ -39,14 +40,14 @@ export class ListRoomMessageEachComponent implements OnInit {
 
   public agentName(): string {
     if (this.agent) {
-      return this.agent.agent.name;
+      return this.agent.name;
     }
     return '名無しのごんべえ';
   }
 
   public agentURLImage(): string {
     if (this.agent) {
-      return this.agent.agent.urlImage;
+      return this.agent.urlImage;
     }
     return '';
   }

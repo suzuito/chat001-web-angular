@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Init } from './model/other';
-import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom } from './model/room';
-import { RoomAgentIn } from './model/agent';
+import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom } from './model/room';
+import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { RoomMessage, Messages } from './model/room_message';
 
 class OptBuilder {
@@ -20,6 +20,7 @@ class OptBuilder {
     return this;
   }
   public nextCursor(v: string): OptBuilder {
+    if (!v) { return this; }
     this.header('X-Next-Cursor', v);
     return this;
   }
@@ -33,6 +34,12 @@ class OptBuilder {
   }
   public param(k: string, v: string): OptBuilder {
     this.o.params = this.o.params.set(k, v);
+    return this;
+  }
+  public limits(l: number): OptBuilder {
+    if (l > 0) {
+      this.o.params = this.o.params.set('limits', l);
+    }
     return this;
   }
   public jsonResponseBody(): OptBuilder {
@@ -66,24 +73,22 @@ export class ApiService {
     private http: HttpClient,
   ) { }
 
-  public async getNull(atoken: string): Promise<Init> {
+  public async getInit(atoken: string): Promise<Init> {
     return this.http.get<Init>(
       url(`/init`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }
 
+  public async getEasyAgent(atoken: string, externalId: string): Promise<EasyAgent> {
+    return this.http.get<EasyAgent>(
+      url(`/api/agents/externals/${externalId}`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
   public async getRooms(atoken: string, nextCursor: string = '', limits: number = -1, order: string = '1'): Promise<Rooms> {
-    let p = `/api/rooms`;
-    const builder = new OptBuilder();
-    builder.atoken(atoken).jsonResponseBody();
-    if (nextCursor !== '') {
-      builder.nextCursor(nextCursor);
-    }
-    if (limits !== -1) {
-      p += `?limits=${limits}&order=${order}`;
-    }
     return this.http.get<Rooms>(
-      url(p), builder.gen(),
+      url('/api/rooms'),
+      new OptBuilder().atoken(atoken).jsonResponseBody().nextCursor(nextCursor).limits(limits).param('order', order).gen(),
     ).toPromise().then((res: any) => res);
   }
 
@@ -125,18 +130,45 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
+  public async getRoomMembers(atoken: string, roomId: string, nextCursor: string = '', limits: number = -1): Promise<AgentsInRoom> {
+    return this.http.get<AgentsInRoom>(
+      url(`/api/rooms/${roomId}/members`),
+      new OptBuilder().atoken(atoken).jsonResponseBody().nextCursor(nextCursor).limits(limits).gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
   public async getRoomMessages(atoken: string, roomId: string, nextCursor: string = '', limits: number = -1): Promise<Messages> {
-    let p = `/api/rooms/${roomId}/messages`;
-    const builder = new OptBuilder();
-    builder.atoken(atoken).jsonResponseBody();
-    if (nextCursor !== '') {
-      builder.nextCursor(nextCursor);
-    }
-    if (limits !== -1) {
-      p += `?limits=${limits}`;
-    }
     return this.http.get<Messages>(
-      url(p), builder.gen(),
+      url(`/api/rooms/${roomId}/messages`), new OptBuilder().atoken(atoken).jsonResponseBody().nextCursor(nextCursor).limits(limits).gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async putAgents(atoken: string, name: string, description: string): Promise<Agent> {
+    return this.http.put<Agent>(
+      url(`/api/agents`), JSON.stringify({
+        name, description,
+      }), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async postRooms(
+    atoken: string,
+    name: string,
+    description: string,
+    maxAgents: number,
+    isPublic: boolean,
+    passwordRaw: string,
+  ): Promise<CreateRoom> {
+    return this.http.post<CreateRoom>(
+      url(`/api/rooms`),
+      {
+        name,
+        description,
+        maxAgents,
+        isPublic,
+        password: passwordRaw,
+      },
+      new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }
 
@@ -235,11 +267,6 @@ export class ApiService {
       public async putExitRoom(atoken: string, roomId: string): Promise<ExitRoom> {
         return this.http.put<ExitRoom>(
           url(`/api/rooms/${roomId}/exit`), null, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
-        ).toPromise().then((res: any) => res);
-      }
-      public async getRoomMembers(atoken: string, roomId: string): Promise<AgentsInRoom> {
-        return this.http.get<AgentsInRoom>(
-          url(`/api/rooms/${roomId}/members`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
         ).toPromise().then((res: any) => res);
       }
       public async getRooms(atoken: string, nextCursor: string = '', limits: number = -1): Promise<Rooms> {

@@ -1,4 +1,4 @@
-import { EasyAgent, RoomAgentIn } from './agent';
+import { EasyAgent, RoomAgentIn, Agent } from './agent';
 import { RoomMessage } from './room_message';
 
 export enum RoomStatus {
@@ -45,28 +45,44 @@ export enum AgentRoleInRoom {
   Owner = 100,
 }
 
-export interface AgentInRoom {
+export interface AgentInRoom extends AgentInRoomProperties {
+  readonly agent: EasyAgent;
+}
+
+export interface AgentInRoomOnlyID extends AgentInRoomProperties {
+  readonly externalID: string;
+}
+
+export interface AgentInRoomProperties {
   readonly role: AgentRoleInRoom;
   readonly createdAt: number;
   readonly updatedAt: number;
   readonly deletedAt: number;
-  readonly agent: EasyAgent;
 }
 
-export function newEmptyAgentInRoom(externalId: string): AgentInRoom {
+export function newAgentInRoomOnlyID(agent: AgentInRoom): AgentInRoomOnlyID {
   return {
-    role: AgentRoleInRoom.Member,
-    createdAt: 0,
-    updatedAt: 0,
-    deletedAt: 0,
-    agent: {
-      externalId,
-      name: externalId,
-      urlImage: null,
-      updatedAt: 0,
-      description: '削除されたユーザー',
-    },
+    role: agent.role,
+    createdAt: agent.createdAt,
+    updatedAt: agent.updatedAt,
+    deletedAt: agent.deletedAt,
+    externalID: agent.agent.externalId,
   };
+}
+
+export function newAgentInRoom(agent: AgentInRoomOnlyID, agt: EasyAgent): AgentInRoom {
+  return {
+    role: agent.role,
+    createdAt: agent.createdAt,
+    updatedAt: agent.updatedAt,
+    deletedAt: agent.deletedAt,
+    agent: agt,
+  };
+}
+
+export interface AgentsInRoom {
+  readonly nextCursor: string;
+  readonly agents: AgentInRoom[];
 }
 
 export interface Rooms {
@@ -86,4 +102,10 @@ export interface ExitRoom {
   agentInRoom: AgentInRoom;
   roomAgentIn: RoomAgentIn;
   message: RoomMessage;
+}
+
+export interface CreateRoom {
+  room: Room;
+  agentInRoom: AgentInRoom;
+  roomAgentIn: RoomAgentIn;
 }

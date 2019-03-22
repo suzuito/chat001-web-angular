@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { AgentsSearchOptionService } from './agents-search-option.service';
-import { DataService } from '../data.service';
 import { EasyAgent } from '../model/agent';
 import { SideMenuScrollService, ScrollIdAgents } from '../side-menu/side-menu-scroll.service';
+import { DataEasyAgentsService } from '../data-easy-agents.service';
 
 @Component({
   selector: 'app-agents',
@@ -12,7 +12,7 @@ import { SideMenuScrollService, ScrollIdAgents } from '../side-menu/side-menu-sc
 export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
-    private dataService: DataService,
+    private dataEasyAgents: DataEasyAgentsService,
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
   ) { }
@@ -29,7 +29,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataService.filterAgent(this.opt);
+    return this.dataEasyAgents.filter(this.opt);
   }
 
 }

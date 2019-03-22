@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '../data.service';
 import { ApiService } from '../api.service';
 import { AppService } from '../app.service';
 import { RoomsSearchOptionService, orderIdToQuery } from './rooms-search-option/rooms-search-option.service';
@@ -21,7 +20,7 @@ export class RoomsService {
   }
 
   public async apiGetRooms(): Promise<void> {
-    return this.appService.apiGetRooms(
+    return this.appService.fetchRooms(
       this.nextCursor,
       30,
       orderIdToQuery(this.roomsSeartchOpt.selectedOrderId),

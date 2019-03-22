@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet, MatDialog } from '@angular/material';
-import { ProfileEditorComponent } from '../parts/profile-editor/profile-editor.component';
+import { ProfileEditorComponent, DataProfileEditorComponent } from '../parts/profile-editor/profile-editor.component';
 import { AgentService } from '../agent.service';
-import { Agent, RoomAgentIn } from '../model/agent';
+import { Agent, RoomAgentIn, RoomAgentInOnlyID } from '../model/agent';
 import { Router } from '@angular/router';
 import { AppRootService } from '../app-root/app-root.service';
 import { Room } from '../model/room';
+import { AppService } from '../app.service';
+import { DataRoomsService } from '../data-rooms.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -18,16 +20,28 @@ export class SideMenuComponent implements OnInit {
     private router: Router,
     private agentService: AgentService,
     private appRootService: AppRootService,
+    private appService: AppService,
+    private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
   }
 
-  public openEditProfile(): void {
-    this.dialog.open(ProfileEditorComponent, {
+  public async openEditProfile(): Promise<void> {
+    const agent = this.agentService.get();
+    const ref = this.dialog.open(ProfileEditorComponent, {
+      data: {
+        name: agent.name,
+        description: agent.description,
+      } as DataProfileEditorComponent,
       autoFocus: false,
     });
+    const result: DataProfileEditorComponent = await ref.afterClosed().toPromise();
+    if (!result) {
+      return;
+    }
+    return this.appService.updateAgentProperties(result.name, result.description);
   }
 
   public agent(): Agent {
@@ -40,7 +54,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   public roomsAgentIn(): Room[] {
-    return this.agentService.filterRoom().map((v: RoomAgentIn) => v.room);
+    return this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId));
   }
 
   public routeToRoom(room: Room): void {

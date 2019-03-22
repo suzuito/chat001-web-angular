@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ListRoomComponent } from '../parts/list-room/list-room.component';
 import { RoomsSearchOptionService } from './rooms-search-option/rooms-search-option.service';
-import { DataService } from '../data.service';
 import { Room } from '../model/room';
 import { SideMenuScrollService, ScrollIdRooms } from '../side-menu/side-menu-scroll.service';
 import { RoomsService } from './rooms.service';
 import { AppService } from '../app.service';
+import { DataRoomsService } from '../data-rooms.service';
 
 @Component({
   selector: 'app-rooms',
@@ -17,8 +17,8 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
   public isSearchOptionOpened: boolean;
 
   constructor(
+    private dataRoomsService: DataRoomsService,
     public searchOptService: RoomsSearchOptionService,
-    public dataService: DataService,
     private scrollService: SideMenuScrollService,
     private roomsService: RoomsService,
     private appService: AppService,
@@ -57,7 +57,7 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public rooms(): Room[] {
-    return this.dataService.filterRoom(this.searchOptService, false);
+    return this.dataRoomsService.filter(this.searchOptService, false);
   }
 
   public routeToRoom(room: Room): void {

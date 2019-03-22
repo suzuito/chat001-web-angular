@@ -1,6 +1,9 @@
 <div class='main'>
-  <app-list-room-message [roomId]='room.id' [messages]='messages()' [dataService]='dataService'>
-  </app-list-room-message>
+  <div *ngFor='let message of messages()'>
+    <app-list-room-message-each [message]='message' [agent]='messageAgent(message.agentExternalId)'>
+    </app-list-room-message-each>
+    <mat-divider></mat-divider>
+  </div>
 </div>
 <div class='padding'></div>
 <mat-toolbar class='inputter' color='primary' #inputterToolbar>

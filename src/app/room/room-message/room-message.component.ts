@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, OnDestroy, OnChanges, AfterViewChecked } from '@angular/core';
 import { Room } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
-import { DataService } from 'src/app/data.service';
 import { RoomService } from '../room.service';
 import { RoomMessageService } from 'src/app/room-message.service';
 import { Message, Messages } from 'src/app/model/room_message';
@@ -9,6 +8,9 @@ import { SideMenuScrollService, ScrollIdRoomMessages, byRoomId } from 'src/app/s
 import { AppService } from 'src/app/app.service';
 import { MatDialog } from '@angular/material';
 import { DialogConfirmerComponent } from 'src/app/parts/dialog-confirmer/dialog-confirmer.component';
+import { EasyAgent } from 'src/app/model/agent';
+import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
+import { CursorManagerRoomMessageService } from '../cursor-manager-room-message.service';
 
 @Component({
   selector: 'app-room-message',
@@ -22,11 +24,12 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService,
     private roomService: RoomService,
     private roomMessageService: RoomMessageService,
+    private roomMessageFetcher: CursorManagerRoomMessageService,
     private scrollService: SideMenuScrollService,
     private appService: AppService,
+    private dataEasyAgentsService: DataEasyAgentsService,
     private dialog: MatDialog,
   ) {
     this.prevRoomId = null;
@@ -36,6 +39,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   ngOnInit() {
     this.route.params.subscribe((params: Params): void => {
       if (params.roomId) {
+        this.roomMessageFetcher.initialize(params.roomId);
         if (this.prevRoomId !== null) {
           this.scrollService.saveScrollPos(byRoomId(ScrollIdRoomMessages, this.prevRoomId));
         }
@@ -91,7 +95,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   }
 
   public getRoomsMessages(): void {
-    this.roomService.getRoomsMessages();
+    this.roomMessageFetcher.fetch(this.room.id);
   }
 
   private putRoomsMessages(): void {
@@ -103,5 +107,9 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     //   return;
     // }
     this.roomService.putRoomsMessages(this.message);
+  }
+
+  public messageAgent(externalId: string): EasyAgent {
+    return this.dataEasyAgentsService.get(externalId);
   }
 }

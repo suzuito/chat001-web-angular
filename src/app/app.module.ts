@@ -50,7 +50,6 @@ import { RoomMessageComponent } from './room/room-message/room-message.component
 import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
 import { RoomInfoEditorComponent } from './room/room-info-editor/room-info-editor.component';
 import { PasswordInputterComponent } from './parts/password-inputter/password-inputter.component';
-import { ListRoomMessageComponent } from './parts/list-room-message/list-room-message.component';
 import { ListRoomMessageEachComponent } from './parts/list-room-message-each/list-room-message-each.component';
 import { ProfileImgComponent } from './parts/profile-img/profile-img.component';
 import { ListAgentInRoomComponent } from './parts/list-agent-in-room/list-agent-in-room.component';
@@ -63,7 +62,6 @@ import { RoomNameDirective } from './parts/room-name.directive';
 import { RoomDescriptionDirective } from './parts/room-description.directive';
 import { RoomProfileComponent } from './parts/room-profile/room-profile.component';
 import { RoomPropertiesComponent } from './parts/room-properties/room-properties.component';
-import { ProfileInRoomCheckboxComponent } from './parts/profile-in-room-checkbox/profile-in-room-checkbox.component';
 import { DialogProfileComponent } from './parts/dialog-profile/dialog-profile.component';
 import { DialogRequesterComponent } from './parts/dialog-requester/dialog-requester.component';
 import { RoomCreatorComponent } from './room-creator/room-creator.component';
@@ -106,7 +104,6 @@ import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confir
     RoomInputterComponent,
     RoomInfoEditorComponent,
     PasswordInputterComponent,
-    ListRoomMessageComponent,
     ListRoomMessageEachComponent,
     ProfileImgComponent,
     ListAgentInRoomComponent,
@@ -119,7 +116,6 @@ import { DialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confir
     RoomDescriptionDirective,
     RoomProfileComponent,
     RoomPropertiesComponent,
-    ProfileInRoomCheckboxComponent,
     DialogProfileComponent,
     DialogRequesterComponent,
     RoomCreatorComponent,

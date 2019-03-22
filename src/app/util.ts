@@ -36,3 +36,8 @@ export function randomRoomDescription(): string {
   const i = getRandomInt(0, names.length - 1);
   return names[i];
 }
+
+
+export function getWSURLFromEnv(env: any, agentID: string) {
+  return `${env.protocol}://${env.hostname}:${env.port}/ws/${agentID}`;
+}

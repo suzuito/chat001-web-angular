@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Agent, RoomAgentIn } from './model/agent';
+import { Agent, RoomAgentIn, RoomAgentInOnlyID, newRoomAgentIn, newRoomAgentInOnlyID } from './model/agent';
 import { AgentMessage, Line } from './model/agent_message';
-import { DataStore, DataWrapper } from './data.store';
+import { DataStore } from './data.store';
 import { AgentMessagesSearchOption } from './agent-messages/agent-messages-search-option.service';
-import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +12,13 @@ export class AgentService {
   private agent: Agent;
   private messages: DataStore<AgentMessage>;
 
-  private roomsAgentIn: DataStore<RoomAgentIn>;
+  private roomsAgentIn: DataStore<RoomAgentInOnlyID>;
 
   constructor(
-    private dataService: DataService,
   ) {
     this.agent = null;
     this.messages = new DataStore<AgentMessage>();
-    this.roomsAgentIn = new DataStore<RoomAgentIn>();
+    this.roomsAgentIn = new DataStore<RoomAgentInOnlyID>();
   }
 
   public set(agent: Agent): void {
@@ -31,11 +29,8 @@ export class AgentService {
     return this.agent;
   }
 
-  public getRoomAgentIn(roomId: string): RoomAgentIn {
-    if (this.roomsAgentIn.has(roomId)) {
-      return this.roomsAgentIn.get(roomId).data;
-    }
-    return null;
+  public getRoomAgentIn(roomId: string): RoomAgentInOnlyID {
+    return this.roomsAgentIn.get(roomId);
   }
 
   public isInRoom(roomId: string): boolean {
@@ -49,9 +44,9 @@ export class AgentService {
   }
 
   public filterMessage(opt: AgentMessagesSearchOption): AgentMessage[] {
-    return this.messages.findRaw((d: DataWrapper<AgentMessage>): boolean => {
+    return this.messages.find((d: AgentMessage): boolean => {
       if (opt.txtWord) {
-        const res = d.data.lines.filter((v: Line): boolean => {
+        const res = d.lines.filter((v: Line): boolean => {
           return (new RegExp(opt.txtWord).test(v.body));
         });
         if (res.length <= 0) {
@@ -59,7 +54,7 @@ export class AgentService {
         }
       }
       if (opt.chkUnread) {
-        if (d.data.read) {
+        if (d.read) {
           return false;
         }
       }
@@ -69,8 +64,7 @@ export class AgentService {
 
   public setRoom(...args: RoomAgentIn[]): void {
     args.forEach((v: RoomAgentIn) => {
-      this.roomsAgentIn.set(v.room.id, v);
-      this.dataService.setRoom(v.room);
+      this.roomsAgentIn.set(v.room.id, newRoomAgentInOnlyID(v));
     });
   }
 
@@ -78,8 +72,8 @@ export class AgentService {
     this.roomsAgentIn.delete(roomId);
   }
 
-  public filterRoom(): RoomAgentIn[] {
-    return this.roomsAgentIn.findRaw((d: DataWrapper<RoomAgentIn>): boolean => {
+  public filterRoom(): RoomAgentInOnlyID[] {
+    return this.roomsAgentIn.find((d: RoomAgentInOnlyID): boolean => {
       return true;
     });
   }

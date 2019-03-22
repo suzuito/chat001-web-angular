@@ -12,7 +12,7 @@ export const environment = {
     port: 8085,
   },
   ws: {
-    protocol: 'wss',
+    protocol: 'ws',
     hostname: '192.168.11.5',
     port: 8086,
   },

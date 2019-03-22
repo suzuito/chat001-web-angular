@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '../data.service';
-import { Room, AgentInRoom, newEmptyAgentInRoom } from '../model/room';
+import { Room, AgentInRoom, newAgentInRoom } from '../model/room';
 import { EventEmitter } from 'events';
 import { AgentService } from '../agent.service';
 import { ApiService } from '../api.service';
@@ -11,6 +10,10 @@ import { Router } from '@angular/router';
 import { ErrorService } from '../error.service';
 import { RoomMessage, Messages, Message } from '../model/room_message';
 import { RoomMessageService } from '../room-message.service';
+import { AppService } from '../app.service';
+import { DataRoomsService } from '../data-rooms.service';
+import { DataAgentsInRoomService } from '../data-agents-in-room.service';
+import { DataEasyAgentsService } from '../data-easy-agents.service';
 
 export enum RoomServiceEventType {
   RouteInfo = 'routeInfo',
@@ -27,11 +30,12 @@ export class RoomService {
   public roomNameMaxLength: number;
   public roomDescriptionMaxLength: number;
 
-  private cursors: Map<string, string>;
-
   constructor(
-    private dataService: DataService,
+    private dataRoomsService: DataRoomsService,
+    private dataAgentsInRoomService: DataAgentsInRoomService,
+    private dataEasyAgentsService: DataEasyAgentsService,
     private agentService: AgentService,
+    private appService: AppService,
     private roomMessageService: RoomMessageService,
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
@@ -41,115 +45,46 @@ export class RoomService {
     this.roomId = null;
     this.roomNameMaxLength = 16;
     this.roomDescriptionMaxLength = 200;
-    this.cursors = new Map<string, string>();
   }
 
   public get room(): Room {
     if (!this.roomId) {
       return null;
     }
-    return this.dataService.getRoomRaw(this.roomId);
+    return this.dataRoomsService.get(this.roomId);
   }
 
   public getAgents(): AgentInRoom[] {
     if (!this.roomId) {
       return [];
     }
-    return this.dataService.getAgentsInRoom(this.roomId);
+    const ret = this.dataAgentsInRoomService.getParent(this.roomId);
+    const ret2 = ret.map(v => {
+      return newAgentInRoom(v, this.dataEasyAgentsService.get(v.externalID));
+    });
+    return ret2;
   }
 
   public async routeToRoom(roomId: string): Promise<void> {
     if (!this.agentService.isInRoom(roomId)) {
-      return this.apiService.getAgentRoomByID(
-        this.localStorageService.get(LocalStorageKey.A),
-        roomId,
-      ).then((r: RoomAgentIn) => {
-        this.roomId = r.room.id;
-        return;
-      }).catch((err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          this.router.navigate(['room-entrance', roomId]);
-        } else {
-          this.errService.errp5XX();
-        }
-        return;
-      });
+      this.router.navigate(['room-entrance', roomId]);
+      return;
     }
     this.roomId = roomId;
+    if (this.dataRoomsService.has(this.roomId)) {
+      return;
+    }
+    return this.appService.fetchRoom(this.roomId).then(() => { return; });
   }
 
   public async putRoomsMessages(message: string): Promise<void> {
-    this.apiService.putRoomsMessages(
+    return this.apiService.putRoomsMessages(
       this.localStorageService.get(LocalStorageKey.A),
       this.roomId,
       message,
     ).then((msg: RoomMessage) => {
-      this.roomMessageService.pushMessage(msg.roomId, msg.message);
-      if (this.dataService.getAgentInRoom(msg.roomId, msg.message.agentExternalId)) {
-        return;
-      }
-      this.apiService.getRoomMember(
-        this.localStorageService.get(LocalStorageKey.A),
-        msg.roomId, msg.message.agentExternalId,
-      ).then((agentInRoom: AgentInRoom) => {
-        this.dataService.setAgentInRoom(msg.roomId, agentInRoom);
-        return;
-      });
+      return;
     });
   }
 
-  private getCursor(roomId: string): string {
-    if (!this.cursors.has(roomId)) {
-      this.cursors.set(roomId, '');
-    }
-    return this.cursors.get(roomId);
-  }
-
-  private setCursor(roomId: string, cursor: string): void {
-    this.cursors.set(roomId, cursor);
-  }
-
-  public async initializeRoomsMessages(): Promise<void> {
-    if (!this.cursors.has(this.roomId)) {
-      this.getRoomsMessages();
-    }
-  }
-
-  public async getRoomsMessages(): Promise<void> {
-    this.apiService.getRoomMessages(
-      this.localStorageService.get(LocalStorageKey.A),
-      this.roomId,
-      this.getCursor(this.roomId),
-      30,
-    ).then((messages: Messages) => {
-      this.getUnknownAgentProfile(messages.messages);
-      this.roomMessageService.pushMessage(this.roomId, ...messages.messages);
-      this.setCursor(this.roomId, messages.nextCursor);
-    });
-  }
-
-  public async getUnknownAgentProfile(messages: Message[]) {
-    const extIDs: string[] = [];
-    messages.forEach((message: Message) => {
-      if (extIDs.find((v: string) => v === message.agentExternalId)) {
-        return;
-      }
-      extIDs.push(message.agentExternalId);
-    });
-    extIDs.forEach((extID: string) => {
-      if (this.dataService.hasAgentInRoom(this.roomId, extID)) {
-        return;
-      }
-      this.apiService.getRoomMember(
-        this.localStorageService.get(LocalStorageKey.A),
-        this.roomId, extID,
-      ).then((v: AgentInRoom) => {
-        this.dataService.setAgentInRoom(this.roomId, v);
-      }).catch((err: HttpErrorResponse) => {
-        if (err.status === 404) {
-          this.dataService.setAgentInRoom(this.roomId, newEmptyAgentInRoom(extID));
-        }
-      });
-    });
-  }
 }
