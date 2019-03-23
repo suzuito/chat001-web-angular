@@ -1,0 +1,11 @@
+@import '../../common';
+
+.image {
+  width: 100%;
+  text-align: center;
+}
+
+.padding {
+  width: $padding-content;
+  height: $padding-content;
+}

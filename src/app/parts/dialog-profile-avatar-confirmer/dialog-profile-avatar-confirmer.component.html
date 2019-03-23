@@ -1,0 +1,12 @@
+<div mat-dialog-title>確認</div>
+<mat-dialog-content>
+  <div class='mat-body-1'>この画像をアバターとして使用します。よろしいですか？</div>
+  <div class='padding'></div>
+  <div class='image'>
+    <img [src]='data.src' />
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color='primary' (click)='ok()'>はい</button>
+  <button mat-raised-button color='primary' (click)='cancel()'>いいえ</button>
+</mat-dialog-actions>

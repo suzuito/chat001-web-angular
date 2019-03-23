@@ -46,6 +46,11 @@ export class SideMenuComponent implements OnInit {
     return this.appService.updateAgentProperties(result.name, result.description);
   }
 
+  public routeToProfileAvatarEditor(): void {
+    this.router.navigate(['agents', 'avatar']);
+    this.appRootService.closeSideNav();
+  }
+
   public agent(): Agent {
     return this.agentService.get();
   }

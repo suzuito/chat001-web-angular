@@ -1,0 +1,14 @@
+<app-header001></app-header001>
+<div class='main'>
+  <div class='actions'>
+    <div>
+      <button mat-raised-button (click)='selectImage()' color='primary'>画像を選択する</button>
+    </div>
+  </div>
+  <div class='padding'></div>
+  <div [style.visibility]='vis()'>
+    <app-image-cripper [width]='sizeImgCripper' [height]='sizeImgCripper' #imageCripper
+      (result)='resultCripper($event)'></app-image-cripper>
+  </div>
+</div>
+<input type='file' hidden #fileInputter />

@@ -17,6 +17,7 @@ import {
   MatMenuModule,
   MatSelectModule,
   MatBadgeModule,
+  MatSliderModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -75,6 +76,10 @@ import { HeaderMainComponent } from './parts/header-main/header-main.component';
 import { HeaderMainSubComponent } from './parts/header-main-sub/header-main-sub.component';
 import { Header001Component } from './header001/header001.component';
 import { Header002Component } from './header002/header002.component';
+import { ExamplesComponent } from './examples/examples.component';
+import { ImageCripperComponent } from './image-cripper/image-cripper.component';
+import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
+import { DialogProfileAvatarConfirmerComponent } from './parts/dialog-profile-avatar-confirmer/dialog-profile-avatar-confirmer.component';
 
 @NgModule({
   declarations: [
@@ -131,6 +136,10 @@ import { Header002Component } from './header002/header002.component';
     HeaderMainSubComponent,
     Header001Component,
     Header002Component,
+    ExamplesComponent,
+    ImageCripperComponent,
+    ProfileAvatarEditorComponent,
+    DialogProfileAvatarConfirmerComponent,
   ],
   imports: [
     BrowserModule,
@@ -153,6 +162,7 @@ import { Header002Component } from './header002/header002.component';
     MatSelectModule,
     HttpClientModule,
     MatBadgeModule,
+    MatSliderModule,
   ],
   providers: [
   ],
@@ -164,6 +174,7 @@ import { Header002Component } from './header002/header002.component';
     DialogIntroducerComponent,
     DialogPasswordInputterComponent,
     DialogConfirmerComponent,
+    DialogProfileAvatarConfirmerComponent,
   ],
   bootstrap: [AppComponent]
 })
