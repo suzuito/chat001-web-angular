@@ -34,6 +34,16 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   ) {
     this.prevRoomId = null;
     this.message = '';
+    this.roomMessageService.addListener('message', (roomId: string) => {
+      if (!this.scrollService.isBottom()) {
+        return;
+      }
+      setTimeout(() => {
+        this.scrollService.loadScrollPos(
+          byRoomId(ScrollIdRoomMessages, roomId), true,
+        );
+      }, 500);
+    });
   }
 
   ngOnInit() {
@@ -74,16 +84,6 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     return this.roomService.room;
   }
 
-  public async exitRoom(): Promise<void> {
-    const ref = this.dialog.open(DialogConfirmerComponent, {
-      data: '本当に退出しますか？',
-    });
-    const result = await ref.afterClosed().toPromise();
-    if (!result) { return; }
-    this.appService.exitRoom(this.roomService.room.id);
-    return;
-  }
-
   public inputMessage(event: any) {
     if (event.keyCode !== 13) {
       return;
@@ -108,6 +108,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     //   return;
     // }
     this.roomService.putRoomsMessages(this.message);
+    this.message = '';
   }
 
   public messageAgent(externalId: string): EasyAgent {

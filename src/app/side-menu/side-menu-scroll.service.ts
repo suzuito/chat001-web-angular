@@ -34,11 +34,16 @@ export class SideMenuScrollService {
     this.el = null;
   }
 
-
   public init(el: MatSidenavContent): void {
     this.el = el;
+    // this.el.elementScrolled().subscribe((v) => {
+    //   // console.log(this.el.measureScrollOffset('top'), this.el.getElementRef().nativeElement.scrollHeight);
+    //   console.log(
+    //     this.el.measureScrollOffset('bottom'),
+    //     this.el.measureScrollOffset('top'),
+    //   );
+    // }); // debug
   }
-
 
   private scrollTo(opts: ExtendedScrollToOptions): void {
     if (!this.el) {
@@ -47,7 +52,6 @@ export class SideMenuScrollService {
     }
     this.el.scrollTo(opts);
   }
-
 
   public saveScrollPos(id: string): void {
     const data: ScrollPosition = {
@@ -65,7 +69,6 @@ export class SideMenuScrollService {
       behavior: 'auto',
     } as ScrollToOptions);
   }
-
 
   public loadScrollPos(id: string, bottomOnInit: boolean = true): void {
     let ret: ScrollPosition = { top: 0, left: 0 };
@@ -85,5 +88,9 @@ export class SideMenuScrollService {
       left: ret.left,
       behavior: 'auto',
     } as ScrollToOptions);
+  }
+
+  public isBottom(): boolean {
+    return 0 === this.el.measureScrollOffset('bottom');
   }
 }

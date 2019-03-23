@@ -24,6 +24,7 @@ export class AgentMessagesComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit() {
     this.header001Service.title = 'ダイレクトメッセージ';
     this.cursorManagerAgentMessages.initialize(defaultId);
+    this.agentService.unreadMessages = 0;
   }
 
   ngAfterViewInit() {

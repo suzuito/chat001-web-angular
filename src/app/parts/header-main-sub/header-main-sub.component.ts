@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header-main-sub',
@@ -19,14 +19,22 @@ export class HeaderMainSubComponent implements OnInit {
   @Output()
   public clickAgentMessages: EventEmitter<void>;
 
+  @Input()
+  public notifications: number;
+
   constructor() {
     this.clickAgentMessages = new EventEmitter<void>();
     this.clickBoostRooms = new EventEmitter<void>();
     this.clickAgents = new EventEmitter<void>();
     this.clickNewRooms = new EventEmitter<void>();
+    this.notifications = 0;
   }
 
   ngOnInit() {
+  }
+
+  public badgeHidden(): boolean {
+    return this.notifications <= 0;
   }
 
 }

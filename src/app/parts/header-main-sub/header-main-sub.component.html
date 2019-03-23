@@ -16,7 +16,8 @@
       </button>
     </div>
     <div class='each'>
-      <button mat-icon-button (click)='clickAgentMessages.emit()'>
+      <button mat-icon-button [matBadge]='notifications' [matBadgeHidden]='badgeHidden()' matBadgePosition='below'
+        matBadgeColor='accent' (click)='clickAgentMessages.emit()'>
         <mat-icon>notifications</mat-icon>
       </button>
     </div>

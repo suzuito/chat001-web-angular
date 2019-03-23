@@ -5,13 +5,13 @@ import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init } from './model/other';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
-import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID } from './model/room';
+import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { WsService } from './ws.service';
 import { WSMessage } from './model/ws';
-import { RoomMessage } from './model/room_message';
+import { RoomMessage, MessageType } from './model/room_message';
 import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
@@ -38,7 +38,20 @@ export class AppService {
   ) {
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
       const rmsg = msg.data as RoomMessage;
-      this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
+      switch (rmsg.message.type) {
+        case MessageType.Message:
+          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
+          return;
+        case MessageType.EnterRoom:
+          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
+          const agentInRoom = rmsg.message.extra.agentInRoom as AgentInRoom;
+          console.log(agentInRoom);
+          this.dataAgentsInRoomService.set(rmsg.roomId, rmsg.message.agentExternalId, newAgentInRoomOnlyID(agentInRoom));
+          return;
+        case MessageType.ExitRoom:
+          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
+          this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
+      }
     });
   }
 
@@ -49,9 +62,10 @@ export class AppService {
       v.roomsAgentIn.rooms.forEach((roomAgentIn: RoomAgentIn) => {
         this.dataRoomsService.setRoom(roomAgentIn.room);
         this.agentService.setRoom(roomAgentIn);
+        this.agentService.unreadMessages = v.unreadMessages;
         this.dataEasyAgentsService.set(v.agent.id, v.agent);
       });
-      // this.wsService.initialize(v.agent.id);
+      this.wsService.initialize(v.agent.id);
     });
   }
 

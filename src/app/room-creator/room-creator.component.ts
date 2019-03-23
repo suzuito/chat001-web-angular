@@ -4,6 +4,7 @@ import { RoomInfo } from '../parts/room-info/room-info.component';
 import { SideMenuScrollService, ScrollIdRoomCreator } from '../side-menu/side-menu-scroll.service';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { Header001Service } from '../header001/header001.service';
 
 @Component({
   selector: 'app-room-creator',
@@ -16,9 +17,11 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
     private scrollService: SideMenuScrollService,
     private appService: AppService,
     private router: Router,
+    private header001Service: Header001Service,
   ) { }
 
   ngOnInit() {
+    this.header001Service.title = '部屋の作成';
   }
 
   ngAfterViewInit() {

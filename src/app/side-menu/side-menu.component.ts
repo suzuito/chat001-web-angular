@@ -83,4 +83,12 @@ export class SideMenuComponent implements OnInit {
     this.router.navigate(['room', room.id]);
     this.appRootService.closeSideNav();
   }
+
+  public unreadMessages(): number {
+    return this.agentService.unreadMessages;
+  }
+
+  public unreadMessagesBadgeHidden(): boolean {
+    return this.agentService.unreadMessages <= 0;
+  }
 }

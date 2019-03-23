@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { EasyAgent } from 'src/app/model/agent';
+import { ProfileImageSize } from '../profile-img/profile-img.component';
 
 @Component({
   selector: 'app-profile-text-all-with-icon2',
@@ -25,6 +26,9 @@ export class ProfileTextAllWithIcon2Component implements OnInit, AfterViewInit {
 
   @Input()
   public icon: string;
+
+  @Input()
+  public imgMode: ProfileImageSize;
 
   @Output()
   public clickProfile: EventEmitter<void>;

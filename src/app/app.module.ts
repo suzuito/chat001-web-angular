@@ -16,6 +16,7 @@ import {
   MatTabsModule,
   MatMenuModule,
   MatSelectModule,
+  MatBadgeModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -151,6 +152,7 @@ import { Header002Component } from './header002/header002.component';
     MatMenuModule,
     MatSelectModule,
     HttpClientModule,
+    MatBadgeModule,
   ],
   providers: [
   ],

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Agent, EasyAgent } from 'src/app/model/agent';
+import { ProfileImageSize } from '../profile-img/profile-img.component';
 
 @Component({
   selector: 'app-profile-text-all-with-icon',
@@ -22,6 +23,9 @@ export class ProfileTextAllWithIconComponent implements OnInit, AfterViewInit {
 
   @Input()
   public nameOnly: boolean;
+
+  @Input()
+  public imgMode: ProfileImageSize;
 
   @ViewChild('leftBox')
   private domLeft: ElementRef;

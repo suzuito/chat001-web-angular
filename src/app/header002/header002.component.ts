@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Header002Service } from './header002.service';
+import { RoomService } from '../room/room.service';
 
 @Component({
   selector: 'app-header002',
