@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, OnDestroy, OnChanges, AfterViewChecked } from '@angular/core';
 import { Room } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
-import { RoomService } from '../room.service';
+import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomMessageService } from 'src/app/room-message.service';
 import { Message, Messages } from 'src/app/model/room_message';
 import { SideMenuScrollService, ScrollIdRoomMessages, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
@@ -34,9 +34,20 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   ) {
     this.prevRoomId = null;
     this.message = '';
+    this.roomMessageService.addListener('message', (roomId: string) => {
+      if (!this.scrollService.isBottom()) {
+        return;
+      }
+      setTimeout(() => {
+        this.scrollService.loadScrollPos(
+          byRoomId(ScrollIdRoomMessages, roomId), true,
+        );
+      }, 500);
+    });
   }
 
   ngOnInit() {
+    this.roomService.currentRoomRoute = CurrentRoomRoute.Message;
     this.route.params.subscribe((params: Params): void => {
       if (params.roomId) {
         this.roomMessageFetcher.initialize(params.roomId);
@@ -73,16 +84,6 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     return this.roomService.room;
   }
 
-  public async exitRoom(): Promise<void> {
-    const ref = this.dialog.open(DialogConfirmerComponent, {
-      data: '本当に退出しますか？',
-    });
-    const result = await ref.afterClosed().toPromise();
-    if (!result) { return; }
-    this.appService.exitRoom(this.roomService.room.id);
-    return;
-  }
-
   public inputMessage(event: any) {
     if (event.keyCode !== 13) {
       return;
@@ -107,6 +108,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     //   return;
     // }
     this.roomService.putRoomsMessages(this.message);
+    this.message = '';
   }
 
   public messageAgent(externalId: string): EasyAgent {

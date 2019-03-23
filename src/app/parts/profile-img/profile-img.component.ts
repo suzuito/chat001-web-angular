@@ -8,11 +8,11 @@ export enum ProfileImageSize {
 export function getProfileImageSizePx(s: ProfileImageSize): number {
   switch (s) {
     case ProfileImageSize.Small:
-      return 50;
+      return 30;
     case ProfileImageSize.Medium:
       return 100;
   }
-  return 50;
+  return 30;
 }
 
 @Component({

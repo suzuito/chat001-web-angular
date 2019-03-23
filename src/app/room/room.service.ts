@@ -15,10 +15,10 @@ import { DataRoomsService } from '../data-rooms.service';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { DataEasyAgentsService } from '../data-easy-agents.service';
 
-export enum RoomServiceEventType {
-  RouteInfo = 'routeInfo',
-  RouteMessage = 'routeMessage',
-  RouteMember = 'routeMember',
+export enum CurrentRoomRoute {
+  Info = 'info',
+  Message = 'message',
+  Member = 'member',
 }
 
 @Injectable({
@@ -29,6 +29,7 @@ export class RoomService {
   public roomId: string;
   public roomNameMaxLength: number;
   public roomDescriptionMaxLength: number;
+  public currentRoomRoute: CurrentRoomRoute;
 
   constructor(
     private dataRoomsService: DataRoomsService,
@@ -36,15 +37,14 @@ export class RoomService {
     private dataEasyAgentsService: DataEasyAgentsService,
     private agentService: AgentService,
     private appService: AppService,
-    private roomMessageService: RoomMessageService,
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
-    private errService: ErrorService,
     private router: Router,
   ) {
     this.roomId = null;
     this.roomNameMaxLength = 16;
     this.roomDescriptionMaxLength = 200;
+    this.currentRoomRoute = CurrentRoomRoute.Info;
   }
 
   public get room(): Room {
@@ -61,6 +61,8 @@ export class RoomService {
     const ret = this.dataAgentsInRoomService.getParent(this.roomId);
     const ret2 = ret.map(v => {
       return newAgentInRoom(v, this.dataEasyAgentsService.get(v.externalID));
+    }).filter(v => {
+      return v.agent.externalId !== this.agentService.get().externalId;
     });
     return ret2;
   }
@@ -85,6 +87,14 @@ export class RoomService {
     ).then((msg: RoomMessage) => {
       return;
     });
+  }
+
+  public async intr(agents: AgentInRoom[], room: Room): Promise<void> {
+    return this.apiService.postRoomByIDIntroduction(
+      this.localStorageService.get(LocalStorageKey.A),
+      room.id,
+      agents.map(v => v.agent.externalId),
+    );
   }
 
 }

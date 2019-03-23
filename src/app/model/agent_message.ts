@@ -16,3 +16,8 @@ export interface AgentMessage {
   readonly createdAt: number;
   readonly read: boolean;
 }
+
+export interface AgentMessages {
+  readonly nextCursor: string;
+  readonly messages: AgentMessage[];
+}

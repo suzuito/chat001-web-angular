@@ -1,6 +1,7 @@
 <div class='profile'>
   <mat-card>
-    <app-profile-text-all-with-icon linesDescription='5' padding='5px' displayEditButton='true' [agent]='agent()'>
+    <app-profile-text-all-with-icon linesDescription='5' padding='5px' displayEditButton='true' [agent]='agent()'
+      [imgMode]="'medium'">
     </app-profile-text-all-with-icon>
     <mat-card-actions>
       <button mat-button color='primary' (click)='openEditProfile()'>編集する</button>
@@ -9,17 +10,22 @@
 </div>
 <div class='recomends'>
   <mat-list>
-    <mat-list-item>
-      <mat-icon mat-list-icon>search</mat-icon>
-      <h4 mat-line>部屋の検索</h4>
-    </mat-list-item>
-    <mat-list-item>
+    <mat-list-item (click)='routeToNewRooms()'>
       <mat-icon mat-list-icon>autorenew</mat-icon>
       <h4 mat-line>新着順</h4>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item (click)='routeToBoostRooms()'>
       <mat-icon mat-list-icon>whatshot</mat-icon>
       <h4 mat-line>人気順</h4>
+    </mat-list-item>
+    <mat-list-item (click)='routeToAgents()'>
+      <mat-icon mat-list-icon>group</mat-icon>
+      <h4 mat-line>アクティブユーザー</h4>
+    </mat-list-item>
+    <mat-list-item (click)='routeToAgentMessages()'>
+      <mat-icon mat-list-icon [matBadge]='unreadMessages()' [matBadgeHidden]='unreadMessagesBadgeHidden()'
+        matBadgePosition='below' matBadgeColor='accent'>notifications</mat-icon>
+      <h4 mat-line>ダイレクトメッセージ</h4>
     </mat-list-item>
     <mat-list-item (click)='routeToRoomCreator()'>
       <mat-icon mat-list-icon>add</mat-icon>

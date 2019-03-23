@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export enum OrderId {
   Newed = 0,
+  Boost,
 }
 
 export function orderIdToQuery(id: OrderId): string {

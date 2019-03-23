@@ -5,6 +5,7 @@ import { Init } from './model/other';
 import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom } from './model/room';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { RoomMessage, Messages } from './model/room_message';
+import { AgentMessages } from './model/agent_message';
 
 class OptBuilder {
   private o: any;
@@ -169,6 +170,23 @@ export class ApiService {
         password: passwordRaw,
       },
       new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async postRoomByIDIntroduction(atoken: string, roomId: string, externalIds: string[]): Promise<void> {
+    return this.http.post<void>(
+      url(`/api/rooms/${roomId}/introduction`),
+      {
+        roomId,
+        agents: externalIds,
+      },
+      new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async getAgentsMessages(atoken: string, nextCursor: string = '', limits: number = -1): Promise<AgentMessages> {
+    return this.http.get<AgentMessages>(
+      url(`/api/agents/messages`), new OptBuilder().atoken(atoken).jsonResponseBody().nextCursor(nextCursor).limits(limits).gen(),
     ).toPromise().then((res: any) => res);
   }
 

@@ -15,7 +15,7 @@ export class AgentMessagesSearchOptionService implements AgentMessagesSearchOpti
 
   constructor() {
     this.txtWord = '';
-    this.chkUnread = true;
+    this.chkUnread = false;
 
     // setInterval(() => { console.log(this); }, 1000); // debug
   }

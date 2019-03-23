@@ -1,4 +1,4 @@
-@import '../common';
+@import '../../common';
 
 // * { border: 1px solid red; }
 
@@ -9,4 +9,10 @@ mat-toolbar {
 
 .main {
   @include header-main;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

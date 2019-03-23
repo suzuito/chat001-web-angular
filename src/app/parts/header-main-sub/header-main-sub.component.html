@@ -1,0 +1,25 @@
+<mat-toolbar color='primary'>
+  <div class='main'>
+    <div class='each'>
+      <button mat-icon-button (click)='clickNewRooms.emit()'>
+        <mat-icon>loop</mat-icon>
+      </button>
+    </div>
+    <div class='each'>
+      <button mat-icon-button (click)='clickBoostRooms.emit()'>
+        <mat-icon>whatshot</mat-icon>
+      </button>
+    </div>
+    <div class='each'>
+      <button mat-icon-button (click)='clickAgents.emit()'>
+        <mat-icon>group</mat-icon>
+      </button>
+    </div>
+    <div class='each'>
+      <button mat-icon-button [matBadge]='notifications' [matBadgeHidden]='badgeHidden()' matBadgePosition='below'
+        matBadgeColor='accent' (click)='clickAgentMessages.emit()'>
+        <mat-icon>notifications</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

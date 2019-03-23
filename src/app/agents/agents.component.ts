@@ -3,6 +3,7 @@ import { AgentsSearchOptionService } from './agents-search-option.service';
 import { EasyAgent } from '../model/agent';
 import { SideMenuScrollService, ScrollIdAgents } from '../side-menu/side-menu-scroll.service';
 import { DataEasyAgentsService } from '../data-easy-agents.service';
+import { Header001Service } from '../header001/header001.service';
 
 @Component({
   selector: 'app-agents',
@@ -15,9 +16,11 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
     private dataEasyAgents: DataEasyAgentsService,
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
+    private header001Service: Header001Service,
   ) { }
 
   ngOnInit() {
+    this.header001Service.title = 'アクティブユーザー';
   }
 
   ngAfterViewInit() {

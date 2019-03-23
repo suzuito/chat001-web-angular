@@ -41,6 +41,22 @@ export class TopComponent implements OnInit, AfterViewInit, OnDestroy {
     this.scrollService.saveScrollPos(ScrollIdTop);
   }
 
+  public routeToTop(): void {
+    this.router.navigate(['']);
+  }
+
+  public routeToNewRooms(): void {
+    this.router.navigate(['rooms']);
+  }
+
+  public routeToBoostRooms(): void {
+    this.router.navigate(['rooms']);
+  }
+
+  public routeToAgentMessages(): void {
+    this.router.navigate(['agent-messages']);
+  }
+
   public routeToRooms(): void {
     this.router.navigate(['rooms']);
   }

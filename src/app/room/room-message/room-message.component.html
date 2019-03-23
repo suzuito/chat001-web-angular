@@ -5,8 +5,8 @@
     <mat-divider></mat-divider>
   </div>
 </div>
-<div class='padding'></div>
-<mat-toolbar class='inputter' color='primary' #inputterToolbar>
+<div class='padding-inputter'></div>
+<mat-toolbar class='inputter' color='' #inputterToolbar>
   <div class='inputter-form'>
     <mat-form-field class='inputter-input'>
       <input type="text" [(ngModel)]='message' matInput [style.font-size]="'15px'" (keyup)='inputMessage($event)'>
@@ -18,10 +18,3 @@
     </button>
   </div>
 </mat-toolbar>
-<div class='ops'>
-  <div>
-    <button mat-fab color='primary' (click)='exitRoom()'>
-      <mat-icon>clear</mat-icon>
-    </button>
-  </div>
-</div>

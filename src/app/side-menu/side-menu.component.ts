@@ -8,6 +8,7 @@ import { AppRootService } from '../app-root/app-root.service';
 import { Room } from '../model/room';
 import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
+import { Header001Service } from '../header001/header001.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -23,6 +24,7 @@ export class SideMenuComponent implements OnInit {
     private appService: AppService,
     private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
+    private header001Service: Header001Service,
   ) { }
 
   ngOnInit() {
@@ -53,6 +55,26 @@ export class SideMenuComponent implements OnInit {
     this.appRootService.closeSideNav();
   }
 
+  public routeToNewRooms(): void {
+    this.header001Service.routeToNewRooms();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToBoostRooms(): void {
+    this.header001Service.routeToBoostRooms();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToAgents(): void {
+    this.header001Service.routeToAgents();
+    this.appRootService.closeSideNav();
+  }
+
+  public routeToAgentMessages(): void {
+    this.header001Service.routeToAgentMessages();
+    this.appRootService.closeSideNav();
+  }
+
   public roomsAgentIn(): Room[] {
     return this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId));
   }
@@ -60,5 +82,13 @@ export class SideMenuComponent implements OnInit {
   public routeToRoom(room: Room): void {
     this.router.navigate(['room', room.id]);
     this.appRootService.closeSideNav();
+  }
+
+  public unreadMessages(): number {
+    return this.agentService.unreadMessages;
+  }
+
+  public unreadMessagesBadgeHidden(): boolean {
+    return this.agentService.unreadMessages <= 0;
   }
 }

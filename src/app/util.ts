@@ -1,4 +1,5 @@
 import { ElementRef } from '@angular/core';
+import { Params } from '@angular/router';
 
 export function getRealStyle(elem: ElementRef): CSSStyleDeclaration {
   const d: HTMLElement = elem.nativeElement;
@@ -40,4 +41,14 @@ export function randomRoomDescription(): string {
 
 export function getWSURLFromEnv(env: any, agentID: string) {
   return `${env.protocol}://${env.hostname}:${env.port}/ws/${agentID}`;
+}
+
+export function ParamAsNumber(params: Params, key: string, dflt: number): number {
+  let ret = -1;
+  try {
+    ret = parseInt(params[key], 10);
+  } catch (err) {
+    ret = dflt;
+  }
+  return ret;
 }

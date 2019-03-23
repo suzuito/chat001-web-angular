@@ -3,11 +3,12 @@
     <app-side-menu></app-side-menu>
   </mat-sidenav>
   <mat-sidenav-content #sidenavContent>
-    <app-header-main title="header 1" (clickMenu)='toggleSideNav()' (clickTitle)='routeToTop()'
-      (clickNotification)='routeToAgentMessages()' (clickRoomInfo)='routeToRoomInfo()'
-      (clickRoomMessage)='routeToRoomMessage()' (clickRoomMember)='routeToRoomMember()'
-      [displayRoomButtons]='displayRoomButtons()'></app-header-main>
-    <div class='padding-top'></div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<mat-toolbar class='opener' color='primary'>
+  <button mat-icon-button (click)='toggleSideNav()'>
+    <mat-icon *ngIf='!isOpened()'>chevron_left</mat-icon>
+    <mat-icon *ngIf='isOpened()'>chevron_right</mat-icon>
+  </button>
+</mat-toolbar>

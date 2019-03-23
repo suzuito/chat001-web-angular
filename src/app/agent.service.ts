@@ -14,11 +14,14 @@ export class AgentService {
 
   private roomsAgentIn: DataStore<RoomAgentInOnlyID>;
 
+  public unreadMessages: number;
+
   constructor(
   ) {
     this.agent = null;
     this.messages = new DataStore<AgentMessage>();
     this.roomsAgentIn = new DataStore<RoomAgentInOnlyID>();
+    this.unreadMessages = 0;
   }
 
   public set(agent: Agent): void {

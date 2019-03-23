@@ -14,7 +14,7 @@
       を部屋
     </div>
     <div class='padding'></div>
-    <mat-select>
+    <mat-select [(ngModel)]='roomSelected'>
       <mat-option *ngFor='let room of rooms' [value]='room'>
         {{room.name}} ({{room.agents}}/{{room.maxAgents}})
         <mat-icon>{{iconLock(room)}}</mat-icon>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-raised-button color='primary'>はい</button>
-    <button mat-raised-button color='primary'>キャンセル</button>
+    <button mat-raised-button color='primary' (click)='clickYes()'>はい</button>
+    <button mat-raised-button color='primary' (click)='clickNo()'>キャンセル</button>
   </div>
 </div>

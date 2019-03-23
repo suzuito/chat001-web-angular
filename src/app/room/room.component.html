@@ -1,3 +1,17 @@
+<app-header002></app-header002>
 <div class='main'>
   <router-outlet></router-outlet>
+</div>
+<div class='ops'>
+  <div>
+    <button mat-mini-fab color='primary' (click)='exitRoom()'>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+  <div class='padding-ops-buttons'></div>
+  <div>
+    <button mat-mini-fab color='primary' (click)='routeToAnyRoomRoute()'>
+      <mat-icon>{{iconRoomRoute()}}</mat-icon>
+    </button>
+  </div>
 </div>

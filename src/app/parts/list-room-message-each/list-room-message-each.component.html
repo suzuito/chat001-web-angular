@@ -1,4 +1,4 @@
-<div class='main' [style.flex-direction]='flexDirectionMain()'>
+<mat-toolbar class='main' [style.flex-direction]='flexDirectionMain()'>
   <div class='user' [style.text-align]='textAlign()'>
     <div class='user-name mat-caption' [matMenuTriggerFor]='menu'>
       {{agentName()}}
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class='body mat-body-2'>{{message.body}}</div>
-</div>
+</mat-toolbar>
 <mat-menu #menu='matMenu'>
   <button mat-menu-item (click)='clickMenuRequest.emit()'>
     <mat-icon>person</mat-icon>
