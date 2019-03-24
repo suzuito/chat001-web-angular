@@ -16,6 +16,7 @@ export const environment = {
     hostname: '192.168.11.5',
     port: 8086,
   },
+  bucket: 'ocd12345',
 } as Environment;
 
 /*

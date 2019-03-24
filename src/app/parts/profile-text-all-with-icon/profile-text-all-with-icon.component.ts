@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Agent, EasyAgent } from 'src/app/model/agent';
 import { ProfileImageSize } from '../profile-img/profile-img.component';
+import { urlAvatar } from 'src/app/util';
 
 @Component({
   selector: 'app-profile-text-all-with-icon',
@@ -48,5 +49,9 @@ export class ProfileTextAllWithIconComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const cssLeft = getComputedStyle(this.domLeft.nativeElement);
     this.domRight.nativeElement.style['padding-left'] = `${parseInt(cssLeft.width, 10) + this.paddingBetween}px`;
+  }
+
+  public urlImage(): string {
+    return urlAvatar(this.agent.externalId, this.agent.avatarType, this.imgMode);
   }
 }

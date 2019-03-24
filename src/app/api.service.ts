@@ -190,6 +190,12 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
+  public async putAgentsAvatar(atoken: string, f: File): Promise<Agent> {
+    return this.http.put<Agent>(
+      url(`/api/agents/avatar`), f, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
   /*
       public putRequests(atoken: string, roomId: string, name: string, color: string): Promise<void> {
         const agent = { name: name, color: color } as EasyAgent;

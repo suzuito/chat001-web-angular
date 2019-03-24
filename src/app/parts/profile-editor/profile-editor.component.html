@@ -2,11 +2,17 @@
 <div mat-dialog-content>
   <div class='main'>
     <div class='mat-caption'>プロフィール</div>
+    <div class='padding'></div>
+    <img #image />
+    <button mat-button color='primary' (click)='selectImage()'>画像を選択する</button>
+    <input id='inputter-file' type='file' hidden #fileInputter />
+    <div class='padding'></div>
     <div>
       <mat-form-field>
         <input matInput [(ngModel)]='data.name' placeholder="名前">
       </mat-form-field>
     </div>
+    <div class='padding'></div>
     <div>
       <mat-form-field>
         <textarea matInput mat-autosize [(ngModel)]='data.description' placeholder="一言メッセージ"></textarea>

@@ -1,5 +1,8 @@
 import { ElementRef } from '@angular/core';
 import { Params } from '@angular/router';
+import { Agent, AvatarType } from './model/agent';
+import { environment } from 'src/environments/environment';
+import { ProfileImageSize } from './parts/profile-img/profile-img.component';
 
 export function getRealStyle(elem: ElementRef): CSSStyleDeclaration {
   const d: HTMLElement = elem.nativeElement;
@@ -51,4 +54,9 @@ export function ParamAsNumber(params: Params, key: string, dflt: number): number
     ret = dflt;
   }
   return ret;
+}
+
+
+export function urlAvatar(externalId: string, custom: AvatarType, size: ProfileImageSize): string {
+  return `https://storage.googleapis.com/${environment.bucket}/avatar/${externalId}/${custom}/${size}.jpg`;
 }

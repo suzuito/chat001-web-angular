@@ -1,0 +1,15 @@
+@import '../common';
+
+.actions {
+  display: flex;
+  flex-direction: row;
+}
+
+.main {
+  padding: $padding-content;
+}
+
+.padding {
+  width: $padding-content;
+  height: $padding-content;
+}

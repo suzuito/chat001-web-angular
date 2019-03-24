@@ -2,6 +2,7 @@ export interface Environment {
   production: boolean;
   api: URL;
   ws: URL;
+  bucket: string;
 }
 
 export interface URL {
@@ -22,4 +23,5 @@ export const environment = {
     hostname: 'node.ordiws-stg.net',
     port: 443,
   },
+  bucket: 'ocm12345',
 } as Environment;

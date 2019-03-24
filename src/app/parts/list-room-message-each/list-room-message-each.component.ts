@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter }
 import { Message } from 'src/app/model/room_message';
 import { AgentInRoom } from 'src/app/model/room';
 import { EasyAgent } from 'src/app/model/agent';
+import { urlAvatar } from 'src/app/util';
+import { ProfileImageSize } from '../profile-img/profile-img.component';
 
 @Component({
   selector: 'app-list-room-message-each',
@@ -47,7 +49,11 @@ export class ListRoomMessageEachComponent implements OnInit {
 
   public agentURLImage(): string {
     if (this.agent) {
-      return this.agent.urlImage;
+      return urlAvatar(
+        this.agent.externalId,
+        this.agent.avatarType,
+        ProfileImageSize.Small,
+      );
     }
     return '';
   }

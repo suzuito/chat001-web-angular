@@ -63,7 +63,7 @@ export class AppService {
         this.dataRoomsService.setRoom(roomAgentIn.room);
         this.agentService.setRoom(roomAgentIn);
         this.agentService.unreadMessages = v.unreadMessages;
-        this.dataEasyAgentsService.set(v.agent.id, v.agent);
+        this.dataEasyAgentsService.set(v.agent.externalId, v.agent);
       });
       this.wsService.initialize(v.agent.id);
     });
@@ -167,7 +167,6 @@ export class AppService {
     });
   }
 
-
   public async getUnknownAgentProfile(...inExtIDs: string[]) {
     const extIDs: string[] = [];
     inExtIDs.forEach((id: string) => {
@@ -186,6 +185,15 @@ export class AppService {
       ).then((v: EasyAgent) => {
         this.dataEasyAgentsService.setAgent(v);
       });
+    });
+  }
+
+  public async updateProfileAvatar(f: File): Promise<void> {
+    return this.apiService.putAgentsAvatar(
+      this.localStorageService.get(LocalStorageKey.A),
+      f,
+    ).then(() => {
+      return;
     });
   }
 

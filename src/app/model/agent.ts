@@ -1,4 +1,10 @@
 import { AgentRoleInRoom, Room } from './room';
+import { ProfileImageSize } from '../parts/profile-img/profile-img.component';
+
+export enum AvatarType {
+  Custom = 'custom',
+  Default = 'default',
+}
 
 export interface Agent extends EasyAgent {
   readonly id: string;
@@ -10,7 +16,7 @@ export interface EasyAgent {
   readonly externalId: string;
   readonly description: string;
   readonly updatedAt: number;
-  readonly urlImage: string;
+  readonly avatarType: AvatarType;
 }
 
 export interface RoomAgentIn extends RoomAgentInProperties {
