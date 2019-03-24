@@ -144,10 +144,10 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
-  public async putAgents(atoken: string, name: string, description: string): Promise<Agent> {
+  public async putAgents(atoken: string, name: string, description: string, isPublic: boolean): Promise<Agent> {
     return this.http.put<Agent>(
       url(`/api/agents`), JSON.stringify({
-        name, description,
+        name, description, isPublic,
       }), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }
@@ -195,6 +195,12 @@ export class ApiService {
       url(`/api/agents/avatar`), f, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }
+
+  // public async getAgentsLatest(atoken: string): Promise<EasyAgent[]> {
+  //   return this.http.get<EasyAgent[]>(
+  //     url(`/api/agents/latest`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+  //   ).toPromise().then((res: any) => res);
+  // }
 
   /*
       public putRequests(atoken: string, roomId: string, name: string, color: string): Promise<void> {

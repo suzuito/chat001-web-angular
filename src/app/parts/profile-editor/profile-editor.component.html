@@ -22,7 +22,8 @@
   <div class='main'>
     <div class='mat-caption'>設定</div>
     <div class='checkbox'>
-      <app-checkbox-with-icon paddingBetween='5px' icon='public' text='一般公開を許可'>
+      <app-checkbox-with-icon [(checked)]='data.isPublic' paddingBetween='5px' iconOn='public' textOn='アクティビティ公開'
+        iconOff='vpn_lock' textOff='アクティビティ非公開'>
       </app-checkbox-with-icon>
     </div>
   </div>

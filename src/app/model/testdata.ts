@@ -30,7 +30,9 @@ export function setTestAgent(s: AgentService) {
     maxOwnedRoom: 10,
     description: `お前はもう死んでいる.........。...今日より明日......。久しぶりに人間にあった気がする...。`,
     updatedAt: getRandomInt(10000000000),
+    accessedAt: getRandomInt(10000000000),
     avatarType: AvatarType.Default,
+    isPublic: true,
   });
   for (let i = 0; i < 5; i++) {
     const r = emptyRoom(`room${i}`, `room${i}`, `room${i}_Desc`, 100);
@@ -53,6 +55,7 @@ export function setTestAgents(s: DataEasyAgentsService) {
       name: `temporaryAgent${i}_name Where did you get the indeterminateChange event from?`,
       description: `temporaryAgent${i}_description Use MatSelectionList's selectionChange event.`,
       updatedAt: getRandomInt(10000000000),
+      accessedAt: getRandomInt(10000000000),
       avatarType: AvatarType.Default,
     });
   }
@@ -83,6 +86,7 @@ export function setTestRooms(s: DataRoomsService, s2: DataAgentsInRoomService, s
         name: `agent${j}_name Where did you get the indeterminateChange event from?`,
         description: `agent${j}_description Use MatSelectionList's selectionChange event.`,
         updatedAt: getRandomInt(10000000000),
+        accessedAt: getRandomInt(10000000000),
         avatarType: AvatarType.Custom,
       };
       s2.setAgentInRoom(roomId, {

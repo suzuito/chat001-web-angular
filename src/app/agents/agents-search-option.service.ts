@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export enum OrderId {
   Updated = 0,
+  Accessed,
 }
 
 export interface AgentsSearchOption {

@@ -16,8 +16,6 @@ import { RoomEntranceComponent } from './room-entrance/room-entrance.component';
 import { RoomEntranceResolverService } from './room-entrance/room-entrance-resolver.service';
 import { AppRootResolverService } from './app-root/app-root-resolver.service';
 import { ErrorComponent } from './error/error.component';
-import { ExamplesComponent } from './examples/examples.component';
-import { ImageCripperComponent } from './image-cripper/image-cripper.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 
 const routes: Routes = [
@@ -81,10 +79,6 @@ const routes: Routes = [
             component: RoomInfoEditorComponent,
           }
         ],
-      },
-      {
-        path: 'examples',
-        component: ImageCripperComponent,
       },
     ],
   },

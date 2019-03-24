@@ -5,7 +5,7 @@ import { fileToSrcURL } from 'src/app/util/image';
 export interface DataProfileEditorComponent {
   name: string;
   description: string;
-  urlImg: string;
+  isPublic: boolean;
 }
 
 @Component({
@@ -38,7 +38,9 @@ export class ProfileEditorComponent implements OnInit, AfterViewInit {
 
   public disabledUpdate(): boolean {
     return (this.data.name === this.src.name)
-      && (this.data.description === this.src.description);
+      && (this.data.description === this.src.description)
+      && (this.data.isPublic === this.src.isPublic)
+      ;
   }
 
   public clickUpdate() {

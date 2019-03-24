@@ -1,4 +1,4 @@
-import { Agent, RoomAgentIn, RoomsAgentIn } from './agent';
+import { Agent, RoomAgentIn, RoomsAgentIn, EasyAgent } from './agent';
 
 export interface Init {
   agent: Agent;
@@ -6,4 +6,5 @@ export interface Init {
   messageTtl: number;
   unreadMessages: number;
   messages: number;
+  agents: EasyAgent[];
 }

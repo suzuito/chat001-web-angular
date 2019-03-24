@@ -36,6 +36,7 @@ export class SideMenuComponent implements OnInit {
       data: {
         name: agent.name,
         description: agent.description,
+        isPublic: agent.isPublic,
       } as DataProfileEditorComponent,
       autoFocus: false,
     });
@@ -43,7 +44,11 @@ export class SideMenuComponent implements OnInit {
     if (!result) {
       return;
     }
-    return this.appService.updateAgentProperties(result.name, result.description);
+    return this.appService.updateAgentProperties(
+      result.name,
+      result.description,
+      result.isPublic,
+    );
   }
 
   public routeToProfileAvatarEditor(): void {

@@ -53,6 +53,10 @@ export class AppService {
           this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
       }
     });
+    this.wsService.addRoute('/agent/access', (msg: WSMessage) => {
+      const rmsg = msg.data as EasyAgent;
+      this.dataEasyAgentsService.setAgent(rmsg);
+    });
   }
 
   public async initialize(): Promise<void> {
@@ -65,6 +69,7 @@ export class AppService {
         this.agentService.unreadMessages = v.unreadMessages;
         this.dataEasyAgentsService.set(v.agent.externalId, v.agent);
       });
+      this.dataEasyAgentsService.setAgent(...v.agents);
       this.wsService.initialize(v.agent.id);
     });
   }
@@ -144,10 +149,10 @@ export class AppService {
     });
   }
 
-  public async updateAgentProperties(name: string, description: string): Promise<void> {
+  public async updateAgentProperties(name: string, description: string, isPublic: boolean): Promise<void> {
     this.apiService.putAgents(
       this.localStorageService.get(LocalStorageKey.A),
-      name, description,
+      name, description, isPublic,
     ).then((updated: Agent) => {
       this.agentService.set(updated);
       this.dataEasyAgentsService.setAgent(updated);
@@ -196,5 +201,13 @@ export class AppService {
       return;
     });
   }
+
+  // public async fetchAgentsLatest(): Promise<void> {
+  //   return this.apiService.getAgentsLatest(
+  //     this.localStorageService.get(LocalStorageKey.A),
+  //   ).then((agents: EasyAgent[]) => {
+  //     this.dataEasyAgentsService.setAgent(...agents);
+  //   });
+  // }
 
 }
