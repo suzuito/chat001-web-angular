@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { toSrcURL } from 'src/app/util/image';
+import { fileToSrcURL } from 'src/app/util/image';
 
 export interface DataProfileEditorComponent {
   name: string;
@@ -67,7 +67,7 @@ export class ProfileEditorComponent implements OnInit, AfterViewInit {
       console.log(f);
       // this.app.uploadFile(this.agent.currentRoomId, f);
       (el as any).value = null;
-      toSrcURL(f).then((v: ArrayBuffer) => {
+      fileToSrcURL(f).then((v: ArrayBuffer) => {
         elImg.src = v;
       });
     });

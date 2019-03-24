@@ -7,6 +7,7 @@ import {
   DataAvatarConfirmer,
 } from '../parts/dialog-profile-avatar-confirmer/dialog-profile-avatar-confirmer.component';
 import { Header001Service } from '../header001/header001.service';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-profile-avatar-editor',
@@ -30,6 +31,7 @@ export class ProfileAvatarEditorComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private header001Service: Header001Service,
+    private appService: AppService,
   ) {
     this.sizeImgCripper = '250px';
   }
@@ -71,7 +73,8 @@ export class ProfileAvatarEditorComponent implements OnInit {
       this.clear();
       return;
     }
-    this.srcNew = await fileToSrcURL(blobToFile(blob, 'confirmImg')) as string;
+    const f = blobToFile(blob, 'confirmImg');
+    this.srcNew = await fileToSrcURL(f) as string;
     const ref = this.dialog.open(DialogProfileAvatarConfirmerComponent, {
       data: {
         src: this.srcNew,
@@ -83,6 +86,7 @@ export class ProfileAvatarEditorComponent implements OnInit {
       return;
     }
     // TODO: upload
+    this.appService.updateProfileAvatar(f);
     this.clear();
   }
 

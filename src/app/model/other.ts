@@ -7,8 +7,3 @@ export interface Init {
   unreadMessages: number;
   messages: number;
 }
-
-export interface AvatarURLs {
-  readonly urlMedium: string;
-  readonly urlSmall: string;
-}

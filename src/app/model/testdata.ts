@@ -4,10 +4,11 @@ import { AgentService } from '../agent.service';
 import { RoomMessageService } from '../room-message.service';
 import { RoomMessage, MessageType } from './room_message';
 import { RoomSearchOptionNull } from '../rooms/rooms-search-option/rooms-search-option.service';
-import { EasyAgent } from './agent';
+import { EasyAgent, AvatarType } from './agent';
 import { DataEasyAgentsService } from '../data-easy-agents.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
+import { ProfileImageSize } from '../parts/profile-img/profile-img.component';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -29,7 +30,7 @@ export function setTestAgent(s: AgentService) {
     maxOwnedRoom: 10,
     description: `お前はもう死んでいる.........。...今日より明日......。久しぶりに人間にあった気がする...。`,
     updatedAt: getRandomInt(10000000000),
-    urlImage: 'https://dic.nicovideo.jp/oekaki/21598.png',
+    avatarType: AvatarType.Default,
   });
   for (let i = 0; i < 5; i++) {
     const r = emptyRoom(`room${i}`, `room${i}`, `room${i}_Desc`, 100);
@@ -52,7 +53,7 @@ export function setTestAgents(s: DataEasyAgentsService) {
       name: `temporaryAgent${i}_name Where did you get the indeterminateChange event from?`,
       description: `temporaryAgent${i}_description Use MatSelectionList's selectionChange event.`,
       updatedAt: getRandomInt(10000000000),
-      urlImage: randomImage(i),
+      avatarType: AvatarType.Default,
     });
   }
   s.setAgent(...ret);
@@ -82,7 +83,7 @@ export function setTestRooms(s: DataRoomsService, s2: DataAgentsInRoomService, s
         name: `agent${j}_name Where did you get the indeterminateChange event from?`,
         description: `agent${j}_description Use MatSelectionList's selectionChange event.`,
         updatedAt: getRandomInt(10000000000),
-        urlImage: randomImage(j),
+        avatarType: AvatarType.Custom,
       };
       s2.setAgentInRoom(roomId, {
         role: AgentRoleInRoom.Member,

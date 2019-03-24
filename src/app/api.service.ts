@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { Init, AvatarURLs } from './model/other';
+import { Init } from './model/other';
 import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom } from './model/room';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { RoomMessage, Messages } from './model/room_message';
@@ -190,8 +190,8 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
-  public async putAgentsAvatar(atoken: string, f: File): Promise<AvatarURLs> {
-    return this.http.post<AvatarURLs>(
+  public async putAgentsAvatar(atoken: string, f: File): Promise<Agent> {
+    return this.http.put<Agent>(
       url(`/api/agents/avatar`), f, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }

@@ -4,7 +4,7 @@
 <div class='list'>
   <div class='list-each' *ngFor='let agentInRoom of getAgentsInRoom()' [style.padding-bottom]="'13px'">
     <div class='list-each-profile' [style.width]="'100%'">
-      <app-profile-text-all-with-icon width='100%' [agent]='agentInRoom.agent' linesDescription='1'>
+      <app-profile-text-all-with-icon width='100%' imgMode='small' [agent]='agentInRoom.agent' linesDescription='1'>
       </app-profile-text-all-with-icon>
     </div>
     <div class='list-each-button'><button mat-stroked-button>{{role(agentInRoom)}}</button></div>
