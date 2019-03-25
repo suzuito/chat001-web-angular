@@ -5,6 +5,8 @@ import { SideMenuScrollService, ScrollIdAgents } from '../side-menu/side-menu-sc
 import { DataEasyAgentsService } from '../data-easy-agents.service';
 import { Header001Service } from '../header001/header001.service';
 import { AgentService } from '../agent.service';
+import { MatDialog } from '@angular/material';
+import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
 
 @Component({
   selector: 'app-agents',
@@ -19,6 +21,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
     private header001Service: Header001Service,
+    private dialog: MatDialog,
   ) {
     this.opt.selectedOrderId = OrderId.Accessed;
   }
@@ -40,6 +43,13 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
       filter(v => {
         return v.externalId !== this.agentService.get().externalId;
       });
+  }
+
+  public async openDialogRequester(agent: EasyAgent): Promise<void> {
+    const ref = this.dialog.open(
+      DialogRequesterComponent,
+    );
+    // const msg:  = ref.afterClosed().toPromise();
   }
 
 }

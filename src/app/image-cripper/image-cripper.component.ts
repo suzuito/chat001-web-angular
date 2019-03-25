@@ -2,7 +2,7 @@ import {
   Component,
   OnInit, ViewChild, ElementRef, AfterViewInit, Input, Output, EventEmitter, OnChanges, SimpleChanges
 } from '@angular/core';
-import Croppie, { CroppieOptions, ResultOptions } from 'croppie';
+import * as Croppie from 'croppie';
 import { ProfileImageSize, getProfileImageSizePx } from '../parts/profile-img/profile-img.component';
 import { MatSliderChange } from '@angular/material';
 import { fileToSrcURL, blobToFile } from '../util/image';
@@ -56,7 +56,7 @@ export class ImageCripperComponent implements OnInit, AfterViewInit, OnChanges {
       viewport: { width: len, height: len, type: 'square' },
       enableZoom: true,
       showZoomer: false,
-      enableResize: false,
+      // enableResize: false,
       mouseWheelZoom: false,
     });
     this.refresh();
