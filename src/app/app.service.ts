@@ -202,6 +202,13 @@ export class AppService {
     });
   }
 
+  public async postRequests(externalId: string, body: string): Promise<void> {
+    return this.apiService.postRequests(
+      this.localStorageService.get(LocalStorageKey.A),
+      externalId, body,
+    );
+  }
+
   // public async fetchAgentsLatest(): Promise<void> {
   //   return this.apiService.getAgentsLatest(
   //     this.localStorageService.get(LocalStorageKey.A),

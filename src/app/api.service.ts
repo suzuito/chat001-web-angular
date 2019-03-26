@@ -196,6 +196,14 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
+  public async postRequests(atoken: string, externalId: string, body: string): Promise<void> {
+    return this.http.post<void>(
+      url(`/api/requests`), JSON.stringify({
+        externalId, body,
+      }), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
   // public async getAgentsLatest(atoken: string): Promise<EasyAgent[]> {
   //   return this.http.get<EasyAgent[]>(
   //     url(`/api/agents/latest`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),

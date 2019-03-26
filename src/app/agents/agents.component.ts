@@ -6,7 +6,8 @@ import { DataEasyAgentsService } from '../data-easy-agents.service';
 import { Header001Service } from '../header001/header001.service';
 import { AgentService } from '../agent.service';
 import { MatDialog } from '@angular/material';
-import { DialogRequesterComponent } from '../parts/dialog-requester/dialog-requester.component';
+import { DialogRequesterComponent, DataDialogRequester } from '../parts/dialog-requester/dialog-requester.component';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-agents',
@@ -21,6 +22,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
     private header001Service: Header001Service,
+    private appService: AppService,
     private dialog: MatDialog,
   ) {
     this.opt.selectedOrderId = OrderId.Accessed;
@@ -48,8 +50,17 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   public async openDialogRequester(agent: EasyAgent): Promise<void> {
     const ref = this.dialog.open(
       DialogRequesterComponent,
+      {
+        data: {
+          agent,
+        } as DataDialogRequester,
+      },
     );
-    // const msg:  = ref.afterClosed().toPromise();
+    const data: DataDialogRequester = await ref.afterClosed().toPromise();
+    if (!data) {
+      return;
+    }
+    this.appService.postRequests(agent.externalId, data.message);
   }
 
 }
