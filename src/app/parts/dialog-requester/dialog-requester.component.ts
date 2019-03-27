@@ -33,24 +33,12 @@ export class DialogRequesterComponent implements OnInit {
     return '';
   }
 
-  public agentDescription(): string {
+  public urlImage() {
     if (this.data.agent) {
-      return this.data.agent.description;
+      return urlAvatar(this.data.agent.externalId, this.data.agent.avatarType, ProfileImageSize.Medium);
     }
     return '';
   }
-
-  /*
-  public urlImage(): string {
-    const ret = urlAvatar(
-      this.data.agent.externalId,
-      this.data.agent.avatarType,
-      ProfileImageSize.Small,
-    );
-    console.log(ret);
-    return ret;
-  }
-  */
 
   public clickSendRequest(): void {
     this.ref.close(this.data);
@@ -58,5 +46,9 @@ export class DialogRequesterComponent implements OnInit {
 
   public clickCancel(): void {
     this.ref.close(null);
+  }
+
+  public disabledButton(): boolean {
+    return this.data.message === '';
   }
 }

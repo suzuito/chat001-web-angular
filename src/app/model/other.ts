@@ -7,4 +7,5 @@ export interface Init {
   readonly unreadMessages: number;
   readonly messages: number;
   readonly agents: EasyAgent[];
+  readonly newed: boolean;
 }

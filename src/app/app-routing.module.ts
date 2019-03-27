@@ -17,6 +17,7 @@ import { RoomEntranceResolverService } from './room-entrance/room-entrance-resol
 import { AppRootResolverService } from './app-root/app-root-resolver.service';
 import { ErrorComponent } from './error/error.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
+import { InitComponent } from './init/init.component';
 
 const routes: Routes = [
   {
@@ -85,6 +86,10 @@ const routes: Routes = [
   {
     path: 'error',
     component: ErrorComponent,
+  },
+  {
+    path: 'init',
+    component: InitComponent,
   },
 ];
 

@@ -3,10 +3,6 @@
   <div class='main'>
     <div class='mat-caption'>プロフィール</div>
     <div class='padding'></div>
-    <img #image />
-    <button mat-button color='primary' (click)='selectImage()'>画像を選択する</button>
-    <input id='inputter-file' type='file' hidden #fileInputter />
-    <div class='padding'></div>
     <div>
       <mat-form-field>
         <input matInput [(ngModel)]='data.name' placeholder="名前">
@@ -27,14 +23,8 @@
       </app-checkbox-with-icon>
     </div>
   </div>
-  <div class='main'>
-    <div class='actions'>
-      <div>
-        <button mat-raised-button color='primary' (click)='clickUpdate()' [disabled]='disabledUpdate()'>更新</button>
-      </div>
-      <div>
-        <button mat-raised-button color='primary' (click)='clickCancel()'>キャンセル</button>
-      </div>
-    </div>
-  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color='primary' (click)='clickUpdate()' [disabled]='disabledUpdate()'>更新</button>
+  <button mat-raised-button color='primary' (click)='clickCancel()'>キャンセル</button>
 </div>

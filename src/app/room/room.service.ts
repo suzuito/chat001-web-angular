@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 import { AgentService } from '../agent.service';
 import { ApiService } from '../api.service';
 import { LocalStorageService, LocalStorageKey } from '../local-storage.service';
-import { RoomAgentIn } from '../model/agent';
+import { RoomAgentIn, EasyAgent } from '../model/agent';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ErrorService } from '../error.service';
@@ -89,11 +89,11 @@ export class RoomService {
     });
   }
 
-  public async intr(agents: AgentInRoom[], room: Room): Promise<void> {
+  public async intr(agents: EasyAgent[], room: Room): Promise<void> {
     return this.apiService.postRoomByIDIntroduction(
       this.localStorageService.get(LocalStorageKey.A),
       room.id,
-      agents.map(v => v.agent.externalId),
+      agents.map(v => v.externalId),
     );
   }
 

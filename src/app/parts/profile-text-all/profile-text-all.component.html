@@ -1,4 +1,4 @@
 <div [style.width]='width'>
-  <div appAgentName *ngIf='!nameOnly'>{{agentName}}</div>
-  <div appAgentDescription [linesDescription]='linesDescription'>{{agentDescription}}</div>
+  <div appAgentName>{{agentName}}</div>
+  <div appAgentDescription *ngIf='!nameOnly' [linesDescription]='linesDescription'>{{agentDescription}}</div>
 </div>

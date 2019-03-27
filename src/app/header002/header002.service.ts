@@ -17,12 +17,4 @@ export class Header002Service {
     this.title = 'test';
   }
 
-  public routeToRoomInfo() {
-    if (this.roomService.currentRoomRoute === CurrentRoomRoute.Info) {
-      this.router.navigate(['room', this.roomService.roomId]);
-      return;
-    }
-    this.router.navigate(['room', this.roomService.roomId, 'info']);
-  }
-
 }

@@ -1,6 +1,8 @@
 <div mat-dialog-title appAgentName [oneLine]='false'>{{agentName()}}</div>
 <div mat-dialog-content>
-  <div appAgentDescription [linesDescription]='10'>{{agentDescription()}}</div>
+  <div class='picture'>
+    <app-profile-img [src]='urlImage()' mode='medium'></app-profile-img>
+  </div>
   <div class='padding'></div>
   <div>
     <mat-form-field [style.width]="'100%'">
@@ -9,5 +11,5 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color='primary' (click)='clickSendRequest()'>リクエストを送る</button>
+  <button mat-raised-button [disabled]='disabledButton()' color='primary' (click)='clickSendRequest()'>リクエストを送る</button>
 </div>

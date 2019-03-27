@@ -51,28 +51,4 @@ export class ProfileEditorComponent implements OnInit, AfterViewInit {
     this.ref.close(null);
   }
 
-  public selectImage(): void {
-    const el = this.fileInputter.nativeElement;
-    const elImg = this.image.nativeElement;
-    el.addEventListener('change', (ev: any) => {
-      if ('target' in ev === false) {
-        return;
-      }
-      if ('files' in ev.target === false) {
-        return;
-      }
-      const files: FileList = ev.target.files;
-      if (files.length <= 0) {
-        return;
-      }
-      const f: File = files.item(0);
-      console.log(f);
-      // this.app.uploadFile(this.agent.currentRoomId, f);
-      (el as any).value = null;
-      fileToSrcURL(f).then((v: ArrayBuffer) => {
-        elImg.src = v;
-      });
-    });
-    el.click();
-  }
 }

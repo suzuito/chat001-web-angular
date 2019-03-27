@@ -114,4 +114,8 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   public messageAgent(externalId: string): EasyAgent {
     return this.dataEasyAgentsService.get(externalId);
   }
+
+  public clickMore(): void {
+    this.roomMessageFetcher.fetch(this.roomService.roomId);
+  }
 }
