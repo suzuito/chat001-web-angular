@@ -50,7 +50,7 @@ export class AgentService {
     return this.messages.find((d: AgentMessage): boolean => {
       if (opt.txtWord) {
         const res = d.lines.filter((v: Line): boolean => {
-          return (new RegExp(opt.txtWord).test(v.body));
+          return (new RegExp(opt.txtWord).test(v.data));
         });
         if (res.length <= 0) {
           return false;

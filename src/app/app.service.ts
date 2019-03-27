@@ -3,7 +3,6 @@ import { ApiService } from './api.service';
 import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init } from './model/other';
-import { HttpErrorResponse } from '@angular/common/http';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
 import { Router } from '@angular/router';
@@ -16,6 +15,7 @@ import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
 import { DataAgentsInRoomService } from './data-agents-in-room.service';
+import { Request } from './model/request';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -206,6 +206,13 @@ export class AppService {
     return this.apiService.postRequests(
       this.localStorageService.get(LocalStorageKey.A),
       externalId, body,
+    );
+  }
+
+  public async postRequestsApprove(request: Request): Promise<void> {
+    return this.apiService.postRequestsApprove(
+      this.localStorageService.get(LocalStorageKey.A),
+      request.id,
     );
   }
 

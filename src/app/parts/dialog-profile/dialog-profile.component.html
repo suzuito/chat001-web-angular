@@ -1,7 +1,7 @@
 <div mat-dialog-title appAgentName [oneLine]='false'>{{agent.name}}</div>
 <div mat-dialog-content>
   <div class='picture'>
-    <app-profile-img [src]='agent.urlImage' mode='medium'></app-profile-img>
+    <app-profile-img [src]='urlImage()' mode='medium'></app-profile-img>
   </div>
   <div appAgentDescription [linesDescription]='10'>{{agent.description}}</div>
 </div>

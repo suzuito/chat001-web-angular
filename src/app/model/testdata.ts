@@ -107,11 +107,12 @@ export function setTestAgentMessages(s: AgentService): void {
     ret.push({
       id: `agentMessage${i}`,
       lines: [
-        { type: LineType.Text, body: `${i}: Hello world` },
-        { type: LineType.Text, body: 'Hi there' },
+        { type: LineType.Spans, data: `${i}: Hello world` },
+        { type: LineType.Spans, data: 'Hi there' },
       ],
       read: randomBoolean(),
       createdAt: getRandomInt(10000000000),
+      type: 1,
     });
   }
   s.setMessage(...ret);
