@@ -92,6 +92,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   }
 
   public messages(): Message[] {
+    this.roomMessageService.clearUnread(this.room.id);
     return this.roomMessageService.getMessages(this.room.id).data;
   }
 

@@ -9,6 +9,7 @@ import { Room } from '../model/room';
 import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { Header001Service } from '../header001/header001.service';
+import { RoomMessageService } from '../room-message.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -19,6 +20,7 @@ export class SideMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private roomMessageService: RoomMessageService,
     private agentService: AgentService,
     private appRootService: AppRootService,
     private appService: AppService,
@@ -94,11 +96,15 @@ export class SideMenuComponent implements OnInit {
     this.appRootService.closeSideNav();
   }
 
-  public unreadMessages(): number {
+  public unreadAgentMessages(): number {
     return this.agentService.unreadMessages;
   }
 
-  public unreadMessagesBadgeHidden(): boolean {
+  public unreadAgentMessagesBadgeHidden(): boolean {
     return this.agentService.unreadMessages <= 0;
+  }
+
+  public unreadRoomMessages(roomId: string): string {
+    return this.roomMessageService.unread(roomId);
   }
 }

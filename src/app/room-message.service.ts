@@ -13,10 +13,12 @@ function comp(a: Message, b: Message): number {
 export class RoomMessageService {
 
   private messages: Map<string, SortedArray<Message>>;
+  private unreadMessages: Map<string, number>;
   private ev: EventEmitter;
 
   constructor() {
     this.messages = new Map<string, SortedArray<Message>>();
+    this.unreadMessages = new Map<string, number>();
     this.ev = new EventEmitter();
   }
 
@@ -37,5 +39,26 @@ export class RoomMessageService {
 
   public addListener(event: string, listener: (...args: any[]) => void): void {
     this.ev.addListener(event, listener);
+  }
+
+  public incrementUnread(roomId: string, i: number): void {
+    if (!this.unreadMessages.has(roomId)) {
+      this.unreadMessages.set(roomId, 0);
+    }
+    this.unreadMessages.set(
+      roomId,
+      this.unreadMessages.get(roomId) + i,
+    );
+  }
+
+  public unread(roomId: string): string {
+    if (!this.unreadMessages.has(roomId)) {
+      return '0';
+    }
+    return this.unreadMessages.get(roomId).toString();
+  }
+
+  public clearUnread(roomId: string): void {
+    this.unreadMessages.set(roomId, 0);
   }
 }

@@ -17,6 +17,8 @@ import { DataEasyAgentsService } from './data-easy-agents.service';
 import { DataAgentsInRoomService } from './data-agents-in-room.service';
 import { Request } from './model/request';
 import { AgentMessage, WSAgentMessage } from './model/agent_message';
+import { RoomService } from './room/room.service';
+import { DataEasyAgentsLatestService } from './data-easy-agents-latest.service';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -25,32 +27,41 @@ export const errCannotEnterRoomError = new Error('');
 })
 export class AppService {
 
+  private soundReciveAgentMessage: any;
+
   constructor(
     private apiService: ApiService,
     private agentService: AgentService,
     private localStorageService: LocalStorageService,
     private roomMessageService: RoomMessageService,
+    private roomService: RoomService,
     private router: Router,
     private dialog: MatDialog,
     private wsService: WsService,
     private dataRoomsService: DataRoomsService,
     private dataEasyAgentsService: DataEasyAgentsService,
     private dataAgentsInRoomService: DataAgentsInRoomService,
+    private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
   ) {
+    this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
       const rmsg = msg.data as RoomMessage;
       switch (rmsg.message.type) {
         case MessageType.Message:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
-          return;
+          break;
         case MessageType.EnterRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           const agentInRoom = rmsg.message.extra.agentInRoom as AgentInRoom;
           this.dataAgentsInRoomService.set(rmsg.roomId, rmsg.message.agentExternalId, newAgentInRoomOnlyID(agentInRoom));
-          return;
+          break;
         case MessageType.ExitRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
+          break;
+      }
+      if (rmsg.roomId !== this.roomService.roomId) {
+        this.roomMessageService.incrementUnread(rmsg.roomId, 1);
       }
     });
     this.wsService.addRoute('/agent/message', (msg: WSMessage) => {
@@ -58,11 +69,21 @@ export class AppService {
       this.agentService.unreadMessages = rmsg.unreadMessages;
       if (rmsg.message) {
         this.agentService.setMessage(rmsg.message);
+        this.soundReciveAgentMessage.play();
       }
     });
     this.wsService.addRoute('/agent/access', (msg: WSMessage) => {
       const rmsg = msg.data as EasyAgent;
       this.dataEasyAgentsService.setAgent(rmsg);
+    });
+    this.wsService.addRoute('/broadcast/latest-agents', (msg: WSMessage) => {
+      const rmsg = msg.data as EasyAgent[];
+      this.dataEasyAgentsLatestService.clear();
+      this.dataEasyAgentsLatestService.setAgent(...rmsg);
+    });
+    this.wsService.addRoute('/broadcast/new-rooms', (msg: WSMessage) => {
+      const rmsg = msg.data as Room[];
+      this.dataRoomsService.setRoom(...rmsg);
     });
   }
 

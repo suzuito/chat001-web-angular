@@ -17,6 +17,7 @@ import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { Room } from '../model/room';
 import { RoomService } from '../room/room.service';
+import { DataEasyAgentsLatestService } from '../data-easy-agents-latest.service';
 
 @Component({
   selector: 'app-agents',
@@ -28,6 +29,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private agentService: AgentService,
     private dataEasyAgents: DataEasyAgentsService,
+    private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
     private dataRoomsService: DataRoomsService,
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
@@ -52,10 +54,7 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public agents(): EasyAgent[] {
-    return this.dataEasyAgents.filter(this.opt).
-      filter(v => {
-        return v.externalId !== this.agentService.get().externalId;
-      });
+    return this.dataEasyAgentsLatestService.getAll(this.agentService.get().externalId);
   }
 
   public async openDialogRequester(agent: EasyAgent): Promise<void> {
