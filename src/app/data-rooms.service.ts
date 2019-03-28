@@ -50,8 +50,8 @@ export class DataRoomsService extends DataStore<Room> {
           return b.createdAt - a.createdAt;
         // case RoomOrderId.Entrant:
         //   return b.agents - a.agents;
-        // case RoomOrderId.Popular:
-        //   return b.agents - a.agents;
+        case OrderId.Boost:
+          return b.agents - a.agents;
       }
       return b.createdAt - a.createdAt;
     });

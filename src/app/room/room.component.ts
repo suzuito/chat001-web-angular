@@ -54,6 +54,10 @@ export class RoomComponent implements OnInit {
     this.router.navigate(['room', this.roomService.roomId]);
   }
 
+  public routeToInfo(): void {
+    this.router.navigate(['room', this.roomService.roomId, 'info']);
+  }
+
   public iconRoomRoute(): string {
     switch (this.roomService.currentRoomRoute) {
       case CurrentRoomRoute.Message:

@@ -1,3 +1,12 @@
 <mat-card>
-  <div *ngFor='let line of message.lines'>{{line.body}}</div>
+  <div *ngFor='let line of message.lines' [ngSwitch]='line.type'>
+    <div *ngSwitchCase='1'>
+      <span *ngFor='let span of line.data' [ngSwitch]='span.type'>
+        <a *ngSwitchCase='3' mat-button (click)='openAgentDialog(span.data)'>{{agentName(span.data)}}</a>
+        <a *ngSwitchCase='4' mat-button (click)='routeToRoomEntrance(span.data)'>{{roomName(span.data)}}</a>
+        <a *ngSwitchCase='6' mat-raised-button (click)='clickApprove(span.data)' color='primary'>承認</a>
+        <span *ngSwitchDefault>{{span.data}}</span>
+      </span>
+    </div>
+  </div>
 </mat-card>

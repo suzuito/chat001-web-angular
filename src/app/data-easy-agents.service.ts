@@ -28,6 +28,8 @@ export class DataEasyAgentsService extends DataStore<EasyAgent> {
       switch (opt.selectedOrderId) {
         case OrderId.Updated:
           return b.updatedAt - a.updatedAt;
+        case OrderId.Accessed:
+          return b.accessedAt - a.accessedAt;
       }
       return b.updatedAt - a.updatedAt;
     });

@@ -18,11 +18,27 @@ export class RoomProfileComponent implements OnInit {
   @Input()
   public linesDescription: number;
 
+  @Input()
+  public unread: number;
+
+  @Input()
+  public nameOnly: boolean;
+
   constructor() {
     this.linesDescription = 1;
+    this.unread = 0;
+    this.nameOnly = false;
   }
 
   ngOnInit() {
+  }
+
+  public unreadString(): string {
+    return this.unread.toString();
+  }
+
+  public hiddenBadge(): boolean {
+    return this.unread <= 0;
   }
 
 }

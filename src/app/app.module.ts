@@ -79,6 +79,7 @@ import { Header002Component } from './header002/header002.component';
 import { ImageCripperComponent } from './image-cripper/image-cripper.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 import { DialogProfileAvatarConfirmerComponent } from './parts/dialog-profile-avatar-confirmer/dialog-profile-avatar-confirmer.component';
+import { InitComponent } from './init/init.component';
 
 @NgModule({
   declarations: [
@@ -138,6 +139,7 @@ import { DialogProfileAvatarConfirmerComponent } from './parts/dialog-profile-av
     ImageCripperComponent,
     ProfileAvatarEditorComponent,
     DialogProfileAvatarConfirmerComponent,
+    InitComponent,
   ],
   imports: [
     BrowserModule,

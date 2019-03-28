@@ -21,6 +21,12 @@ app-header002 {
   right: $padding-content;
 }
 
+.ops-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .padding-ops-buttons {
-  height: 10px;
+  height: $padding-content;
+  width: $padding-content;
 }

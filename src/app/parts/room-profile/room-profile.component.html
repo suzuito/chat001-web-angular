@@ -1,5 +1,17 @@
 <div class='main' [style.width]='width'>
-  <div appRoomName>{{room.name}}</div>
-  <div appRoomDescription [linesDescription]='linesDescription'>{{room.description}}</div>
-  <app-room-properties [room]='room'></app-room-properties>
+  <div class='col-icon'>
+    <button mat-icon-button>
+      <mat-icon [matBadge]='unreadString()' [matBadgeHidden]='hiddenBadge()' [matBadgePosition]="'above after'">
+        <!--
+        <mat-icon>
+          -->
+        meeting_room
+      </mat-icon>
+    </button>
+  </div>
+  <div class='col-profile'>
+    <div appRoomName>{{room.name}}</div>
+    <div appRoomDescription *ngIf='!nameOnly' [linesDescription]='linesDescription'>{{room.description}}</div>
+    <app-room-properties *ngIf='!nameOnly' [room]='room'></app-room-properties>
+  </div>
 </div>

@@ -29,4 +29,8 @@ export class LocalStorageService {
     localStorage.removeItem(k);
   }
 
+  public empty(k: LocalStorageKey): boolean {
+    return !localStorage.getItem(k);
+  }
+
 }

@@ -34,6 +34,10 @@ export class DataStore<T> {
     }
     return false;
   }
+
+  public clear(): void {
+    this.datas = new Map<string, T>();
+  }
 }
 
 export class DataStores<T> {

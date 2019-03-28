@@ -87,7 +87,10 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!result) {
       return;
     }
-    this.roomService.intr(agentsInRoomSelected, result);
+    this.roomService.intr(
+      agentsInRoomSelected.map(v => v.agent),
+      result,
+    );
   }
 
   public role(agentInRoom: AgentInRoom): string {

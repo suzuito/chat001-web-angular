@@ -3,7 +3,6 @@ import { ApiService } from './api.service';
 import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init } from './model/other';
-import { HttpErrorResponse } from '@angular/common/http';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
 import { Router } from '@angular/router';
@@ -16,6 +15,10 @@ import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
 import { DataAgentsInRoomService } from './data-agents-in-room.service';
+import { Request } from './model/request';
+import { AgentMessage, WSAgentMessage } from './model/agent_message';
+import { RoomService } from './room/room.service';
+import { DataEasyAgentsLatestService } from './data-easy-agents-latest.service';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -24,34 +27,63 @@ export const errCannotEnterRoomError = new Error('');
 })
 export class AppService {
 
+  private soundReciveAgentMessage: any;
+
   constructor(
     private apiService: ApiService,
     private agentService: AgentService,
     private localStorageService: LocalStorageService,
     private roomMessageService: RoomMessageService,
+    private roomService: RoomService,
     private router: Router,
     private dialog: MatDialog,
     private wsService: WsService,
     private dataRoomsService: DataRoomsService,
     private dataEasyAgentsService: DataEasyAgentsService,
     private dataAgentsInRoomService: DataAgentsInRoomService,
+    private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
   ) {
+    this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
       const rmsg = msg.data as RoomMessage;
       switch (rmsg.message.type) {
         case MessageType.Message:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
-          return;
+          break;
         case MessageType.EnterRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           const agentInRoom = rmsg.message.extra.agentInRoom as AgentInRoom;
-          console.log(agentInRoom);
           this.dataAgentsInRoomService.set(rmsg.roomId, rmsg.message.agentExternalId, newAgentInRoomOnlyID(agentInRoom));
-          return;
+          break;
         case MessageType.ExitRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
+          break;
       }
+      if (rmsg.roomId !== this.roomService.roomId) {
+        this.roomMessageService.incrementUnread(rmsg.roomId, 1);
+      }
+    });
+    this.wsService.addRoute('/agent/message', (msg: WSMessage) => {
+      const rmsg = msg.data as WSAgentMessage;
+      this.agentService.unreadMessages = rmsg.unreadMessages;
+      if (rmsg.message) {
+        this.agentService.setMessage(rmsg.message);
+        this.soundReciveAgentMessage.play();
+      }
+    });
+    this.wsService.addRoute('/agent/access', (msg: WSMessage) => {
+      const rmsg = msg.data as EasyAgent;
+      this.dataEasyAgentsService.setAgent(rmsg);
+    });
+    this.wsService.addRoute('/broadcast/latest-agents', (msg: WSMessage) => {
+      const rmsg = msg.data as EasyAgent[];
+      this.dataEasyAgentsLatestService.clear();
+      this.dataEasyAgentsLatestService.setAgent(...rmsg);
+    });
+    this.wsService.addRoute('/broadcast/new-rooms', (msg: WSMessage) => {
+      const rmsg = msg.data as Room[];
+      this.dataRoomsService.setRoom(...rmsg);
     });
   }
 
@@ -59,12 +91,13 @@ export class AppService {
     return this.apiService.getInit(this.localStorageService.get(LocalStorageKey.A)).then((v: Init) => {
       this.agentService.set(v.agent);
       this.localStorageService.set(LocalStorageKey.A, v.agent.id);
+      this.agentService.unreadMessages = v.unreadMessages;
       v.roomsAgentIn.rooms.forEach((roomAgentIn: RoomAgentIn) => {
         this.dataRoomsService.setRoom(roomAgentIn.room);
         this.agentService.setRoom(roomAgentIn);
-        this.agentService.unreadMessages = v.unreadMessages;
         this.dataEasyAgentsService.set(v.agent.externalId, v.agent);
       });
+      this.dataEasyAgentsService.setAgent(...v.agents);
       this.wsService.initialize(v.agent.id);
     });
   }
@@ -144,10 +177,10 @@ export class AppService {
     });
   }
 
-  public async updateAgentProperties(name: string, description: string): Promise<void> {
+  public async updateAgentProperties(name: string, description: string, isPublic: boolean): Promise<void> {
     this.apiService.putAgents(
       this.localStorageService.get(LocalStorageKey.A),
-      name, description,
+      name, description, isPublic,
     ).then((updated: Agent) => {
       this.agentService.set(updated);
       this.dataEasyAgentsService.setAgent(updated);
@@ -196,5 +229,27 @@ export class AppService {
       return;
     });
   }
+
+  public async postRequests(externalId: string, body: string): Promise<void> {
+    return this.apiService.postRequests(
+      this.localStorageService.get(LocalStorageKey.A),
+      externalId, body,
+    );
+  }
+
+  public async postRequestsApprove(request: Request): Promise<void> {
+    return this.apiService.postRequestsApprove(
+      this.localStorageService.get(LocalStorageKey.A),
+      request.id,
+    );
+  }
+
+  // public async fetchAgentsLatest(): Promise<void> {
+  //   return this.apiService.getAgentsLatest(
+  //     this.localStorageService.get(LocalStorageKey.A),
+  //   ).then((agents: EasyAgent[]) => {
+  //     this.dataEasyAgentsService.setAgent(...agents);
+  //   });
+  // }
 
 }

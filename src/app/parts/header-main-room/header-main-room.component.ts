@@ -13,14 +13,10 @@ export class HeaderMainRoomComponent implements OnInit {
   @Input()
   public agents: number;
 
-  @Output()
-  public clickSettings: EventEmitter<void>;
-
   constructor() {
     this.title = 'testtesttesttesttesttesttesttest';
     // this.title = 'test';
     this.agents = 123;
-    this.clickSettings = new EventEmitter<void>();
   }
 
   ngOnInit() {

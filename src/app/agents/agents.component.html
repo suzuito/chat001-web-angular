@@ -1,7 +1,10 @@
 <app-header001></app-header001>
 <div class='list'>
-  <app-list-any width='100%' heightList='100%' [disableHeader]='true' [disableMore]='false'>
-    <app-profile-text-all-with-icon2 *ngFor='let agent of agents()' [agent]='agent' imgMode='small' icon='message'>
-    </app-profile-text-all-with-icon2>
+  <app-list-any width='100%' heightList='100%' [disableHeader]='true' [disableMore]='true'>
+    <div class='each-list' *ngFor='let agent of agents()'>
+      <app-profile-text-all-with-icon2 [agent]='agent' imgMode='small' icon='message'
+        (clickIconButton)='openDialogRequester(agent)' (clickProfile)='openDialogProfile(agent)' [nameOnly]='false'>
+      </app-profile-text-all-with-icon2>
+    </div>
   </app-list-any>
 </div>

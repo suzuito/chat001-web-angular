@@ -4,13 +4,12 @@ import { EventEmitter } from 'events';
 import { AgentService } from '../agent.service';
 import { ApiService } from '../api.service';
 import { LocalStorageService, LocalStorageKey } from '../local-storage.service';
-import { RoomAgentIn } from '../model/agent';
+import { RoomAgentIn, EasyAgent } from '../model/agent';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ErrorService } from '../error.service';
 import { RoomMessage, Messages, Message } from '../model/room_message';
 import { RoomMessageService } from '../room-message.service';
-import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { DataEasyAgentsService } from '../data-easy-agents.service';
@@ -36,7 +35,6 @@ export class RoomService {
     private dataAgentsInRoomService: DataAgentsInRoomService,
     private dataEasyAgentsService: DataEasyAgentsService,
     private agentService: AgentService,
-    private appService: AppService,
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
     private router: Router,
@@ -76,7 +74,7 @@ export class RoomService {
     if (this.dataRoomsService.has(this.roomId)) {
       return;
     }
-    return this.appService.fetchRoom(this.roomId).then(() => { return; });
+    return;
   }
 
   public async putRoomsMessages(message: string): Promise<void> {
@@ -89,11 +87,11 @@ export class RoomService {
     });
   }
 
-  public async intr(agents: AgentInRoom[], room: Room): Promise<void> {
+  public async intr(agents: EasyAgent[], room: Room): Promise<void> {
     return this.apiService.postRoomByIDIntroduction(
       this.localStorageService.get(LocalStorageKey.A),
       room.id,
-      agents.map(v => v.agent.externalId),
+      agents.map(v => v.externalId),
     );
   }
 

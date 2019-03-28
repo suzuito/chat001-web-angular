@@ -46,4 +46,8 @@ export class DialogIntroducerComponent implements OnInit {
     this.ref.close(null);
   }
 
+  public disabledYes(): boolean {
+    return this.roomSelected === null;
+  }
+
 }

@@ -9,6 +9,7 @@ export enum AvatarType {
 export interface Agent extends EasyAgent {
   readonly id: string;
   readonly maxOwnedRoom: number;
+  readonly isPublic: boolean;
 }
 
 export interface EasyAgent {
@@ -16,6 +17,7 @@ export interface EasyAgent {
   readonly externalId: string;
   readonly description: string;
   readonly updatedAt: number;
+  readonly accessedAt: number;
   readonly avatarType: AvatarType;
 }
 
