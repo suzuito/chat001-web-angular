@@ -1,1 +1,18 @@
 // * { border: 1px solid red; }
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.col-icon {
+  width: 20%;
+  // border: 1px solid red;
+}
+
+.col-profile {
+  width: 80%;
+  // border: 1px solid red;
+}

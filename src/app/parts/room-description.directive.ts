@@ -22,6 +22,7 @@ export class RoomDescriptionDirective implements AfterViewInit {
     this.el.nativeElement.style['-moz-hyphens'] = 'auto';
     this.el.nativeElement.style['-ms-hyphens'] = 'auto';
     this.el.nativeElement.style.hyphens = 'auto';
+    this.el.nativeElement.style['word-break'] = 'break-all';
     this.linesDescription = 1;
     // this.el.nativeElement.style.border = '1px solid red'; // debug
   }
