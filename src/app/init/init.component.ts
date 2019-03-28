@@ -16,7 +16,7 @@ export class InitComponent implements OnInit {
   }
 
   public routeToTop() {
-    this.router.navigate(['']);
+    location.href = '';
   }
 
 }

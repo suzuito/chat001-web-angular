@@ -16,6 +16,7 @@ import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
 import { DataAgentsInRoomService } from './data-agents-in-room.service';
 import { Request } from './model/request';
+import { AgentMessage, WSAgentMessage } from './model/agent_message';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -45,12 +46,18 @@ export class AppService {
         case MessageType.EnterRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           const agentInRoom = rmsg.message.extra.agentInRoom as AgentInRoom;
-          console.log(agentInRoom);
           this.dataAgentsInRoomService.set(rmsg.roomId, rmsg.message.agentExternalId, newAgentInRoomOnlyID(agentInRoom));
           return;
         case MessageType.ExitRoom:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
           this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
+      }
+    });
+    this.wsService.addRoute('/agent/message', (msg: WSMessage) => {
+      const rmsg = msg.data as WSAgentMessage;
+      this.agentService.unreadMessages = rmsg.unreadMessages;
+      if (rmsg.message) {
+        this.agentService.setMessage(rmsg.message);
       }
     });
     this.wsService.addRoute('/agent/access', (msg: WSMessage) => {
@@ -63,10 +70,10 @@ export class AppService {
     return this.apiService.getInit(this.localStorageService.get(LocalStorageKey.A)).then((v: Init) => {
       this.agentService.set(v.agent);
       this.localStorageService.set(LocalStorageKey.A, v.agent.id);
+      this.agentService.unreadMessages = v.unreadMessages;
       v.roomsAgentIn.rooms.forEach((roomAgentIn: RoomAgentIn) => {
         this.dataRoomsService.setRoom(roomAgentIn.room);
         this.agentService.setRoom(roomAgentIn);
-        this.agentService.unreadMessages = v.unreadMessages;
         this.dataEasyAgentsService.set(v.agent.externalId, v.agent);
       });
       this.dataEasyAgentsService.setAgent(...v.agents);

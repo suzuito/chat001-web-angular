@@ -35,3 +35,9 @@ export interface AgentMessages {
   readonly nextCursor: string;
   readonly messages: AgentMessage[];
 }
+
+export interface WSAgentMessage {
+  readonly message: AgentMessage;
+  readonly unreadMessages: number;
+  readonly messages: number;
+}
