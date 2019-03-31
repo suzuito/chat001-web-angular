@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Message } from 'src/app/model/room_message';
 import { AgentInRoom } from 'src/app/model/room';
 import { EasyAgent } from 'src/app/model/agent';
-import { urlAvatar } from 'src/app/util';
+import { urlAvatar, getRealStyle } from 'src/app/util';
 import { ProfileImageSize } from '../profile-img/profile-img.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProfileImageSize } from '../profile-img/profile-img.component';
   templateUrl: './list-room-message-each.component.html',
   styleUrls: ['./list-room-message-each.component.scss']
 })
-export class ListRoomMessageEachComponent implements OnInit {
+export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
 
   @Input()
   public message: Message;
@@ -30,6 +30,15 @@ export class ListRoomMessageEachComponent implements OnInit {
   @Output()
   public clickMenuUserInfo: EventEmitter<void>;
 
+  @ViewChild('domMain')
+  public domMain: ElementRef;
+
+  @ViewChild('domUser')
+  public domUser: ElementRef;
+
+  @ViewChild('domBody')
+  public domBody: ElementRef;
+
   constructor() {
     this.isLeft = true;
     this.clickUserIcon = new EventEmitter<void>();
@@ -38,6 +47,19 @@ export class ListRoomMessageEachComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    /*
+    const cssMain = getRealStyle(this.domMain);
+    const cssUser = getRealStyle(this.domUser);
+    const cssBody = getRealStyle(this.domBody);
+    const widthUser = parseInt(cssMain.width, 10) * 0.3;
+    const widthBody = parseInt(cssMain.width, 10) * 0.7;
+    console.log(cssMain.width, widthUser, widthBody);
+    this.domUser.nativeElement.style.width = `${widthUser}px`;
+    this.domBody.nativeElement.style.width = `${widthBody}px`;
+    */
   }
 
   public agentName(): string {

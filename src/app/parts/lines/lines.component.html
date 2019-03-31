@@ -1,0 +1,4 @@
+<div *ngFor='let line of lines' [ngSwitch]='line.type'>
+  <div *ngSwitchDefault>メッセージを表示できません</div>
+  <app-spans *ngSwitchCase='1' [spans]='line.obj'></app-spans>
+</div>

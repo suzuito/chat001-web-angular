@@ -1,0 +1,13 @@
+.main001 {
+  position: absolute;
+  width: 100px;
+  top: 100px;
+  left: 100px;
+  border: 1px solid red;
+
+  word-wrap: break-word;
+   -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}

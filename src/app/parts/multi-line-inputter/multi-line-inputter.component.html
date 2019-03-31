@@ -1,0 +1,12 @@
+<div class='actions'>
+  <div>
+    <button mat-raised-button (click)='ok()' color='primary'>Post</button>
+  </div>
+  <div>
+    <button mat-raised-button (click)='cancel()' color=''>キャンセル</button>
+  </div>
+</div>
+<mat-form-field>
+  <textarea [(ngModel)]='message' matInput matTextareaAutosize matAutosizeMaxRows='10' matAutosizeMinRows='3'
+    placeholder='複数行の入力できるよ'></textarea>
+</mat-form-field>

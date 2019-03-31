@@ -11,9 +11,17 @@ export enum MessageType {
   UpdateRole = 500,
 }
 
+export enum LineType { }
+
+export interface Line {
+  readonly type: LineType;
+  readonly data: string;
+  obj: any;
+}
+
 export interface Message {
   readonly id: string;
-  readonly body: string;
+  readonly lines: Line[];
   readonly agentExternalId: string;
   readonly type: MessageType;
   readonly createdAt: number;
@@ -28,4 +36,12 @@ export interface RoomMessage {
 export interface Messages {
   readonly nextCursor: string;
   readonly messages: Message[];
+}
+
+export function attachObjectToMessage(...msgs: Message[]): void {
+  msgs.forEach((msg: Message) => {
+    msg.lines.forEach((line: Line) => {
+      line.obj = JSON.parse(line.data);
+    });
+  });
 }

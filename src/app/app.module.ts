@@ -80,6 +80,11 @@ import { ImageCripperComponent } from './image-cripper/image-cripper.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 import { DialogProfileAvatarConfirmerComponent } from './parts/dialog-profile-avatar-confirmer/dialog-profile-avatar-confirmer.component';
 import { InitComponent } from './init/init.component';
+import { LinesComponent } from './parts/lines/lines.component';
+import { SpansComponent } from './parts/spans/spans.component';
+import { ExampleComponent } from './example/example.component';
+import { MultiLineInputterComponent } from './parts/multi-line-inputter/multi-line-inputter.component';
+import { DialogImgUploadConfirmerComponent } from './parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +145,11 @@ import { InitComponent } from './init/init.component';
     ProfileAvatarEditorComponent,
     DialogProfileAvatarConfirmerComponent,
     InitComponent,
+    LinesComponent,
+    SpansComponent,
+    ExampleComponent,
+    MultiLineInputterComponent,
+    DialogImgUploadConfirmerComponent,
   ],
   imports: [
     BrowserModule,
@@ -175,6 +185,8 @@ import { InitComponent } from './init/init.component';
     DialogPasswordInputterComponent,
     DialogConfirmerComponent,
     DialogProfileAvatarConfirmerComponent,
+    DialogImgUploadConfirmerComponent,
+    MultiLineInputterComponent,
   ],
   bootstrap: [AppComponent]
 })

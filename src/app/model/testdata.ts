@@ -126,8 +126,7 @@ export function setTestRoomMessages(s: RoomMessageService, d: DataAgentsInRoomSe
       const agentI = getRandomInt(agents.length);
       s.pushMessage(room.id, {
         id: `message${room.id}.${i}`,
-        body: `message${room.id}.${i}.body: 今後ジョブの中間出力に対してデフォルトで zstd による圧縮を適用させるための設定変更メンテナンスを実施予定です。
-        zstd デフォルト化後にジョブが実行できなくなる可能性を事前に排除するため、下記の2点に関してご確認いただくようお願い致します。`,
+        lines: [],
         agentExternalId: agents[agentI].externalID,
         type: MessageType.Message,
         createdAt: getRandomInt(10000000000),

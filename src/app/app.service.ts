@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
-import { Init } from './model/other';
+import { Init, RoomMessageImageLink } from './model/other';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { WsService } from './ws.service';
 import { WSMessage } from './model/ws';
-import { RoomMessage, MessageType } from './model/room_message';
+import { RoomMessage, MessageType, attachObjectToMessage } from './model/room_message';
 import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
@@ -46,6 +46,7 @@ export class AppService {
     this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
       const rmsg = msg.data as RoomMessage;
+      attachObjectToMessage(rmsg.message);
       switch (rmsg.message.type) {
         case MessageType.Message:
           this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
@@ -241,6 +242,13 @@ export class AppService {
     return this.apiService.postRequestsApprove(
       this.localStorageService.get(LocalStorageKey.A),
       request.id,
+    );
+  }
+
+  public async postRoomsMessagesImage(roomId: string, file: File): Promise<RoomMessageImageLink> {
+    return this.apiService.postRoomsMessagesImage(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId, file,
     );
   }
 
