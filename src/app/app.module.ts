@@ -85,6 +85,8 @@ import { SpansComponent } from './parts/spans/spans.component';
 import { ExampleComponent } from './example/example.component';
 import { MultiLineInputterComponent } from './parts/multi-line-inputter/multi-line-inputter.component';
 import { DialogImgUploadConfirmerComponent } from './parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
+import { LineRequestComponent } from './parts/line-request/line-request.component';
+import { LineRoomIntroductionComponent } from './parts/line-room-introduction/line-room-introduction.component';
 
 @NgModule({
   declarations: [
@@ -150,6 +152,8 @@ import { DialogImgUploadConfirmerComponent } from './parts/dialog-img-upload-con
     ExampleComponent,
     MultiLineInputterComponent,
     DialogImgUploadConfirmerComponent,
+    LineRequestComponent,
+    LineRoomIntroductionComponent,
   ],
   imports: [
     BrowserModule,

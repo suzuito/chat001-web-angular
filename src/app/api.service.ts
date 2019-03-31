@@ -4,7 +4,7 @@ import { environment } from '../environments/environment';
 import { Init, RoomMessageImageLink } from './model/other';
 import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom } from './model/room';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
-import { RoomMessage, Messages, attachObjectToMessage } from './model/room_message';
+import { RoomMessage, Messages, attachObjectToMessage, attachObjectToAgentMessage } from './model/room_message';
 import { AgentMessages } from './model/agent_message';
 
 class OptBuilder {
@@ -190,7 +190,10 @@ export class ApiService {
   public async getAgentsMessages(atoken: string, nextCursor: string = '', limits: number = -1): Promise<AgentMessages> {
     return this.http.get<AgentMessages>(
       url(`/api/agents/messages`), new OptBuilder().atoken(atoken).jsonResponseBody().nextCursor(nextCursor).limits(limits).gen(),
-    ).toPromise().then((res: any) => res);
+    ).toPromise().then((res: any) => {
+      attachObjectToAgentMessage(...res.messages);
+      return res;
+    });
   }
 
   public async putAgentsAvatar(atoken: string, f: File): Promise<Agent> {

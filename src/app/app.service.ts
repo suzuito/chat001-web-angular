@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { WsService } from './ws.service';
 import { WSMessage } from './model/ws';
-import { RoomMessage, MessageType, attachObjectToMessage } from './model/room_message';
+import { RoomMessage, MessageType, attachObjectToMessage, attachObjectToAgentMessage } from './model/room_message';
 import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
@@ -67,6 +67,7 @@ export class AppService {
     });
     this.wsService.addRoute('/agent/message', (msg: WSMessage) => {
       const rmsg = msg.data as WSAgentMessage;
+      attachObjectToAgentMessage(rmsg.message);
       this.agentService.unreadMessages = rmsg.unreadMessages;
       if (rmsg.message) {
         this.agentService.setMessage(rmsg.message);

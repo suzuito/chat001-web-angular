@@ -1,27 +1,4 @@
-
-
-export enum LineType {
-  Spans = 1,
-}
-
-export enum SpanType {
-  Text = 1,
-  URL = 2,
-  Agent = 3,
-  RoomEntrance = 4,
-  LineBreak = 5,
-  RequestApprove = 6,
-}
-
-export interface Span {
-  readonly type: SpanType;
-  readonly data: any;
-}
-
-export interface Line {
-  readonly type: LineType;
-  readonly data: any;
-}
+import { Line } from './line';
 
 export interface AgentMessage {
   readonly id: string;

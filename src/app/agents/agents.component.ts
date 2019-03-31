@@ -11,7 +11,7 @@ import {
   DataDialogRequester,
 } from '../parts/dialog-requester/dialog-requester.component';
 import { AppService } from '../app.service';
-import { DialogProfileComponent, DataDialogProfile } from '../parts/dialog-profile/dialog-profile.component';
+import { DialogProfileComponent, ResultDialogProfile, DataDialogProfile } from '../parts/dialog-profile/dialog-profile.component';
 import { DialogIntroducerComponent } from '../parts/dialog-introducer/dialog-introducer.component';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { DataRoomsService } from '../data-rooms.service';
@@ -77,16 +77,16 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
     const ref = this.dialog.open(
       DialogProfileComponent,
       {
-        data: agent,
+        data: { agent, readonly: false } as DataDialogProfile,
       },
     );
-    const result: DataDialogProfile = await ref.afterClosed().toPromise();
+    const result: ResultDialogProfile = await ref.afterClosed().toPromise();
     if (!result) {
       return;
     }
-    if (result === DataDialogProfile.Request) {
+    if (result === ResultDialogProfile.Request) {
       this.openDialogRequester(agent);
-    } else if (result === DataDialogProfile.Intr) {
+    } else if (result === ResultDialogProfile.Intr) {
       this.openDialogIntr(agent);
     }
   }

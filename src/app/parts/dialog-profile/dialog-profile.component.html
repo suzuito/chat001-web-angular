@@ -5,7 +5,7 @@
   </div>
   <div appAgentDescription [linesDescription]='10'>{{agent.description}}</div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions *ngIf='!readonly'>
   <button mat-raised-button color='primary' (click)='clickRequest()'>リクエスト</button>
   <button mat-raised-button color='primary' (click)='clickIntr()'>招待する</button>
 </div>

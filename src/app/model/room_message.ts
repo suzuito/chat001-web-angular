@@ -1,3 +1,6 @@
+import { Line } from './line';
+import { AgentMessage } from './agent_message';
+
 export enum MessageType {
   Message = 1,
   EnterRoom = 2,
@@ -9,14 +12,6 @@ export enum MessageType {
   Video = 300,
   YouTube = 400,
   UpdateRole = 500,
-}
-
-export enum LineType { }
-
-export interface Line {
-  readonly type: LineType;
-  readonly data: string;
-  obj: any;
 }
 
 export interface Message {
@@ -40,6 +35,14 @@ export interface Messages {
 
 export function attachObjectToMessage(...msgs: Message[]): void {
   msgs.forEach((msg: Message) => {
+    msg.lines.forEach((line: Line) => {
+      line.obj = JSON.parse(line.data);
+    });
+  });
+}
+
+export function attachObjectToAgentMessage(...msgs: AgentMessage[]): void {
+  msgs.forEach((msg: AgentMessage) => {
     msg.lines.forEach((line: Line) => {
       line.obj = JSON.parse(line.data);
     });
