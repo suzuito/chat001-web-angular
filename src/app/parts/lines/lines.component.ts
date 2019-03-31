@@ -12,19 +12,9 @@ export class LinesComponent implements OnInit {
   @Input()
   public lines: Line[];
 
-  constructor(
-    private dataEasyAgentsService: DataEasyAgentsService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  public agentName(externalId: string): string {
-    const agent = this.dataEasyAgentsService.get(externalId);
-    if (!agent) {
-      return '???';
-    }
-    return agent.name;
   }
 
 }

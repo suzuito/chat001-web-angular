@@ -43,4 +43,8 @@ export class SpansComponent implements OnInit {
     return span.data.url;
   }
 
+  public dataSpanYouTubeURLWidth(span: SpanURL): string {
+    return `${window.innerWidth * 0.5}px`;
+  }
+
 }

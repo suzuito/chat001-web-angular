@@ -44,7 +44,7 @@ import { AgentMessageComponent } from './parts/agent-message/agent-message.compo
 import { AgentMessagesSearchOptionComponent } from './agent-messages/agent-messages-search-option/agent-messages-search-option.component';
 import { RoomComponent } from './room/room.component';
 import { RoomInfoComponent } from './parts/room-info/room-info.component';
-import { DatetimeStringPipe } from './pipe/date';
+import { DatetimeStringPipe, SafePipe } from './pipe/date';
 import { RoomMemberComponent } from './room/room-member/room-member.component';
 import { RoomMessageComponent } from './room/room-message/room-message.component';
 import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
@@ -154,6 +154,7 @@ import { LineRoomIntroductionComponent } from './parts/line-room-introduction/li
     DialogImgUploadConfirmerComponent,
     LineRequestComponent,
     LineRoomIntroductionComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

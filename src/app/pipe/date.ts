@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { stringPaddedNumber } from '../util/date';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({ name: 'datetimeString', pure: false })
 export class DatetimeStringPipe implements PipeTransform {
@@ -18,5 +19,13 @@ export class DatetimeStringPipe implements PipeTransform {
       str += ` ${h}:${M}:${s}`;
     }
     return str;
+  }
+}
+
+@Pipe({ name: 'safeIframeSource' })
+export class SafePipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) { }
+  transform(url): any {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

@@ -19,6 +19,7 @@ import { Request } from './model/request';
 import { AgentMessage, WSAgentMessage } from './model/agent_message';
 import { RoomService } from './room/room.service';
 import { DataEasyAgentsLatestService } from './data-easy-agents-latest.service';
+import { DataSyncherService } from './data-syncher.service';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -42,6 +43,7 @@ export class AppService {
     private dataEasyAgentsService: DataEasyAgentsService,
     private dataAgentsInRoomService: DataAgentsInRoomService,
     private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
+    private dataSyncherService: DataSyncherService,
   ) {
     this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
