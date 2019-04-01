@@ -47,4 +47,8 @@ export class SpansComponent implements OnInit {
     return `${window.innerWidth * 0.5}px`;
   }
 
+  public dataSpanYouTubeURLHeight(span: SpanURL): string {
+    return `${window.innerWidth * 0.5}px`;
+  }
+
 }
