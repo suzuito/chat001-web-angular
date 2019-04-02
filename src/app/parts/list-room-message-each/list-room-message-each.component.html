@@ -1,5 +1,5 @@
-<mat-toolbar class='main' [style.flex-direction]='flexDirectionMain()'>
-  <div class='user' [style.text-align]='textAlign()'>
+<div class='main' [style.flex-direction]='flexDirectionMain()' #domMain>
+  <div class='user' [style.text-align]='textAlign()' #domUser>
     <div class='user-name mat-caption' [matMenuTriggerFor]='menu'>
       {{agentName()}}
     </div>
@@ -7,8 +7,13 @@
       <app-profile-img mode='small' [src]='agentURLImage()' (click)='clickUserIcon.emit()'></app-profile-img>
     </div>
   </div>
-  <div class='body mat-body-2'>{{message.body}}</div>
-</mat-toolbar>
+  <!--
+  <div class='body mat-body-2'>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+  -->
+  <div class='body mat-body-2' #domBody>
+    <app-lines [lines]='message.lines'></app-lines>
+  </div>
+</div>
 <mat-menu #menu='matMenu'>
   <button mat-menu-item (click)='clickMenuRequest.emit()'>
     <mat-icon>person</mat-icon>

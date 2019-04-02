@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Agent, RoomAgentIn, RoomAgentInOnlyID, newRoomAgentIn, newRoomAgentInOnlyID } from './model/agent';
-import { AgentMessage, Line } from './model/agent_message';
+import { AgentMessage } from './model/agent_message';
 import { DataStore } from './data.store';
 import { AgentMessagesSearchOption } from './agent-messages/agent-messages-search-option.service';
+import { Line } from './model/line';
 
 @Injectable({
   providedIn: 'root'

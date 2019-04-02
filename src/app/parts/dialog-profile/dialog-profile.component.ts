@@ -4,9 +4,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { urlAvatar } from 'src/app/util';
 import { ProfileImageSize } from '../profile-img/profile-img.component';
 
-export enum DataDialogProfile {
+export enum ResultDialogProfile {
   Request = 1,
   Intr,
+}
+
+export interface DataDialogProfile {
+  agent: EasyAgent;
+  readonly: boolean;
 }
 
 @Component({
@@ -16,10 +21,15 @@ export enum DataDialogProfile {
 })
 export class DialogProfileComponent implements OnInit {
 
+  public agent: EasyAgent;
+  public readonly: boolean;
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public agent: EasyAgent,
+    @Inject(MAT_DIALOG_DATA) public data: DataDialogProfile,
     private ref: MatDialogRef<DialogProfileComponent>,
   ) {
+    this.agent = data.agent;
+    this.readonly = data.readonly;
   }
 
   ngOnInit() {
@@ -30,11 +40,11 @@ export class DialogProfileComponent implements OnInit {
   }
 
   public clickRequest() {
-    this.ref.close(DataDialogProfile.Request);
+    this.ref.close(ResultDialogProfile.Request);
   }
 
   public clickIntr() {
-    this.ref.close(DataDialogProfile.Intr);
+    this.ref.close(ResultDialogProfile.Intr);
   }
 
 }

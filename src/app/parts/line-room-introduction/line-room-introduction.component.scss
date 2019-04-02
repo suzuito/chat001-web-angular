@@ -1,0 +1,5 @@
+@import '../../common';
+
+.button-link {
+  @include button-link
+}

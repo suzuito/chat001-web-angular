@@ -18,6 +18,7 @@ import { AppRootResolverService } from './app-root/app-root-resolver.service';
 import { ErrorComponent } from './error/error.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 import { InitComponent } from './init/init.component';
+import { ExampleComponent } from './example/example.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: 'init',
     component: InitComponent,
+  },
+  {
+    path: 'example',
+    component: ExampleComponent,
   },
 ];
 

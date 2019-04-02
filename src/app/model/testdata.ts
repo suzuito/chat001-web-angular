@@ -1,5 +1,5 @@
 import { Room, RoomStatus, AgentInRoom, AgentRoleInRoom, emptyRoom } from './room';
-import { AgentMessage, LineType } from './agent_message';
+import { AgentMessage } from './agent_message';
 import { AgentService } from '../agent.service';
 import { RoomMessageService } from '../room-message.service';
 import { RoomMessage, MessageType } from './room_message';
@@ -9,6 +9,7 @@ import { DataEasyAgentsService } from '../data-easy-agents.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { DataAgentsInRoomService } from '../data-agents-in-room.service';
 import { ProfileImageSize } from '../parts/profile-img/profile-img.component';
+import { LineType } from './line';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -107,8 +108,8 @@ export function setTestAgentMessages(s: AgentService): void {
     ret.push({
       id: `agentMessage${i}`,
       lines: [
-        { type: LineType.Spans, data: `${i}: Hello world` },
-        { type: LineType.Spans, data: 'Hi there' },
+        { type: LineType.Spans, obj: null, data: `${i}: Hello world` },
+        { type: LineType.Spans, obj: null, data: 'Hi there' },
       ],
       read: randomBoolean(),
       createdAt: getRandomInt(10000000000),
@@ -126,8 +127,7 @@ export function setTestRoomMessages(s: RoomMessageService, d: DataAgentsInRoomSe
       const agentI = getRandomInt(agents.length);
       s.pushMessage(room.id, {
         id: `message${room.id}.${i}`,
-        body: `message${room.id}.${i}.body: 今後ジョブの中間出力に対してデフォルトで zstd による圧縮を適用させるための設定変更メンテナンスを実施予定です。
-        zstd デフォルト化後にジョブが実行できなくなる可能性を事前に排除するため、下記の2点に関してご確認いただくようお願い致します。`,
+        lines: [],
         agentExternalId: agents[agentI].externalID,
         type: MessageType.Message,
         createdAt: getRandomInt(10000000000),

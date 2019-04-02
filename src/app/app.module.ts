@@ -44,7 +44,7 @@ import { AgentMessageComponent } from './parts/agent-message/agent-message.compo
 import { AgentMessagesSearchOptionComponent } from './agent-messages/agent-messages-search-option/agent-messages-search-option.component';
 import { RoomComponent } from './room/room.component';
 import { RoomInfoComponent } from './parts/room-info/room-info.component';
-import { DatetimeStringPipe } from './pipe/date';
+import { DatetimeStringPipe, SafePipe } from './pipe/date';
 import { RoomMemberComponent } from './room/room-member/room-member.component';
 import { RoomMessageComponent } from './room/room-message/room-message.component';
 import { RoomInputterComponent } from './room/room-inputter/room-inputter.component';
@@ -80,6 +80,13 @@ import { ImageCripperComponent } from './image-cripper/image-cripper.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 import { DialogProfileAvatarConfirmerComponent } from './parts/dialog-profile-avatar-confirmer/dialog-profile-avatar-confirmer.component';
 import { InitComponent } from './init/init.component';
+import { LinesComponent } from './parts/lines/lines.component';
+import { SpansComponent } from './parts/spans/spans.component';
+import { ExampleComponent } from './example/example.component';
+import { MultiLineInputterComponent } from './parts/multi-line-inputter/multi-line-inputter.component';
+import { DialogImgUploadConfirmerComponent } from './parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
+import { LineRequestComponent } from './parts/line-request/line-request.component';
+import { LineRoomIntroductionComponent } from './parts/line-room-introduction/line-room-introduction.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +147,14 @@ import { InitComponent } from './init/init.component';
     ProfileAvatarEditorComponent,
     DialogProfileAvatarConfirmerComponent,
     InitComponent,
+    LinesComponent,
+    SpansComponent,
+    ExampleComponent,
+    MultiLineInputterComponent,
+    DialogImgUploadConfirmerComponent,
+    LineRequestComponent,
+    LineRoomIntroductionComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,
@@ -175,6 +190,8 @@ import { InitComponent } from './init/init.component';
     DialogPasswordInputterComponent,
     DialogConfirmerComponent,
     DialogProfileAvatarConfirmerComponent,
+    DialogImgUploadConfirmerComponent,
+    MultiLineInputterComponent,
   ],
   bootstrap: [AppComponent]
 })

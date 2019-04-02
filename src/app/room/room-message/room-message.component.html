@@ -9,15 +9,22 @@
   </div>
 </div>
 <div class='padding-inputter'></div>
-<mat-toolbar class='inputter' color='' #inputterToolbar>
+<mat-toolbar class='inputter' #inputterToolbar>
+  <div>
+    <button mat-icon-button (click)='openMultiLineInputter()'>
+      <mat-icon>vertical_align_top</mat-icon>
+    </button>
+  </div>
   <div class='inputter-form'>
     <mat-form-field class='inputter-input'>
-      <input type="text" [(ngModel)]='message' matInput [style.font-size]="'15px'" (keyup)='inputMessage($event)'>
+      <textarea type="text" matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='1'
+        [(ngModel)]='message' matInput [style.font-size]="'15px'" (input)='checkInput($event)'></textarea>
     </mat-form-field>
   </div>
   <div>
-    <button mat-icon-button>
+    <button mat-icon-button (click)='uploadImage()'>
       <mat-icon>photo</mat-icon>
     </button>
+    <input type='file' hidden #fileInputter />
   </div>
 </mat-toolbar>

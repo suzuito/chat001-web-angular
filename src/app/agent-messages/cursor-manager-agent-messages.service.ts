@@ -5,6 +5,7 @@ import { LocalStorageService, LocalStorageKey } from '../local-storage.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { AgentService } from '../agent.service';
 import { AgentMessages } from '../model/agent_message';
+import { DataSyncherService } from '../data-syncher.service';
 
 export const defaultId = 'dummy';
 
@@ -17,6 +18,7 @@ export class CursorManagerAgentMessagesService extends CursorManager {
     private agentService: AgentService,
     private apiService: ApiService,
     private localStorageService: LocalStorageService,
+    private dataSyncherService: DataSyncherService,
   ) {
     super();
   }

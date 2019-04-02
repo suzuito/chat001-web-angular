@@ -9,3 +9,7 @@ export interface Init {
   readonly agents: EasyAgent[];
   readonly newed: boolean;
 }
+
+export interface RoomMessageImageLink {
+  readonly url: string;
+}
