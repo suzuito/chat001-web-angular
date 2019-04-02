@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Internal Server Error</title>
+  <title>{{title}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     * {
@@ -54,7 +54,7 @@
 </head>
 
 <body>
-  <h1>{{title()}}</h1>
+  <h1>{{head()}}</h1>
   <p>{{body()}}</p>
   <a [href]='reloadURL()'>{{reload()}}</a>
 </body>

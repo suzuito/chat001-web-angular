@@ -36,13 +36,14 @@ Error
 
 #### SidemenuComponent
 
-* Can open side menu using right up toggle opener.
-* Can close side menu using right up toggle opener.
+* Open side menu using right up toggle opener.
+* Close side menu using right up toggle opener.
+* Close side menu when an user click out of side menu area.
 * Display agent name, description and image.
 * Display shortened agent name, description if there is the one.
 
 * Click "画像の更新" and route to ProfileAvatarEditorComponent
-* Click "編集する" and open dialog of ProfileEditorComponent
+* Click "編集する" and open ProfileEditor
 
 * Click "新着順" and route to RoomsComponent with query 'd=0'
 * Click "人気順" and route to RoomsComponent with query 'd=1'
@@ -58,6 +59,8 @@ Error
 #### RoomsComponent
 
 * Display "部屋がありません" if displayed rooms are nothing.
+* Display created room by other any users.
+* There is no private room in displayed rooms.
 * Change header title.
 * Accessing without query 'd' display rooms order by createdAt.
 * Accessing with query 'd=0' display rooms order by createdAt.
@@ -72,9 +75,9 @@ Error
 * Display "アクティブユーザーがいません" if displayed agents are nothing.
 * Change header title.
 * Display latest agents top 30.
-* Click a agent and display dialog of agent.
-* Click "リクエスト" on a dialog of agent and display request dialog.
-* Click "招待する" on a dialog of agent and display introduction dialog.
+* Click a agent and display DialogProfile.
+* Click "リクエスト" on a DialogProfile and display DialogRequester.
+* Click "招待する" on a DialogProfile and display DialogIntroducer.
 
 #### AgentMessagesComponent
 
@@ -85,20 +88,34 @@ Error
 * Mark unread message with accent color.
 * Set number of unread messages to zero.
 
+##### Introduction message
+
+* Click agent button and display DialogProfile with readonly.
+* Click agent button and display DialogRoomProfile with readonly.
+* Display "入室する" button and click this and enter the room and route the room.
+* If agent already enters room then message is not sent to the agent.
+
+##### Request message
+
+* Click agent button and display DialogProfile with readonly.
+* Display "承認する" button and click this and enter the room and route the room.
+
 ### RoomCreatorComponent
 
 * Display name and description of room.
+* Display error message when invalid room input.
 * Random selection of name and description.
 * Set default value to each input by queries.
 * Set default value to each input without queries.
 * Click "作成" and route to created room.
+* Call Error event if creating room is failed.
 
 ### RoomComponent
 
 * Click group icon and route to RoomMembers.
 * Click settings icon and route to RoomInfo.
 * Click clear icon and exit the room and route to another room agent in.
-* Click notification icon and open menu dialog of agent messages.
+* Click notification icon and open menu of agent messages.
 
 #### RoomMessagesComponent
 
@@ -106,8 +123,8 @@ Error
 * Display messages.
 * Click "もっと読み込む" and load more room messages.
 * Open agent's menus when click agent.
-* Click "情報" menu and open dialog agent dialog with read only.
-* Click "リクエスト" menu and open dialog request dialog.
+* Click "情報" menu and open DialogProfile with read only.
+* Click "リクエスト" menu and open DialogRequester.
 * Scroll when agent is at bottom of scroll and posted new message.
 
 ##### URLMessage
@@ -129,48 +146,46 @@ Error
 * Input message.
 * Open input bottom sheet when click open toggle.
 * Disable close of bottom sheet.
-* Open image selector dialog when click open image icon.
+* Open image selector DialogImgUploadConfirmer when click open image icon.
 * Confirm image upload when image is selected.
 * Message is posted when enters key.
+* Display error message when invalid room input.
 
 #### RoomMemberComponent
 
-* Click role button to change the role and open role selector dialog.
+* Click role button to change the role and open DialogRoleSelector.
 * Disable role button if you doesn't have admin role.
 * Disable "招待する" button if you doesn't check any checkbox.
-* Click "招待する" button and open DialogRoomIntroducter.
-
-##### DialogRoleSelector
+* Click "招待する" button and open DialogIntroducer.
+* Click agent icon button and open DialogAgent with readonly.
+* Display all room members.
+* Display user himself.
 
 #### RoomInfoComponent
 
 * Display name and description of room.
+* Display error message when invalid room input.
 * Random selection of name and description.
-* Set default value to each input by queries.
-* Set default value to each input without queries.
-* Click "更新" and route to created room.
+* Click "更新" and open DialogUpdateConfirmRoomInfoComponent.
+* Readonly if user doesn't have permission.
+* Call Error event if creating room is failed.
 
-#### Introduction message
+### ErrorComponent
 
-* Click agent button and display agent dialog with readonly.
-* Click agent button and display room dialog with readonly.
-* Display "入室する" button and click this and enter the room and route the room.
-
-#### Request message
-
-* Click agent button and display agent dialog with readonly.
-* Display "承認する" button and click this and enter the room and route the room.
+* Display error title, description and reload link.
 
 ## Dialogs
 
-### RequestDialog
+### ProfileEditor
+
+### DialogRequester
 
 * Display user name, description and icon.
 * Disable click button when "一言メッセージ" is empty.
-* Input "一言メッセージ" and click "リクエストを送る", close dialog. Display "リクエストを送りました" on snackbar.
-* Close dialog when click out range of dialog.
+* Input "一言メッセージ" and click "リクエストを送る", close the dialog. Display "リクエストを送りました" on snackbar.
+* Close the dialog when click out range of the dialog.
 
-### IntroductionDialog
+### DialogIntroducer
 
 * Display selected user names and selector for room to introduce.
 * Introduced rooms are where agent in.
@@ -178,4 +193,15 @@ Error
 * Disable "はい" when room is not selected.
 * Close dialog when click out range of dialog.
 
-### AgentDialog
+### DialogProfile
+
+Display no action buttons if readonly is true.
+
+### DialogRoomProfile
+
+Display no action buttons if readonly is true.
+
+### DialogRequester
+### DialogIntroducer
+### DialogImgUploadConfirmer
+### DialogRoleSelector
