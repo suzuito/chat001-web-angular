@@ -29,9 +29,6 @@ Type of notifications are either info or warn.
 * Buttons of sub header display data properly.
 * Notifications for recieving agent message.
   * With sound and text
-
-Error
-
 * If API response with http status 5XX, it's fatal error.
 
 #### SidemenuComponent
@@ -55,6 +52,10 @@ Error
 * Click a room in which agent is and route to RoomMessageComponent
 
 * Notifications for recieving room message.
+
+#### AgentAvatarEditorComponent
+
+* Display DialogConfirm when user will leave this page.
 
 #### RoomsComponent
 
@@ -109,6 +110,7 @@ Error
 * Set default value to each input without queries.
 * Click "作成" and route to created room.
 * Call Error event if creating room is failed.
+* Save editing state when user leave this page.
 
 ### RoomComponent
 
@@ -169,6 +171,7 @@ Error
 * Click "更新" and open DialogUpdateConfirmRoomInfoComponent.
 * Readonly if user doesn't have permission.
 * Call Error event if creating room is failed.
+* Save editing state when user leave this page.
 
 ### ErrorComponent
 
@@ -178,12 +181,20 @@ Error
 
 ### ProfileEditor
 
+* Display user name and description.
+* Disable update button if name is empty.
+* Click update button, close dialog and update user profile.
+* Click cancel button and close dialog.
+* If updating profile is success, notify success message.
+* Disable close by clicking out of range.
+
 ### DialogRequester
 
 * Display user name, description and icon.
 * Disable click button when "一言メッセージ" is empty.
 * Input "一言メッセージ" and click "リクエストを送る", close the dialog. Display "リクエストを送りました" on snackbar.
-* Close the dialog when click out range of the dialog.
+* Click cancel button and close dialog.
+* Disable close by clicking out of range.
 
 ### DialogIntroducer
 
@@ -191,17 +202,29 @@ Error
 * Introduced rooms are where agent in.
 * Display "招待できる部屋がありません" on snackbar when agent enters no rooms.
 * Disable "はい" when room is not selected.
-* Close dialog when click out range of dialog.
+* Click cancel button and close dialog.
+* Disable close by clicking out of range.
 
 ### DialogProfile
 
-Display no action buttons if readonly is true.
+* Display name, description and icon.
+* Display no action buttons if readonly is true.
+* Close dialog when click out range of dialog.
 
 ### DialogRoomProfile
 
-Display no action buttons if readonly is true.
+* Display name and description.
+* Display no action buttons if readonly is true.
+* Close dialog when click out range of dialog.
 
-### DialogRequester
-### DialogIntroducer
 ### DialogImgUploadConfirmer
+
+* Display "はい" and "いいえ" button.
+* Click cancel button and close dialog.
+* Disable close by clicking out of range.
+
 ### DialogRoleSelector
+
+* Display selector of "member" and "owner"
+* Click cancel button and close dialog.
+* Disable close by clicking out of range.

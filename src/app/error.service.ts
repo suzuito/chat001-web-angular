@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class ErrorService {
 
   constructor(
     private router: Router,
+    private snackBar: MatSnackBar,
   ) { }
 
   public errp5XX(body: string = ''): void {
@@ -34,5 +36,15 @@ export class ErrorService {
     this.reloadURL = reloadURL;
     this.reload = reload;
     this.router.navigate(['error']);
+  }
+
+  public warn(msg: string): void {
+    this.snackBar.open(
+      msg,
+      '',
+      {
+        duration: 3000,
+      },
+    );
   }
 }
