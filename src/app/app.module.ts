@@ -18,6 +18,7 @@ import {
   MatSelectModule,
   MatBadgeModule,
   MatSliderModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -178,6 +179,7 @@ import { LineRoomIntroductionComponent } from './parts/line-room-introduction/li
     HttpClientModule,
     MatBadgeModule,
     MatSliderModule,
+    MatSnackBarModule,
   ],
   providers: [
   ],
