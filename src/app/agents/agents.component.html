@@ -1,6 +1,7 @@
 <app-header001></app-header001>
 <div class='list'>
-  <app-list-any width='100%' heightList='100%' [disableHeader]='true' [disableMore]='true'>
+  <div *ngIf='agents().length <= 0' class='mat-body-1'>アクティブユーザーがいません</div>
+  <app-list-any *ngIf='agents().length > 0' width='100%' heightList='100%' [disableHeader]='true' [disableMore]='true'>
     <div class='each-list' *ngFor='let agent of agents()'>
       <app-profile-text-all-with-icon2 [agent]='agent' imgMode='small' icon='message'
         (clickIconButton)='openDialogRequester(agent)' (clickProfile)='openDialogProfile(agent)' [nameOnly]='false'>

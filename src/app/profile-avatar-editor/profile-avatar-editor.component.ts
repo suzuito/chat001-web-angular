@@ -34,6 +34,7 @@ export class ProfileAvatarEditorComponent implements OnInit {
     private appService: AppService,
   ) {
     this.sizeImgCripper = '250px';
+    this.fileSelected = null;
   }
 
   ngOnInit() {

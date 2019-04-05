@@ -19,6 +19,7 @@ import { ErrorComponent } from './error/error.component';
 import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-avatar-editor.component';
 import { InitComponent } from './init/init.component';
 import { ExampleComponent } from './example/example.component';
+import { DeactivateProfileAvatarEditorGuard } from './profile-avatar-editor/deactivate-profile-avatar-editor.guard';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
       {
         path: 'agents/avatar',
         component: ProfileAvatarEditorComponent,
+        canDeactivate: [DeactivateProfileAvatarEditorGuard],
       },
       {
         path: 'agent-messages',

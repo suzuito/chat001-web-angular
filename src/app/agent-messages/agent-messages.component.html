@@ -1,6 +1,7 @@
 <app-header001></app-header001>
 <div class='list'>
-  <app-list-agent-message width='100%' heightList='100%' [disableHeader]='true' [disableMore]='false'
-    [messages]='messages()' (clickMore)='clickMore()'>
+  <div *ngIf='messages().length <= 0' class='mat-body-1'>メッセージがありません</div>
+  <app-list-agent-message *ngIf='messages().length > 0' width='100%' heightList='100%' [disableHeader]='true'
+    [disableMore]='false' [messages]='messages()' (clickMore)='clickMore()'>
   </app-list-agent-message>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { RoomService, CurrentRoomRoute } from './room.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { DialogConfirmerComponent } from '../parts/dialog-confirmer/dialog-confirmer.component';
+import { DialogConfirmerComponent, DataDialogConfirmerComponent } from '../parts/dialog-confirmer/dialog-confirmer.component';
 import { MatDialog } from '@angular/material';
 import { AppService } from '../app.service';
 import { Header002Service } from '../header002/header002.service';
@@ -70,7 +70,11 @@ export class RoomComponent implements OnInit {
 
   public async exitRoom(): Promise<void> {
     const ref = this.dialog.open(DialogConfirmerComponent, {
-      data: '本当に退出しますか？',
+      data: {
+        msg: '本当に退出しますか？',
+        yes: 'はい',
+        no: 'いいえ',
+      } as DataDialogConfirmerComponent,
     });
     const result = await ref.afterClosed().toPromise();
     if (!result) { return; }

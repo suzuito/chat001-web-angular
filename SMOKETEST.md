@@ -38,19 +38,15 @@ Type of notifications are either info or warn.
 * Close side menu when an user click out of side menu area.
 * Display agent name, description and image.
 * Display shortened agent name, description if there is the one.
-
 * Click "画像の更新" and route to ProfileAvatarEditorComponent
 * Click "編集する" and open ProfileEditor
-
 * Click "新着順" and route to RoomsComponent with query 'd=0'
 * Click "人気順" and route to RoomsComponent with query 'd=1'
 * Click "アクティブユーザー" and route to AgentsComponent
 * Click "ダイレクトメッセージ" and route to AgentMessagesComponent
 * Click "部屋の作成" and route to CreateRoomComponent
-
 * Display RoomsAgentIn
 * Click a room in which agent is and route to RoomMessageComponent
-
 * Notifications for recieving room message.
 
 #### AgentAvatarEditorComponent
