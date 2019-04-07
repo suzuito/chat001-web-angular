@@ -5,8 +5,9 @@
   </div>
   <div class='padding'></div>
   <div>
-    <mat-form-field [style.width]="'100%'">
-      <textarea matInput [(ngModel)]='data.message' placeholder='一言メッセージ'></textarea>
+    <mat-form-field [hintLabel]='hintLabel()' [style.width]="'100%'">
+      <textarea matInput [(ngModel)]='data.message' [maxLength]='maxLength' placeholder='一言メッセージ'></textarea>
+      <mat-hint align='end'>{{hint()}}</mat-hint>
     </mat-form-field>
   </div>
 </div>

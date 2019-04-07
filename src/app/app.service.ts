@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init, RoomMessageImageLink } from './model/other';
-import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
+import { RoomAgentIn, EasyAgent, Agent, RoomAgentInOnlyID } from './model/agent';
 import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -20,6 +20,13 @@ import { AgentMessage, WSAgentMessage } from './model/agent_message';
 import { RoomService } from './room/room.service';
 import { DataEasyAgentsLatestService } from './data-easy-agents-latest.service';
 import { DataSyncherService } from './data-syncher.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from './error.service';
+import { errCodeToMsg, errByHttpError } from './model/error';
+import { DialogProgressiveComponent, defaultDialogConfigProgressive } from './parts/dialog-progressive/dialog-progressive.component';
+import { DialogProfileComponent, DataDialogProfile, ResultDialogProfile } from './parts/dialog-profile/dialog-profile.component';
+import { DialogIntroducerComponent } from './parts/dialog-introducer/dialog-introducer.component';
+import { DialogRequesterComponent, DataDialogRequester } from './parts/dialog-requester/dialog-requester.component';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -44,6 +51,7 @@ export class AppService {
     private dataAgentsInRoomService: DataAgentsInRoomService,
     private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
     private dataSyncherService: DataSyncherService,
+    private errorService: ErrorService,
   ) {
     this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
@@ -88,6 +96,16 @@ export class AppService {
     this.wsService.addRoute('/broadcast/new-rooms', (msg: WSMessage) => {
       const rmsg = msg.data as Room[];
       this.dataRoomsService.setRoom(...rmsg);
+    });
+  }
+
+  private s(p: Promise<any>): Promise<void> {
+    const ref = this.dialog.open(DialogProgressiveComponent, defaultDialogConfigProgressive);
+    return p.then(() => {
+      ref.componentInstance.success('');
+    }).catch((err: Error) => {
+      ref.componentInstance.fail(err.message);
+    }).finally(() => {
     });
   }
 
@@ -151,7 +169,7 @@ export class AppService {
         return;
       }
     }
-    return this.apiService.putEnterRoom(
+    return this.s(this.apiService.putEnterRoom(
       this.localStorageService.get(LocalStorageKey.A),
       room.id,
       password,
@@ -160,8 +178,8 @@ export class AppService {
       this.router.navigate(['room', room.id]);
       return;
     }).catch(err => {
-      // TODO: Notice error message
-    });
+      throw errByHttpError(err);
+    }));
   }
 
   public async exitRoom(roomId: string): Promise<void> {
@@ -177,7 +195,7 @@ export class AppService {
       }
       this.router.navigate(['']);
     }).catch(err => {
-      // TODO: Notice error message
+      throw errByHttpError(err);
     });
   }
 
@@ -192,7 +210,7 @@ export class AppService {
   }
 
   public async createRoom(name: string, description: string, maxAgents: number, isPublic: boolean, passwordRaw: string): Promise<void> {
-    return this.apiService.postRooms(
+    return this.s(this.apiService.postRooms(
       this.localStorageService.get(LocalStorageKey.A),
       name, description, maxAgents, isPublic, passwordRaw,
     ).then((cr: CreateRoom) => {
@@ -201,7 +219,9 @@ export class AppService {
       this.agentService.setRoom(cr.roomAgentIn);
       this.router.navigate(['room', cr.room.id]);
       return;
-    });
+    }).catch((err: HttpErrorResponse) => {
+      throw errByHttpError(err);
+    }));
   }
 
   public async getUnknownAgentProfile(...inExtIDs: string[]) {
@@ -242,10 +262,14 @@ export class AppService {
   }
 
   public async postRequestsApprove(request: Request): Promise<void> {
-    return this.apiService.postRequestsApprove(
+    return this.s(this.apiService.postRequestsApprove(
       this.localStorageService.get(LocalStorageKey.A),
       request.id,
-    );
+    ).then((room: Room) => {
+      this.enterRoom(room);
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
   }
 
   public async postRoomsMessagesImage(roomId: string, file: File): Promise<RoomMessageImageLink> {
@@ -255,12 +279,54 @@ export class AppService {
     );
   }
 
-  // public async fetchAgentsLatest(): Promise<void> {
-  //   return this.apiService.getAgentsLatest(
-  //     this.localStorageService.get(LocalStorageKey.A),
-  //   ).then((agents: EasyAgent[]) => {
-  //     this.dataEasyAgentsService.setAgent(...agents);
-  //   });
-  // }
+  public async openDialogProfile(agent: EasyAgent, readonly: boolean = false): Promise<void> {
+    const ref = this.dialog.open(
+      DialogProfileComponent,
+      {
+        data: { agent, readonly } as DataDialogProfile,
+      },
+    );
+    const result: ResultDialogProfile = await ref.afterClosed().toPromise();
+    if (!result) {
+      return;
+    }
+    if (result === ResultDialogProfile.Request) {
+      this.openDialogRequester(agent);
+    } else if (result === ResultDialogProfile.Intr) {
+      this.openDialogIntr(agent);
+    }
+  }
 
+  public async openDialogIntr(agent: EasyAgent): Promise<void> {
+    const ref = this.dialog.open(
+      DialogIntroducerComponent,
+      {
+        data: {
+          agentNames: [agent.name],
+          rooms: this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+        },
+      },
+    );
+    const result: Room = await ref.afterClosed().toPromise();
+    if (!result) {
+      return;
+    }
+    this.roomService.intr([agent], result);
+  }
+
+  public async openDialogRequester(agent: EasyAgent): Promise<void> {
+    const ref = this.dialog.open(
+      DialogRequesterComponent,
+      {
+        data: {
+          agent,
+        } as DataDialogRequester,
+      },
+    );
+    const data: DataDialogRequester = await ref.afterClosed().toPromise();
+    if (!data) {
+      return;
+    }
+    this.postRequests(agent.externalId, data.message);
+  }
 }

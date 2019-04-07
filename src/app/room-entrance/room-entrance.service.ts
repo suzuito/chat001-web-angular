@@ -30,7 +30,7 @@ export class RoomEntranceService {
       this.roomId = roomId;
       return;
     }).catch(() => {
-      this.errService.errp5XX();
+      this.errService.fatal5XX();
       return;
     });
   }

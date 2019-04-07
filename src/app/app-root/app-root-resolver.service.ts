@@ -20,7 +20,7 @@ export class AppRootResolverService implements Resolve<boolean> {
     return this.appService.initialize().then(() => {
       return true;
     }).catch((err) => {
-      this.errService.errp5XX();
+      this.errService.fatal5XX();
       return false;
     });
   }

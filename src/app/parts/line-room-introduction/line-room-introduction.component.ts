@@ -3,6 +3,10 @@ import { LineDataRoomIntroduction } from 'src/app/model/line';
 import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
 import { DataSyncherService } from 'src/app/data-syncher.service';
+import { AppService } from 'src/app/app.service';
+import { MatDialog } from '@angular/material';
+import { DialogProfileComponent, DataDialogProfile } from '../dialog-profile/dialog-profile.component';
+import { DialogProfileRoomComponent, DataDialogProfileRoom } from '../dialog-profile-room/dialog-profile-room.component';
 
 @Component({
   selector: 'app-line-room-introduction',
@@ -18,24 +22,40 @@ export class LineRoomIntroductionComponent implements OnInit {
     private dataEasyAgentsService: DataEasyAgentsService,
     private dataRoomsService: DataRoomsService,
     private dataSyncherService: DataSyncherService,
+    private appService: AppService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
   }
 
   public agentName(): string {
-    if (!this.dataEasyAgentsService.has(this.intr.externalIdFrom)) {
-      this.dataSyncherService.addAgent(this.intr.externalIdFrom);
-      return this.intr.externalIdFrom;
-    }
-    return this.dataEasyAgentsService.get(this.intr.externalIdFrom).name;
+    return this.intr.agent.name;
   }
 
   public roomName(): string {
-    if (!this.dataRoomsService.has(this.intr.roomId)) {
-      return this.intr.roomId;
-    }
-    return this.dataRoomsService.get(this.intr.roomId).name;
+    return this.intr.room.name;
+  }
+
+  public enterRoom(): void {
+    this.appService.enterRoom(this.intr.room);
+  }
+
+  public openAgentDialog(): void {
+    this.dialog.open(DialogProfileComponent, {
+      data: {
+        readonly: true,
+        agent: this.intr.agent,
+      } as DataDialogProfile,
+    });
+  }
+
+  public openRoomDialog(): void {
+    this.dialog.open(DialogProfileRoomComponent, {
+      data: {
+        room: this.intr.room,
+      } as DataDialogProfileRoom,
+    });
   }
 
 }

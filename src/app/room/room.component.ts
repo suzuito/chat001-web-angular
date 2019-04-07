@@ -5,6 +5,7 @@ import { DialogConfirmerComponent, DataDialogConfirmerComponent } from '../parts
 import { MatDialog } from '@angular/material';
 import { AppService } from '../app.service';
 import { Header002Service } from '../header002/header002.service';
+import { AgentService } from '../agent.service';
 
 @Component({
   selector: 'app-room',
@@ -17,6 +18,7 @@ export class RoomComponent implements OnInit {
 
   constructor(
     public roomService: RoomService,
+    private agentService: AgentService,
     public router: Router,
     private dialog: MatDialog,
     private appService: AppService,
@@ -80,6 +82,18 @@ export class RoomComponent implements OnInit {
     if (!result) { return; }
     this.appService.exitRoom(this.roomService.room.id);
     return;
+  }
+
+  public unreadAgentMessages(): number {
+    return this.agentService.unreadMessages;
+  }
+
+  public unreadAgentMessagesBadgeHidden(): boolean {
+    return this.agentService.unreadMessages <= 0;
+  }
+
+  public routeToAgentMessages(): void {
+    this.router.navigate(['agent-messages']);
   }
 
 }

@@ -3,6 +3,7 @@ import { Params } from '@angular/router';
 import { Agent, AvatarType } from './model/agent';
 import { environment } from 'src/environments/environment';
 import { ProfileImageSize } from './parts/profile-img/profile-img.component';
+import { ApiService } from './api.service';
 
 export function getRealStyle(elem: ElementRef): CSSStyleDeclaration {
   const d: HTMLElement = elem.nativeElement;

@@ -63,6 +63,8 @@ export class AgentService {
         }
       }
       return true;
+    }).sort((a: AgentMessage, b: AgentMessage): number => {
+      return b.createdAt - a.createdAt;
     });
   }
 

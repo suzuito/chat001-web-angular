@@ -3,7 +3,9 @@
     <button mat-button color='primary' (click)='clickMore()'>もっと読み込む...</button>
   </div>
   <div *ngFor='let message of messages()'>
-    <app-list-room-message-each [message]='message' [agent]='messageAgent(message.agentExternalId)'>
+    <app-list-room-message-each [message]='message' [agent]='messageAgent(message.agentExternalId)'
+      (clickMenuRequest)='openDialogRequester(message.agentExternalId)'
+      (clickMenuUserInfo)='openDialogProfile(message.agentExternalId)'>
     </app-list-room-message-each>
     <mat-divider></mat-divider>
   </div>

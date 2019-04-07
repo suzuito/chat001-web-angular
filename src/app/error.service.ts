@@ -17,7 +17,7 @@ export class ErrorService {
     private snackBar: MatSnackBar,
   ) { }
 
-  public errp5XX(body: string = ''): void {
+  public fatal5XX(body: string = ''): void {
     this.title = 'InternalServerError';
     this.body = body;
     this.reloadURL = '/';
@@ -25,7 +25,7 @@ export class ErrorService {
     this.router.navigate(['error']);
   }
 
-  private errp(
+  private fatal(
     title: string,
     body: string,
     reload: string,
@@ -38,13 +38,29 @@ export class ErrorService {
     this.router.navigate(['error']);
   }
 
+  public error(msg: string): void {
+    this.snackBar.open(
+      msg,
+      '',
+      {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        politeness: 'polite',
+      },
+    );
+  }
+
   public warn(msg: string): void {
     this.snackBar.open(
       msg,
       '',
       {
         duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
       },
     );
   }
+
 }

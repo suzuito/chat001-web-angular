@@ -1,0 +1,6 @@
+<div>
+  <button mat-button color='primary' [disabled]='disableAgentButton()' class='button-link'
+    (click)='openAgentDialog()'>@{{agentName()}}</button>
+  <span>さんから1on1リクエストが承認されました</span>
+  <button mat-button (click)='routeToRoom()' color='primary' class='button-link'>{{roomName()}}</button>
+</div>

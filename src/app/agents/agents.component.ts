@@ -28,15 +28,11 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private agentService: AgentService,
-    private dataEasyAgents: DataEasyAgentsService,
     private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
-    private dataRoomsService: DataRoomsService,
     public opt: AgentsSearchOptionService,
     private scrollService: SideMenuScrollService,
     private header001Service: Header001Service,
     private appService: AppService,
-    private dialog: MatDialog,
-    private roomService: RoomService,
   ) {
     this.opt.selectedOrderId = OrderId.Accessed;
   }
@@ -58,54 +54,15 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public async openDialogRequester(agent: EasyAgent): Promise<void> {
-    const ref = this.dialog.open(
-      DialogRequesterComponent,
-      {
-        data: {
-          agent,
-        } as DataDialogRequester,
-      },
-    );
-    const data: DataDialogRequester = await ref.afterClosed().toPromise();
-    if (!data) {
-      return;
-    }
-    this.appService.postRequests(agent.externalId, data.message);
+    this.appService.openDialogRequester(agent);
   }
 
   public async openDialogProfile(agent: EasyAgent): Promise<void> {
-    const ref = this.dialog.open(
-      DialogProfileComponent,
-      {
-        data: { agent, readonly: false } as DataDialogProfile,
-      },
-    );
-    const result: ResultDialogProfile = await ref.afterClosed().toPromise();
-    if (!result) {
-      return;
-    }
-    if (result === ResultDialogProfile.Request) {
-      this.openDialogRequester(agent);
-    } else if (result === ResultDialogProfile.Intr) {
-      this.openDialogIntr(agent);
-    }
+    this.appService.openDialogProfile(agent, false);
   }
 
   public async openDialogIntr(agent: EasyAgent): Promise<void> {
-    const ref = this.dialog.open(
-      DialogIntroducerComponent,
-      {
-        data: {
-          agentNames: [agent.name],
-          rooms: this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
-        },
-      },
-    );
-    const result: Room = await ref.afterClosed().toPromise();
-    if (!result) {
-      return;
-    }
-    this.roomService.intr([agent], result);
+    this.appService.openDialogIntr(agent);
   }
 
 }

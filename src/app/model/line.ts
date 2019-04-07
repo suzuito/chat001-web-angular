@@ -1,3 +1,5 @@
+import { EasyAgent } from './agent';
+import { Room } from './room';
 
 export enum LineType {
   Spans = 1,
@@ -12,6 +14,6 @@ export interface Line {
 }
 
 export interface LineDataRoomIntroduction {
-  externalIdFrom: string;
-  roomId: string;
+  readonly agent: EasyAgent;
+  readonly room: Room;
 }

@@ -1,4 +1,7 @@
 <div class='main mat-body-1'>
+  <button *ngIf='!message.read' mat-icon-button color='accent'>
+    <mat-icon>error</mat-icon>
+  </button><span *ngIf='!message.read'>未読のメッセージ</span>
   <app-lines [lines]='message.lines'></app-lines>
 </div>
 <mat-divider></mat-divider>

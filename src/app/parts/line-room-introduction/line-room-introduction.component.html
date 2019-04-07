@@ -1,7 +1,9 @@
 <div>
-  <button mat-button color='primary' [style.padding]="'0px'" class='button-link'>@{{agentName()}}</button>
+  <button mat-button color='primary' [style.padding]="'0px'" class='button-link'
+    (click)='openAgentDialog()'>@{{agentName()}}</button>
   <span>さんから</span>
-  <button mat-button color='primary' [style.padding]="'0px'" class='button-link'>{{roomName()}}</button>
+  <button mat-button color='primary' [style.padding]="'0px'" class='button-link'
+    (click)='openRoomDialog()'>{{roomName()}}</button>
   <span>への入室招待が来ています！</span>
-  <button mat-button color='primary' class='button-link'>入室する</button>
+  <button mat-button color='primary' class='button-link' (click)='enterRoom()'>入室する</button>
 </div>

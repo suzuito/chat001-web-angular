@@ -210,8 +210,8 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
-  public async postRequestsApprove(atoken: string, reqId: string): Promise<void> {
-    return this.http.post<void>(
+  public async postRequestsApprove(atoken: string, reqId: string): Promise<Room> {
+    return this.http.post<Room>(
       url(`/api/requests/${reqId}/approve`),
       null,
       new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
@@ -225,3 +225,4 @@ export class ApiService {
   }
 
 }
+

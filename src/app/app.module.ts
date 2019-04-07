@@ -19,6 +19,7 @@ import {
   MatBadgeModule,
   MatSliderModule,
   MatSnackBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -88,6 +89,9 @@ import { MultiLineInputterComponent } from './parts/multi-line-inputter/multi-li
 import { DialogImgUploadConfirmerComponent } from './parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
 import { LineRequestComponent } from './parts/line-request/line-request.component';
 import { LineRoomIntroductionComponent } from './parts/line-room-introduction/line-room-introduction.component';
+import { DialogProgressiveComponent } from './parts/dialog-progressive/dialog-progressive.component';
+import { LineRequestApprovedComponent } from './parts/line-request-approved/line-request-approved.component';
+import { DialogProfileRoomComponent } from './parts/dialog-profile-room/dialog-profile-room.component';
 
 @NgModule({
   declarations: [
@@ -156,6 +160,9 @@ import { LineRoomIntroductionComponent } from './parts/line-room-introduction/li
     LineRequestComponent,
     LineRoomIntroductionComponent,
     SafePipe,
+    DialogProgressiveComponent,
+    LineRequestApprovedComponent,
+    DialogProfileRoomComponent,
   ],
   imports: [
     BrowserModule,
@@ -180,6 +187,7 @@ import { LineRoomIntroductionComponent } from './parts/line-room-introduction/li
     MatBadgeModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
   ],
@@ -194,6 +202,8 @@ import { LineRoomIntroductionComponent } from './parts/line-room-introduction/li
     DialogProfileAvatarConfirmerComponent,
     DialogImgUploadConfirmerComponent,
     MultiLineInputterComponent,
+    DialogProgressiveComponent,
+    DialogProfileRoomComponent,
   ],
   bootstrap: [AppComponent]
 })

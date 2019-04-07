@@ -65,18 +65,6 @@ export class RoomService {
     return ret2;
   }
 
-  public async routeToRoom(roomId: string): Promise<void> {
-    if (!this.agentService.isInRoom(roomId)) {
-      this.router.navigate(['room-entrance', roomId]);
-      return;
-    }
-    this.roomId = roomId;
-    if (this.dataRoomsService.has(this.roomId)) {
-      return;
-    }
-    return;
-  }
-
   public async putRoomsMessages(message: string): Promise<void> {
     return this.apiService.putRoomsMessages(
       this.localStorageService.get(LocalStorageKey.A),

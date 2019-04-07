@@ -111,10 +111,6 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     if (this.message.length <= 0) {
       return;
     }
-    // TODO: Notice length checking error
-    // if (this.message.length > ???) {
-    //   return;
-    // }
     this.roomService.putRoomsMessages(this.message);
     this.message = '';
   }
@@ -189,5 +185,18 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
         this.appService.postRoomsMessagesImage(this.roomService.roomId, file);
       });
     });
+  }
+
+  public openDialogProfile(externalId: string): void {
+    if (!this.dataEasyAgentsService.has(externalId)) {
+      return;
+    }
+    this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
+  }
+  public openDialogRequester(externalId: string): void {
+    if (!this.dataEasyAgentsService.has(externalId)) {
+      return;
+    }
+    this.appService.openDialogRequester(this.dataEasyAgentsService.get(externalId));
   }
 }

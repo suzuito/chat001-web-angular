@@ -41,4 +41,11 @@ export class RoomProfileComponent implements OnInit {
     return this.unread <= 0;
   }
 
+  public roomName(): string {
+    if (!this.room) {
+      return '';
+    }
+    return this.room.name;
+  }
+
 }

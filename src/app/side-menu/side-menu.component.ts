@@ -104,7 +104,10 @@ export class SideMenuComponent implements OnInit {
     return this.agentService.unreadMessages <= 0;
   }
 
-  public unreadRoomMessages(roomId: string): string {
-    return this.roomMessageService.unread(roomId);
+  public unreadRoomMessages(room: Room): string {
+    if (!room) {
+      return '0';
+    }
+    return this.roomMessageService.unread(room.id);
   }
 }

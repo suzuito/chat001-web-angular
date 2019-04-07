@@ -1,0 +1,16 @@
+<div class='title' *ngIf='state != 1' mat-dialog-title>
+  <button mat-icon-button [color]='colorIcon()'>
+    <mat-icon>{{icon()}}</mat-icon>
+  </button>
+</div>
+<div class='content' mat-dialog-content>
+  <div>
+    <mat-spinner *ngIf='state == 1'></mat-spinner>
+  </div>
+  <div *ngIf='state != 1 && msg' class='mat-body-1'>
+    {{msg}}
+  </div>
+</div>
+<div class='buttons' *ngIf='state != 1'>
+  <button mat-button (click)='close()'>閉じる</button>
+</div>

@@ -16,11 +16,14 @@ export interface DataDialogRequester {
 })
 export class DialogRequesterComponent implements OnInit {
 
+  public maxLength: number;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DataDialogRequester,
     private ref: MatDialogRef<DialogRequesterComponent>,
   ) {
     this.data.message = '';
+    this.maxLength = 50;
   }
 
   ngOnInit() {
@@ -50,5 +53,13 @@ export class DialogRequesterComponent implements OnInit {
 
   public disabledButton(): boolean {
     return this.data.message === '';
+  }
+
+  public hintLabel(): string {
+    return `最大${this.maxLength}文字`;
+  }
+
+  public hint(): string {
+    return `${this.data.message.length} / ${this.maxLength}`;
   }
 }

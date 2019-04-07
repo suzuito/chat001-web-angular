@@ -15,12 +15,15 @@
   </div>
 </div>
 <mat-menu #menu='matMenu'>
-  <button mat-menu-item (click)='clickMenuRequest.emit()'>
+  <button mat-menu-item (click)='clickMenuUserInfo.emit()' *ngIf='agent'>
     <mat-icon>person</mat-icon>
     <span>ユーザー</span>
   </button>
-  <button mat-menu-item (click)='clickMenuUserInfo.emit()'>
+  <button mat-menu-item (click)='clickMenuRequest.emit()' *ngIf='agent'>
     <mat-icon>message</mat-icon>
     <span>リクエスト</span>
+  </button>
+  <button mat-menu-item *ngIf='!agent' disabled>
+    すでに存在しないユーザーです
   </button>
 </mat-menu>

@@ -38,7 +38,7 @@
 <div class='list'>
   <app-list-any width='100%' heightList='100%' caption='入室中' [disableMore]='true' [disableHeader]='true'>
     <div *ngFor='let room of roomsAgentIn()' (click)='routeToRoom(room)' [style.padding-bottom]="'13px'">
-      <app-room-profile [room]='room' [nameOnly]='true' [unread]='unreadRoomMessages(room.id)'></app-room-profile>
+      <app-room-profile [room]='room' [nameOnly]='true' [unread]='unreadRoomMessages(room)'></app-room-profile>
     </div>
   </app-list-any>
 </div>
