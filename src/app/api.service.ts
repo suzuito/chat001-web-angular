@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient, HttpEvent } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Init, RoomMessageImageLink } from './model/other';
-import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom } from './model/room';
+import { Rooms, Room, EnterRoom, ExitRoom, AgentInRoom, CreateRoom, AgentsInRoom, AgentRoleInRoom } from './model/room';
 import { RoomAgentIn, EasyAgent, Agent } from './model/agent';
 import { RoomMessage, Messages, attachObjectToMessage, attachObjectToAgentMessage } from './model/room_message';
 import { AgentMessages } from './model/agent_message';
+import { RoomInfo } from './parts/room-info/room-info.component';
 
 class OptBuilder {
   private o: any;
@@ -221,6 +222,30 @@ export class ApiService {
   public async postRoomsMessagesImage(atoken: string, roomId: string, f: File): Promise<RoomMessageImageLink> {
     return this.http.post<RoomMessageImageLink>(
       url(`/api/rooms/${roomId}/messages/image`), f, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async postRoomsOwner(atoken: string, roomId: string, externalId: string): Promise<void> {
+    return this.http.post<void>(
+      url(`/api/rooms/${roomId}/owner`), { id: externalId }, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async putRoomsMembersRole(atoken: string, roomId: string, externalId: string, role: AgentRoleInRoom): Promise<void> {
+    return this.http.put<void>(
+      url(`/api/rooms/${roomId}/members/role`), { id: externalId, role }, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async putRooms(atoken: string, roomId: string, info: RoomInfo): Promise<Room> {
+    return this.http.put<Room>(
+      url(`/api/rooms/${roomId}`), info, new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
+  public async deleteRooms(atoken: string, roomId: string): Promise<Room> {
+    return this.http.delete<Room>(
+      url(`/api/rooms/${roomId}`), new OptBuilder().atoken(atoken).jsonResponseBody().gen(),
     ).toPromise().then((res: any) => res);
   }
 

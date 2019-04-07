@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList, AfterViewInit, OnDestroy, EventEmitter } from '@angular/core';
-import { Room, AgentInRoom, AgentRoleInRoom } from 'src/app/model/room';
+import { Room, AgentInRoom, AgentRoleInRoom, roleName, roleColor } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomMemberSearchOptionService } from './room-member-search-option/room-member-search-option.service';
@@ -10,6 +10,9 @@ import { RoomAgentIn, RoomAgentInOnlyID } from 'src/app/model/agent';
 import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
 import { CursorManagerRoomMemberService } from '../cursor-manager-room-member.service';
+import { AppService } from 'src/app/app.service';
+import { DialogRoleSelectorComponent, DataDialogRoleSelector } from 'src/app/parts/dialog-role-selector/dialog-role-selector.component';
+import { DialogConfirmerComponent, DataDialogConfirmerComponent } from 'src/app/parts/dialog-confirmer/dialog-confirmer.component';
 
 @Component({
   selector: 'app-room-member',
@@ -28,6 +31,7 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
     private agentService: AgentService,
     private dataRoomsService: DataRoomsService,
+    private appService: AppService,
   ) {
     this.checkedMap = new Map<string, boolean>();
   }
@@ -93,24 +97,12 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  public role(agentInRoom: AgentInRoom): string {
-    if (agentInRoom.role === AgentRoleInRoom.Member) {
-      return 'member';
-    }
-    if (agentInRoom.role === AgentRoleInRoom.Owner) {
-      return 'owner';
-    }
-    return 'member';
+  public roleName(agentInRoom: AgentInRoom): string {
+    return roleName(agentInRoom.role);
   }
 
   public roleColor(agentInRoom: AgentInRoom): string {
-    if (agentInRoom.role === AgentRoleInRoom.Member) {
-      return '';
-    }
-    if (agentInRoom.role === AgentRoleInRoom.Owner) {
-      return 'primary';
-    }
-    return '';
+    return roleColor(agentInRoom.role);
   }
 
   public clickMore(): void {
@@ -118,6 +110,9 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public clickChecked(agentInRoom: AgentInRoom): void {
+    if (this.isYourSelf(agentInRoom)) {
+      return;
+    }
     if (this.checkedMap.get(agentInRoom.agent.externalId) === true) {
       this.checkedMap.set(agentInRoom.agent.externalId, false);
     } else {
@@ -130,6 +125,46 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
       this.checkedMap.set(agentInRoom.agent.externalId, false);
     }
     return this.checkedMap.get(agentInRoom.agent.externalId);
+  }
+
+  public clickMember(agentInRoom: AgentInRoom): void {
+    this.appService.openDialogProfile(agentInRoom.agent, true);
+  }
+
+  public disabledRoleSelector(): boolean {
+    return !this.agentService.isOwner(this.room.id);
+  }
+
+  public async clickRoleSelector(agentInRoom: AgentInRoom): Promise<void> {
+    const ref1 = this.dialog.open(DialogRoleSelectorComponent, {
+      data: {
+        role: agentInRoom.role,
+      } as DataDialogRoleSelector,
+    });
+    const result1: AgentRoleInRoom = await ref1.afterClosed().toPromise();
+    if (!result1) {
+      return;
+    }
+    if (!this.isYourSelf(agentInRoom)) {
+      this.appService.putRoomsMembersRole(this.room.id, agentInRoom.agent.externalId, result1);
+      return;
+    }
+    const ref2 = this.dialog.open(DialogConfirmerComponent, {
+      data: {
+        msg: 'この部屋の管理権限を捨てようとしています。本当によろしいですか？管理権限を捨てた場合、この部屋の情報を編集することができなくなります。',
+        yes: 'はい',
+        no: 'いいえ',
+      } as DataDialogConfirmerComponent,
+    });
+    const result2 = await ref2.afterClosed().toPromise();
+    if (result2) {
+      this.appService.putRoomsMembersRole(this.room.id, agentInRoom.agent.externalId, result1);
+      return;
+    }
+  }
+
+  public isYourSelf(agentInRoom: AgentInRoom): boolean {
+    return this.agentService.get().externalId === agentInRoom.agent.externalId;
   }
 
 }

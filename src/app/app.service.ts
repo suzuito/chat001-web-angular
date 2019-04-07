@@ -4,7 +4,7 @@ import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init, RoomMessageImageLink } from './model/other';
 import { RoomAgentIn, EasyAgent, Agent, RoomAgentInOnlyID } from './model/agent';
-import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom } from './model/room';
+import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom, AgentRoleInRoom } from './model/room';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
@@ -27,6 +27,8 @@ import { DialogProgressiveComponent, defaultDialogConfigProgressive } from './pa
 import { DialogProfileComponent, DataDialogProfile, ResultDialogProfile } from './parts/dialog-profile/dialog-profile.component';
 import { DialogIntroducerComponent } from './parts/dialog-introducer/dialog-introducer.component';
 import { DialogRequesterComponent, DataDialogRequester } from './parts/dialog-requester/dialog-requester.component';
+import { RoomInfo } from './parts/room-info/room-info.component';
+import { DialogConfirmerComponent, DataDialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confirmer.component';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -99,14 +101,24 @@ export class AppService {
     });
   }
 
-  private s(p: Promise<any>): Promise<void> {
+  private s(p: Promise<any>): Promise<any> {
     const ref = this.dialog.open(DialogProgressiveComponent, defaultDialogConfigProgressive);
-    return p.then(() => {
+    return p.then((a) => {
       ref.componentInstance.success('');
+      return a;
     }).catch((err: Error) => {
       ref.componentInstance.fail(err.message);
     }).finally(() => {
     });
+  }
+
+  private routeToRemainingRoom(): void {
+    const roomsAgentIn = this.agentService.filterRoom();
+    if (roomsAgentIn.length > 0) {
+      this.router.navigate(['room', roomsAgentIn[0].roomId]);
+      return;
+    }
+    this.router.navigate(['']);
   }
 
   public async initialize(): Promise<void> {
@@ -188,12 +200,7 @@ export class AppService {
       roomId,
     ).then((exitRoom: ExitRoom) => {
       this.agentService.deleteRoom(roomId);
-      const roomsAgentIn = this.agentService.filterRoom();
-      if (roomsAgentIn.length > 0) {
-        this.router.navigate(['room', roomsAgentIn[0].roomId]);
-        return;
-      }
-      this.router.navigate(['']);
+      this.routeToRemainingRoom();
     }).catch(err => {
       throw errByHttpError(err);
     });
@@ -279,6 +286,56 @@ export class AppService {
     );
   }
 
+  public async putRoomsMessages(roomId: string, message: string): Promise<void> {
+    if (/^\s*$/.test(message)) {
+      return Promise.resolve();
+    }
+    return this.apiService.putRoomsMessages(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+      message,
+    ).then((msg: RoomMessage) => {
+      return;
+    });
+  }
+
+  public async putRoomsMembersRole(roomId: string, externalId: string, role: AgentRoleInRoom): Promise<void> {
+    return this.s(this.apiService.putRoomsMembersRole(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+      externalId,
+      role,
+    ).then(() => {
+      this.dataAgentsInRoomService.updateRole(roomId, externalId, role);
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
+  }
+
+  public async putRooms(roomId: string, info: RoomInfo): Promise<void> {
+    return this.s(this.apiService.putRooms(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+      info,
+    ).then((room: Room) => {
+      this.dataRoomsService.setRoom(room);
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
+  }
+
+  public async deleteRooms(roomId: string): Promise<void> {
+    return this.s(this.apiService.deleteRooms(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+    ).then((room) => {
+      this.dataRoomsService.setRoom(room);
+      this.errorService.warn('削除を予約しました。いずれかのタイミングでこの部屋は削除されます。');
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
+  }
+
   public async openDialogProfile(agent: EasyAgent, readonly: boolean = false): Promise<void> {
     const ref = this.dialog.open(
       DialogProfileComponent,
@@ -328,5 +385,18 @@ export class AppService {
       return;
     }
     this.postRequests(agent.externalId, data.message);
+  }
+
+  public async openDialogConfirmer(msg: string, yes: string, no: string): Promise<boolean> {
+    const ref = this.dialog.open(
+      DialogConfirmerComponent,
+      {
+        data: {
+          msg, yes, no,
+        } as DataDialogConfirmerComponent,
+        disableClose: true,
+      },
+    );
+    return await ref.afterClosed().toPromise();
   }
 }

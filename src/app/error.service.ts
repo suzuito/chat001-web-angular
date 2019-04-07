@@ -25,6 +25,14 @@ export class ErrorService {
     this.router.navigate(['error']);
   }
 
+  public fatal4XXNotFound(body: string = ''): void {
+    this.title = 'NotFound';
+    this.body = body;
+    this.reloadURL = '/';
+    this.reload = 'Reload';
+    this.router.navigate(['error']);
+  }
+
   private fatal(
     title: string,
     body: string,

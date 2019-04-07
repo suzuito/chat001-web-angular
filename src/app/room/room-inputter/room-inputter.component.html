@@ -1,3 +1,20 @@
-<p>
-  room-inputter works!
-</p>
+<mat-toolbar class='inputter'>
+  <div>
+    <button mat-icon-button (click)='openMultiLineInputter()' [color]='colorOpenMultiLineInputter()'
+      [matBadge]='badgeOpenMultiLineInputter()' matBadgeColor='warn' matBadgePosition='above before'>
+      <mat-icon>vertical_align_top</mat-icon>
+    </button>
+  </div>
+  <div class='inputter-form'>
+    <mat-form-field class='inputter-input'>
+      <textarea type="text" matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='1'
+        [(ngModel)]='message' matInput [style.font-size]="'15px'" (input)='checkInput($event)'></textarea>
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-icon-button (click)='uploadImage()'>
+      <mat-icon>photo</mat-icon>
+    </button>
+    <input type='file' hidden #fileInputter />
+  </div>
+</mat-toolbar>

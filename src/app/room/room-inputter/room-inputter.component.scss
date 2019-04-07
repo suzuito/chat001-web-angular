@@ -1,0 +1,22 @@
+@import '../../common';
+
+.inputter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: $height-header;
+
+  display: flex;
+  flex-direction: row;
+  z-index: 4;
+}
+
+.inputter-form {
+  width: 90%;
+}
+
+.inputter-input {
+  width: 100%;
+}

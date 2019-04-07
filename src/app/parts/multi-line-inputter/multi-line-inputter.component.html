@@ -1,12 +1,14 @@
 <div class='actions'>
   <div>
-    <button mat-raised-button (click)='ok()' color='primary'>Post</button>
+    <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledPost()'>Post</button>
   </div>
   <div>
     <button mat-raised-button (click)='cancel()' color=''>キャンセル</button>
   </div>
 </div>
-<mat-form-field>
+<mat-form-field [hintLabel]='hintLabelMessage()'>
   <textarea [(ngModel)]='message' matInput matTextareaAutosize matAutosizeMaxRows='10' matAutosizeMinRows='3'
-    placeholder='複数行の入力できるよ'></textarea>
+    [errorStateMatcher]='errorStateMatcherMessage'></textarea>
+  <mat-hint align='end'>{{hintMessage()}}</mat-hint>
+  <mat-error>{{errorMessage()}}</mat-error>
 </mat-form-field>

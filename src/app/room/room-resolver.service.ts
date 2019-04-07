@@ -5,6 +5,7 @@ import { CursorManagerRoomMessageService } from './cursor-manager-room-message.s
 import { AppService } from '../app.service';
 import { AgentService } from '../agent.service';
 import { DataRoomsService } from '../data-rooms.service';
+import { ErrorService } from '../error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class RoomResolverService implements Resolve<boolean> {
     private appService: AppService,
     private agentService: AgentService,
     private router: Router,
+    private errorService: ErrorService,
   ) { }
 
   public async resolve(
@@ -33,6 +35,9 @@ export class RoomResolverService implements Resolve<boolean> {
     }
     return this.appService.fetchRoom(roomId).then(() => {
       this.roomService.roomId = roomId;
+    }).catch(err => {
+      this.errorService.fatal4XXNotFound('存在しないか削除された部屋です');
+      return false;
     });
   }
 }

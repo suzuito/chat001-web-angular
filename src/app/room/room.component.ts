@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { AppService } from '../app.service';
 import { Header002Service } from '../header002/header002.service';
 import { AgentService } from '../agent.service';
+import { RoomStatus } from '../model/room';
 
 @Component({
   selector: 'app-room',
@@ -94,6 +95,10 @@ export class RoomComponent implements OnInit {
 
   public routeToAgentMessages(): void {
     this.router.navigate(['agent-messages']);
+  }
+
+  public willDeleted(): boolean {
+    return this.roomService.room.status > RoomStatus.Deletable;
   }
 
 }

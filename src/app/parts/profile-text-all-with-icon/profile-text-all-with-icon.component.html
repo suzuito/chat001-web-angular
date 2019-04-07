@@ -1,4 +1,4 @@
-<div class='main' [style.width]='width' #mainBox>
+<div class='main' [style.width]='width' (click)='clickMain.emit()' #mainBox>
   <div class='left' #leftBox>
     <app-profile-img [src]='urlImage()' [mode]='imgMode'></app-profile-img>
   </div>

@@ -5,6 +5,7 @@ export enum RoomStatus {
   Deactivate = 1,
   Active = 2,
   ReadOnly = 3,
+  Deletable = 100,
 }
 
 export interface Room {
@@ -45,6 +46,31 @@ export enum AgentRoleInRoom {
   Owner = 100,
 }
 
+export const agentRoles: AgentRoleInRoom[] = [
+  AgentRoleInRoom.Member,
+  AgentRoleInRoom.Owner,
+];
+
+export function roleName(role: AgentRoleInRoom): string {
+  if (role === AgentRoleInRoom.Member) {
+    return 'member';
+  }
+  if (role === AgentRoleInRoom.Owner) {
+    return 'owner';
+  }
+  return 'member';
+}
+
+export function roleColor(role: AgentRoleInRoom): string {
+  if (role === AgentRoleInRoom.Member) {
+    return '';
+  }
+  if (role === AgentRoleInRoom.Owner) {
+    return 'primary';
+  }
+  return '';
+}
+
 export interface AgentInRoom extends AgentInRoomProperties {
   readonly agent: EasyAgent;
 }
@@ -54,7 +80,7 @@ export interface AgentInRoomOnlyID extends AgentInRoomProperties {
 }
 
 export interface AgentInRoomProperties {
-  readonly role: AgentRoleInRoom;
+  role: AgentRoleInRoom;
   readonly createdAt: number;
   readonly updatedAt: number;
   readonly deletedAt: number;

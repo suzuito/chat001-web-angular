@@ -30,7 +30,7 @@ export class RoomEntranceService {
       this.roomId = roomId;
       return;
     }).catch(() => {
-      this.errService.fatal5XX();
+      this.errService.fatal4XXNotFound('存在しないか削除された部屋です');
       return;
     });
   }

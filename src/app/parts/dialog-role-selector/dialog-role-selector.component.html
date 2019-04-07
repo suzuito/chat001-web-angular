@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select [(value)]='role'>
+      <mat-option *ngFor='let agentRole of agentRoles()' [value]='agentRole' required>{{roleName(agentRole)}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledUpdateButton()'>更新する</button>
+  <button mat-button (click)='cancel()'>キャンセル</button>
+</div>

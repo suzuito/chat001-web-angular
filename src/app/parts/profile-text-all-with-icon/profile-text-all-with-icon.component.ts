@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Agent, EasyAgent } from 'src/app/model/agent';
 import { ProfileImageSize } from '../profile-img/profile-img.component';
 import { urlAvatar } from 'src/app/util';
@@ -28,6 +28,9 @@ export class ProfileTextAllWithIconComponent implements OnInit, AfterViewInit {
   @Input()
   public imgMode: ProfileImageSize;
 
+  @Output()
+  public clickMain: EventEmitter<void>;
+
   @ViewChild('leftBox')
   private domLeft: ElementRef;
 
@@ -41,6 +44,7 @@ export class ProfileTextAllWithIconComponent implements OnInit, AfterViewInit {
     this.linesDescription = 1;
     this.nameOnly = false;
     this.paddingBetween = 10;
+    this.clickMain = new EventEmitter<void>();
   }
 
   ngOnInit() {

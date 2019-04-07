@@ -19,14 +19,37 @@ app-header002 {
 
   top: $padding-content + $height-header;
   right: $padding-content;
+
 }
 
 .ops-row {
   display: flex;
   flex-direction: row;
+
+  justify-content: flex-end;
 }
 
 .padding-ops-buttons {
   height: $padding-content;
   width: $padding-content;
+}
+
+.delete-label {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding-left: 70px;
+  font-size: $font-size-middle;
+  z-index: 100;
+  transform-origin: 0 0;
+  transform: translate(-50px, 170px) rotate(-45deg);
+  -webkit-transform: translate(-50px, 170px) rotate(-45deg);
+  -ms-transform: translate(-50px, 170px) rotate(-45deg);
+  -moz-transform: translate(-50px, 170px) rotate(-45deg);
+  -o-transform: translate(-50px, 170px) rotate(-45deg);
+}
+
+.delete-label-div {
+  width: 100%;
 }

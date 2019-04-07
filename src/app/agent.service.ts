@@ -4,6 +4,7 @@ import { AgentMessage } from './model/agent_message';
 import { DataStore } from './data.store';
 import { AgentMessagesSearchOption } from './agent-messages/agent-messages-search-option.service';
 import { Line } from './model/line';
+import { AgentRoleInRoom } from './model/room';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,21 @@ export class AgentService {
     return this.roomsAgentIn.find((d: RoomAgentInOnlyID): boolean => {
       return true;
     });
+  }
+
+  public isOwner(roomId: string): boolean {
+    const results = this.roomsAgentIn.find((d: RoomAgentInOnlyID): boolean => {
+      // console.log(d);
+      return d.roomId === roomId && d.role === AgentRoleInRoom.Owner;
+    });
+    if (!results) {
+      // console.log(results, false);
+      return false;
+    }
+    if (results.length <= 0) {
+      return false;
+    }
+    // console.log(results, true);
+    return true;
   }
 }

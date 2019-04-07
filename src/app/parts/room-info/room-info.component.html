@@ -9,7 +9,7 @@
         </mat-form-field>
       </div>
       <div>
-        <button mat-icon-button>
+        <button mat-icon-button [disabled]='!changable'>
           <mat-icon (click)='renameAtRandom()'>replay</mat-icon>
         </button>
       </div>
@@ -27,7 +27,7 @@
           </mat-form-field>
         </div>
         <div>
-          <button mat-icon-button>
+          <button mat-icon-button [disabled]='!changable'>
             <mat-icon (click)='redescriptionAtRandom()'>replay</mat-icon>
           </button>
         </div>
@@ -40,15 +40,16 @@
       <div class='mat-caption'>最大人数</div>
       <div class='padding'></div>
       <div>
-        <mat-radio-group (input)='changeMaxAgentsSelector()' [(ngModel)]=" selectedMaxAgents"
-          class='max-agents-radio-buttons'>
+        <mat-radio-group [disabled]='!changable' (change)='changeMaxAgentsRadioGroup($event)'
+          [(ngModel)]="selectedMaxAgents" class='max-agents-radio-buttons'>
           <mat-radio-button *ngFor='let ma of recomendMaxAgents' [value]='ma'>{{ma}}人</mat-radio-button>
           <mat-radio-button [value]='5'>その他</mat-radio-button>
         </mat-radio-group>
       </div>
       <div *ngIf='selectedMaxAgents > 4'>
         <mat-form-field class='maxAgents'>
-          <mat-select [(ngModel)]='selectedMaxAgents' (selectionChange)='changeMaxAgentsSelector()'>
+          <mat-select [(ngModel)]='selectedMaxAgents' [disabled]='!changable'
+            (selectionChange)='changeMaxAgentsSelector($event)'>
             <mat-option *ngFor='let ma of allMaxAgents' [value]='ma'>{{ma}}</mat-option>
           </mat-select>
         </mat-form-field>

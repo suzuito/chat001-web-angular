@@ -4,12 +4,21 @@
 <div class='list'>
   <div class='list-each' *ngFor='let agentInRoom of getAgentsInRoom()' [style.padding-bottom]="'13px'">
     <div class='list-each-profile' [style.width]="'100%'">
-      <app-profile-text-all-with-icon width='100%' imgMode='small' [agent]='agentInRoom.agent' linesDescription='1'>
+      <app-profile-text-all-with-icon (clickMain)='clickMember(agentInRoom)' width='100%' imgMode='small'
+        [agent]='agentInRoom.agent' linesDescription='1'>
       </app-profile-text-all-with-icon>
     </div>
-    <div class='list-each-button'><button mat-stroked-button>{{role(agentInRoom)}}</button></div>
+    <div class='list-each-button'>
+      <!--
+      <button mat-stroked-button (click)='clickRoleSelector(agentInRoom)'
+        [disabled]='disabledRoleSelector()'>{{roleName(agentInRoom)}}</button>
+      -->
+      <button (click)='clickRoleSelector(agentInRoom)'
+        [disabled]='disabledRoleSelector()'>{{roleName(agentInRoom)}}</button>
+    </div>
     <div class='list-each-checkbox'>
-      <mat-checkbox (click)='clickChecked(agentInRoom)' [checked]='checked(agentInRoom)'></mat-checkbox>
+      <mat-checkbox (click)='clickChecked(agentInRoom)' [checked]='checked(agentInRoom)'
+        [disabled]='isYourSelf(agentInRoom)'></mat-checkbox>
     </div>
   </div>
   <div class='action'>

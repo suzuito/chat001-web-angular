@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Room, emptyRoom } from 'src/app/model/room';
 import { randomRoomName, randomRoomDescription } from 'src/app/util';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, MatRadioChange, MatSelectChange } from '@angular/material';
 
 export interface RoomInfo {
   name: string;
@@ -179,7 +179,13 @@ export class RoomInfoComponent implements OnInit, OnChanges {
     this.info.description = randomRoomDescription();
   }
 
-  public changeMaxAgentsSelector(): void {
+  public changeMaxAgentsSelector(ev: MatSelectChange): void {
+    this.selectedMaxAgents = ev.value;
+    this.info.maxAgents = this.selectedMaxAgents;
+  }
+
+  public changeMaxAgentsRadioGroup(ev: MatRadioChange): void {
+    this.selectedMaxAgents = ev.value;
     this.info.maxAgents = this.selectedMaxAgents;
   }
 
@@ -274,7 +280,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   }
 
   public disableOK(): boolean {
-    if (!this.isChanged) {
+    if (!this.isChanged()) {
       return true;
     }
     if (this.info.password && validRoomInfoPassword(this.info) !== null) {

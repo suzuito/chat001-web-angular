@@ -1,4 +1,11 @@
 <div class='ops'>
 </div>
 <app-room-info [room]="room" maxLengthName='16' maxLengthDescription='200' textDoneButton='更新'
-  (done)='clickDoneRoomInfo($event)' [changable]='true'></app-room-info>
+  (done)='clickDoneRoomInfo($event)' [changable]='changable()'></app-room-info>
+<mat-card>
+  <mat-card-actions>
+    <div class='actions'>
+      <button mat-raised-button color='warn' (click)='deleteRoom()' [disabled]='!isOwner()'>削除する</button>
+    </div>
+  </mat-card-actions>
+</mat-card>

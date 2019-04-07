@@ -28,7 +28,7 @@ export class CursorManagerRoomMemberService extends CursorManager {
       this.localStorageService.get(LocalStorageKey.A),
       roomId,
       this.get(roomId),
-      100,
+      -1,
     ).then((agentsInRoom: AgentsInRoom) => {
       agentsInRoom.agents.forEach(v => {
         this.dataEasyAgentsService.setAgent(v.agent);

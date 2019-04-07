@@ -59,20 +59,8 @@ export class RoomService {
     const ret = this.dataAgentsInRoomService.getParent(this.roomId);
     const ret2 = ret.map(v => {
       return newAgentInRoom(v, this.dataEasyAgentsService.get(v.externalID));
-    }).filter(v => {
-      return v.agent.externalId !== this.agentService.get().externalId;
     });
     return ret2;
-  }
-
-  public async putRoomsMessages(message: string): Promise<void> {
-    return this.apiService.putRoomsMessages(
-      this.localStorageService.get(LocalStorageKey.A),
-      this.roomId,
-      message,
-    ).then((msg: RoomMessage) => {
-      return;
-    });
   }
 
   public async intr(agents: EasyAgent[], room: Room): Promise<void> {

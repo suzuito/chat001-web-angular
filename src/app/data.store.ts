@@ -68,6 +68,14 @@ export class DataStores<T> {
     return [];
   }
 
+  public deleteParent(pid: string): boolean {
+    if (this.datas.has(pid)) {
+      this.datas.delete(pid);
+      return true;
+    }
+    return false;
+  }
+
   public set(pid: string, id: string, d: T): void {
     let ds: DataStore<T> = null;
     if (!this.datas.has(pid)) {

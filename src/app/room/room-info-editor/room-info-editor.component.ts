@@ -5,6 +5,8 @@ import { RoomInfo } from 'src/app/parts/room-info/room-info.component';
 import { MatDialog } from '@angular/material';
 import { PasswordInputterComponent } from 'src/app/parts/password-inputter/password-inputter.component';
 import { SideMenuScrollService, ScrollIdRoomInfo, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
+import { AgentService } from 'src/app/agent.service';
+import { AppService } from 'src/app/app.service';
 
 @Component({
   selector: 'app-room-info-editor',
@@ -15,8 +17,10 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
 
   constructor(
     private roomService: RoomService,
+    private agentService: AgentService,
     private dialog: MatDialog,
     private scrollService: SideMenuScrollService,
+    private appService: AppService,
   ) { }
 
   ngOnInit() {
@@ -35,15 +39,26 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
     return this.roomService.room;
   }
 
-  public clickDoneRoomInfo(roomInfo: RoomInfo): void {
-    console.log(roomInfo);
-    if (this.roomService.room.password) {
-      const ref = this.dialog.open(PasswordInputterComponent, {
-        disableClose: true,
-      });
-      ref.afterClosed().subscribe((passwordRaw: string) => {
-        console.log(passwordRaw);
-      });
+  public async clickDoneRoomInfo(roomInfo: RoomInfo): Promise<void> {
+    this.appService.putRooms(this.room.id, roomInfo);
+  }
+
+  public changable(): boolean {
+    return this.agentService.isOwner(this.room.id);
+  }
+
+  public async deleteRoom(): Promise<void> {
+    const result = await this.appService.openDialogConfirmer(
+      '部屋を削除します。削除したら戻せません。本当に削除しますか?',
+      'はい', 'いいえ',
+    );
+    if (!result) {
+      return;
     }
+    this.appService.deleteRooms(this.room.id);
+  }
+
+  public isOwner(): boolean {
+    return this.agentService.isOwner(this.room.id);
   }
 }
