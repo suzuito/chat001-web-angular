@@ -34,9 +34,8 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
         return;
       }
       setTimeout(() => {
-        this.scrollService.loadScrollPos(
-          byRoomId(ScrollIdRoomMessages, roomId), true,
-        );
+        // this.scrollService.loadScrollPos(byRoomId(ScrollIdRoomMessages, roomId), true);
+        this.scrollService.scrollToBottom();
       }, 500);
     });
   }
