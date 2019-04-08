@@ -62,14 +62,6 @@ export class SideMenuScrollService {
     this.scrolls.set(id, data);
   }
 
-  public loadScrollPosInit(id: string, left: number, top: number): void {
-    this.scrollTo({
-      top,
-      left,
-      behavior: 'auto',
-    } as ScrollToOptions);
-  }
-
   public loadScrollPos(id: string, bottomOnInit: boolean = true): void {
     let ret: ScrollPosition = { top: 0, left: 0 };
     if (bottomOnInit && this.el) {
@@ -88,6 +80,14 @@ export class SideMenuScrollService {
       left: ret.left,
       behavior: 'auto',
     } as ScrollToOptions);
+  }
+
+  public scrollToBottom(): void {
+    this.scrollTo(
+      {
+        top: this.el.getElementRef().nativeElement.scrollHeight,
+      },
+    );
   }
 
   public isBottom(): boolean {
