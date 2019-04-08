@@ -26,8 +26,11 @@ export function errCodeToMsg(code: number): string {
   return 'Unknown http error';
 }
 
-export function errByHttpError(err: HttpErrorResponse): Error {
+export function errByHttpError(err: HttpErrorResponse, overrideOpt: Map<number, string> = new Map<number, string>()): Error {
   if ('code' in err.error) {
+    if (overrideOpt.has(err.error.code)) {
+      return new Error(overrideOpt.get(err.error.code));
+    }
     return new Error(errCodeToMsg(err.error.code));
   }
   return new Error('Unknown error');

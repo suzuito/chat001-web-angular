@@ -47,7 +47,6 @@ export class ImageCripperComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
   }
 
   ngAfterViewInit() {

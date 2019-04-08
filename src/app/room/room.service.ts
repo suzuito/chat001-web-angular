@@ -63,12 +63,4 @@ export class RoomService {
     return ret2;
   }
 
-  public async intr(agents: EasyAgent[], room: Room): Promise<void> {
-    return this.apiService.postRoomByIDIntroduction(
-      this.localStorageService.get(LocalStorageKey.A),
-      room.id,
-      agents.map(v => v.externalId),
-    );
-  }
-
 }

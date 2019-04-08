@@ -207,13 +207,15 @@ export class AppService {
   }
 
   public async updateAgentProperties(name: string, description: string, isPublic: boolean): Promise<void> {
-    this.apiService.putAgents(
+    return this.s(this.apiService.putAgents(
       this.localStorageService.get(LocalStorageKey.A),
       name, description, isPublic,
     ).then((updated: Agent) => {
       this.agentService.set(updated);
       this.dataEasyAgentsService.setAgent(updated);
-    });
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
   }
 
   public async createRoom(name: string, description: string, maxAgents: number, isPublic: boolean, passwordRaw: string): Promise<void> {
@@ -253,19 +255,25 @@ export class AppService {
   }
 
   public async updateProfileAvatar(f: File): Promise<void> {
-    return this.apiService.putAgentsAvatar(
+    return this.s(this.apiService.putAgentsAvatar(
       this.localStorageService.get(LocalStorageKey.A),
       f,
-    ).then(() => {
-      return;
-    });
+    ).then((agent: Agent) => {
+      this.agentService.set(agent);
+    }).catch(err => {
+      throw errByHttpError(err);
+    }));
   }
 
   public async postRequests(externalId: string, body: string): Promise<void> {
-    return this.apiService.postRequests(
+    return this.s(this.apiService.postRequests(
       this.localStorageService.get(LocalStorageKey.A),
       externalId, body,
-    );
+    ).catch(err => {
+      throw errByHttpError(err, new Map([
+        [409001, 'このユーザーには既にリクエストを送っています。相手からの返答待ち状態です。返答があるまで、このユーザーに対する新しいリクエストを送ることはできません。'],
+      ]));
+    }));
   }
 
   public async postRequestsApprove(request: Request): Promise<void> {
@@ -336,6 +344,16 @@ export class AppService {
     }));
   }
 
+  public async postRoomByIDIntroduction(agents: EasyAgent[], room: Room): Promise<void> {
+    return this.s(this.apiService.postRoomByIDIntroduction(
+      this.localStorageService.get(LocalStorageKey.A),
+      room.id,
+      agents.map(v => v.externalId),
+    )).catch(err => {
+      throw errByHttpError(err);
+    });
+  }
+
   public async openDialogProfile(agent: EasyAgent, readonly: boolean = false): Promise<void> {
     const ref = this.dialog.open(
       DialogProfileComponent,
@@ -350,17 +368,23 @@ export class AppService {
     if (result === ResultDialogProfile.Request) {
       this.openDialogRequester(agent);
     } else if (result === ResultDialogProfile.Intr) {
-      this.openDialogIntr(agent);
+      this.openDialogIntr(
+        [agent],
+        this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+      );
     }
   }
 
-  public async openDialogIntr(agent: EasyAgent): Promise<void> {
+  public async openDialogIntr(
+    agents: EasyAgent[],
+    rooms: Room[] = this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+  ): Promise<void> {
     const ref = this.dialog.open(
       DialogIntroducerComponent,
       {
         data: {
-          agentNames: [agent.name],
-          rooms: this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+          agentNames: agents.map(a => a.name),
+          rooms,
         },
       },
     );
@@ -368,7 +392,7 @@ export class AppService {
     if (!result) {
       return;
     }
-    this.roomService.intr([agent], result);
+    this.postRoomByIDIntroduction(agents, result);
   }
 
   public async openDialogRequester(agent: EasyAgent): Promise<void> {

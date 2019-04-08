@@ -62,7 +62,9 @@ export class AgentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public async openDialogIntr(agent: EasyAgent): Promise<void> {
-    this.appService.openDialogIntr(agent);
+    this.appService.openDialogIntr(
+      [agent],
+    );
   }
 
 }

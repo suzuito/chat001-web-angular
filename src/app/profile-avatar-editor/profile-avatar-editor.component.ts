@@ -55,10 +55,8 @@ export class ProfileAvatarEditorComponent implements OnInit {
         return;
       }
       this.fileSelected = files.item(0);
-      // this.app.uploadFile(this.agent.currentRoomId, f);
       (el as any).value = null;
       fileToSrcURL(this.fileSelected).then((v: string | ArrayBuffer) => {
-        console.log(v);
         this.imageCripper.setSrc(v as string);
       });
     });
