@@ -54,7 +54,7 @@ export class MultiLineInputterComponent implements OnInit {
   }
 
   public errorMessage(): string {
-    return `長すぎです。${this.maxLengthMessage}より短くしてください。${this.message.length} / ${this.maxLengthMessage}`;
+    return `長すぎです。${this.maxLengthMessage}文字より短くしてください。${this.message.length} / ${this.maxLengthMessage}`;
   }
 
   public disabledPost(): boolean {

@@ -81,19 +81,11 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
         agentsInRoomSelected.push(agentInRoom);
       }
     });
-    const ref = this.dialog.open(DialogIntroducerComponent, {
-      data: {
-        agentNames: agentsInRoomSelected.map(v => v.agent.name),
-        rooms: this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
-      } as DataIntroducer,
-    });
-    const result: Room = await ref.afterClosed().toPromise();
-    if (!result) {
-      return;
-    }
-    this.roomService.intr(
-      agentsInRoomSelected.map(v => v.agent),
-      result,
+    this.appService.openDialogIntr(
+      agentsInRoomSelected.map(a => a.agent),
+      this.agentService.filterRoom()
+        .filter(r => r.roomId !== this.room.id)
+        .map(v => this.dataRoomsService.get(v.roomId)),
     );
   }
 
