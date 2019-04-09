@@ -168,6 +168,10 @@ export class AppService {
     });
   }
 
+  public routeToRoom(roomId: string): void {
+    this.router.navigate(['room', roomId]);
+  }
+
   public async enterRoom(room: Room): Promise<void> {
     if (this.agentService.isInRoom(room.id)) {
       this.router.navigate(['room', room.id]);
@@ -281,9 +285,12 @@ export class AppService {
       this.localStorageService.get(LocalStorageKey.A),
       request.id,
     ).then((room: Room) => {
+      this.dataRoomsService.setRoom(room);
       this.enterRoom(room);
     }).catch(err => {
-      throw errByHttpError(err);
+      throw errByHttpError(err, new Map([
+        [404001, 'このリクエストは存在しません。既に承認、または削除されたものと思われます'],
+      ]));
     }));
   }
 

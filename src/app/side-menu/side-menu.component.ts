@@ -10,6 +10,7 @@ import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { Header001Service } from '../header001/header001.service';
 import { RoomMessageService } from '../room-message.service';
+import { SideMenuWidthService } from './side-menu-width.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -27,6 +28,7 @@ export class SideMenuComponent implements OnInit {
     private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
     private header001Service: Header001Service,
+    private sideMenuWidthService: SideMenuWidthService,
   ) { }
 
   ngOnInit() {
