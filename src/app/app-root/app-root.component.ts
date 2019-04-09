@@ -53,13 +53,13 @@ export class AppRootComponent implements OnInit, AfterViewInit {
   }
 
   public openSideNav(): void {
-    if (this.isScreenWide()) {
-      return;
-    }
     this.sidenav.open();
   }
 
   public closeSideNav(): void {
+    if (this.isScreenWide()) {
+      return;
+    }
     this.sidenav.close();
   }
 
