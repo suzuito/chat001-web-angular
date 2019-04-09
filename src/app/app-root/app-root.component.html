@@ -1,12 +1,13 @@
-<mat-sidenav-container hasBackdrop="true">
-  <mat-sidenav fixedInViewport="true" position="end" mode="push" autoFocus='false' [style.width]="'90%'" #sidenav>
+<mat-sidenav-container [hasBackdrop]="backDropSideNav()">
+  <mat-sidenav fixedInViewport="true" position="end" [mode]='modeSideNav()' autoFocus='false'
+    [style.width]='widthSideNav()' #sidenav>
     <app-side-menu></app-side-menu>
   </mat-sidenav>
   <mat-sidenav-content #sidenavContent>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<mat-toolbar class='opener' color='primary'>
+<mat-toolbar class='opener' color='primary' *ngIf='!isScreenWide() || !isOpened()'>
   <button mat-icon-button (click)='toggleSideNav()'>
     <mat-icon *ngIf='!isOpened()'>chevron_left</mat-icon>
     <mat-icon *ngIf='isOpened()'>chevron_right</mat-icon>

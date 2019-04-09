@@ -36,6 +36,9 @@ export class AppRootComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if (this.isScreenWide()) {
+      this.sidenav.open();
+    }
     this.scrollService.init(this.sidenavContent);
   }
 
@@ -43,10 +46,16 @@ export class AppRootComponent implements OnInit, AfterViewInit {
   }
 
   public toggleSideNav(): void {
+    if (this.isScreenWide() && this.sidenav.opened) {
+      return;
+    }
     this.sidenav.toggle();
   }
 
   public openSideNav(): void {
+    if (this.isScreenWide()) {
+      return;
+    }
     this.sidenav.open();
   }
 
@@ -78,5 +87,30 @@ export class AppRootComponent implements OnInit, AfterViewInit {
 
   public displayRoomButtons(): boolean {
     return this.roomService.roomId !== null;
+  }
+
+  private isScreenWide(): boolean {
+    return window.innerWidth > 600;
+  }
+
+  public backDropSideNav(): boolean {
+    if (this.isScreenWide()) {
+      return false;
+    }
+    return true;
+  }
+
+  public modeSideNav(): string {
+    if (this.isScreenWide()) {
+      return 'side';
+    }
+    return 'push';
+  }
+
+  public widthSideNav(): string {
+    if (this.isScreenWide()) {
+      return '300px';
+    }
+    return '90%';
   }
 }
