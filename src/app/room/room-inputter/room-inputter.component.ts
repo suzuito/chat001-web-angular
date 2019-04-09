@@ -6,6 +6,7 @@ import { RoomService } from '../room.service';
 import { fileToSrcURL } from 'src/app/util/image';
 import { DialogImgUploadConfirmerComponent } from 'src/app/parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
 import { AppService } from 'src/app/app.service';
+import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
 
 const maxLengthMessage = 300;
 
@@ -38,6 +39,7 @@ export class RoomInputterComponent implements OnInit {
     private roomService: RoomService,
     private appService: AppService,
     private dialog: MatDialog,
+    private sideMenuWidthService: SideMenuWidthService,
   ) {
     this.message = '';
     this.errorStateMatcherMessage = new ErrorStateMatcherMessage(this);
@@ -145,5 +147,9 @@ export class RoomInputterComponent implements OnInit {
       return '!';
     }
     return '';
+  }
+
+  public widthInputter(): string {
+    return `${window.innerWidth - this.sideMenuWidthService.width()}px`;
   }
 }

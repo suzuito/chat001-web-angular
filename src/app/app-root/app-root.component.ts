@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { AppRootService } from './app-root.service';
 import { RoomService } from '../room/room.service';
 import { SideMenuScrollService } from '../side-menu/side-menu-scroll.service';
+import { SideMenuWidthService } from '../side-menu/side-menu-width.service';
+
+const sideNavWideWidth = 300;
 
 @Component({
   selector: 'app-app-root',
@@ -23,6 +26,7 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     private appRootService: AppRootService,
     private roomService: RoomService,
     private scrollService: SideMenuScrollService,
+    private sideMenuWidthService: SideMenuWidthService,
   ) {
     this.appRootService.event.addListener('toggleSideNav', () => {
       this.toggleSideNav();
@@ -40,6 +44,8 @@ export class AppRootComponent implements OnInit, AfterViewInit {
       this.sidenav.open();
     }
     this.scrollService.init(this.sidenavContent);
+    this.sideMenuWidthService.elem = this.sidenav;
+    this.sideMenuWidthService.sideNavWidth = sideNavWideWidth;
   }
 
   ngAfterViewInit(): void {
@@ -109,7 +115,7 @@ export class AppRootComponent implements OnInit, AfterViewInit {
 
   public widthSideNav(): string {
     if (this.isScreenWide()) {
-      return '300px';
+      return `${sideNavWideWidth}px`;
     }
     return '90%';
   }

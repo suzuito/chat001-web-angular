@@ -7,6 +7,7 @@ import { AppService } from '../app.service';
 import { Header002Service } from '../header002/header002.service';
 import { AgentService } from '../agent.service';
 import { RoomStatus } from '../model/room';
+import { SideMenuWidthService } from '../side-menu/side-menu-width.service';
 
 @Component({
   selector: 'app-room',
@@ -25,6 +26,7 @@ export class RoomComponent implements OnInit {
     private appService: AppService,
     private route: ActivatedRoute,
     private header002Service: Header002Service,
+    private sideMenuWidthService: SideMenuWidthService,
   ) {
     this.prevRoomId = null;
     this.route.params.subscribe((params: Params): void => {
@@ -99,6 +101,15 @@ export class RoomComponent implements OnInit {
 
   public willDeleted(): boolean {
     return this.roomService.room.status > RoomStatus.Deletable;
+  }
+
+  public rightHeader(): string {
+    return `${this.sideMenuWidthService.width()}px`;
+  }
+
+  public rightOps(): string {
+    return `${this.sideMenuWidthService.width() + 10 /*padding*/}px`;
+
   }
 
 }

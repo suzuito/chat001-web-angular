@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatBottomSheet, MatDialog } from '@angular/material';
 import { ProfileEditorComponent, DataProfileEditorComponent } from '../parts/profile-editor/profile-editor.component';
 import { AgentService } from '../agent.service';
@@ -28,7 +28,6 @@ export class SideMenuComponent implements OnInit {
     private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
     private header001Service: Header001Service,
-    private sideMenuWidthService: SideMenuWidthService,
   ) { }
 
   ngOnInit() {

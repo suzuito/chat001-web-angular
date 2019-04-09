@@ -1,8 +1,8 @@
-<app-header002></app-header002>
+<app-header002 [style.right]='rightHeader()'></app-header002>
 <div class='main'>
   <router-outlet></router-outlet>
 </div>
-<div class='ops'>
+<div class='ops' [style.right]='rightOps()'>
   <div class='ops-row'>
     <div>
       <button mat-mini-fab color='primary' (click)='routeToAnyRoomRoute()'>

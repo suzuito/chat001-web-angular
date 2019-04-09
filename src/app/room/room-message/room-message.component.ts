@@ -9,6 +9,7 @@ import { AppService } from 'src/app/app.service';
 import { EasyAgent } from 'src/app/model/agent';
 import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { CursorManagerRoomMessageService } from '../cursor-manager-room-message.service';
+import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
 
 @Component({
   selector: 'app-room-message',
