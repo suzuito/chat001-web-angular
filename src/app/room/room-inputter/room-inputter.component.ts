@@ -125,6 +125,7 @@ export class RoomInputterComponent implements OnInit {
       const ref = this.dialog.open(DialogImgUploadConfirmerComponent, {
         data: src,
         disableClose: true,
+        height: '90%',
       });
       ref.afterClosed().toPromise().then((result: boolean) => {
         if (!result) {

@@ -41,3 +41,11 @@ mat-sidenav-content {
   width: 40px;
   height: $height-header;
 }
+
+.ws-status {
+  position: fixed;
+  left: 50%;
+  height: 0px;
+
+  z-index: 20;
+}

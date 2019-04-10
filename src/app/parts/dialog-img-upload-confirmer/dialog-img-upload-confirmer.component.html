@@ -1,9 +1,11 @@
-<div mat-dialog-title>確認</div>
-<div mat-dialog-content>
-  <img [src]='src' />
-</div>
-<div class='mat-body-1'>この画像をアップロードしても良いですか？</div>
-<div mat-dialog-actions>
-  <button mat-raised-button color='primary' (click)='ok()'>はい</button>
-  <button mat-raised-button color='primary' (click)='cancel()'>いいえ</button>
+<div #main>
+  <div mat-dialog-title>確認</div>
+  <div mat-dialog-content>
+    <img [src]='src' [height]='heightImage' />
+  </div>
+  <div class='mat-body-1'>この画像をアップロードしても良いですか？</div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' (click)='ok()'>はい</button>
+    <button mat-raised-button color='primary' (click)='cancel()'>いいえ</button>
+  </div>
 </div>

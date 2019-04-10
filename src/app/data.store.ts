@@ -108,4 +108,5 @@ export class SortedArray<T> {
     this.data.push(...elements);
     this.data.sort(this.compareFunction);
   }
+
 }

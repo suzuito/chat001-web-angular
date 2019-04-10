@@ -7,6 +7,10 @@
   z-index: 2;
 }
 
+.padding-message {
+  height: $padding-content * 30;
+}
+
 .ops {
   padding-bottom: $padding-content;
   padding-top: $padding-content;

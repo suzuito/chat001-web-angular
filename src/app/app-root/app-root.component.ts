@@ -119,4 +119,5 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     }
     return '90%';
   }
+
 }

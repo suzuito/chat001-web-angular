@@ -4,7 +4,8 @@
   <app-list-any *ngIf='rooms().length > 0' width='100%' heightList='100%' caption='新着順' (clickMore)='clickMore()'
     [disableMore]='false' [disableHeader]='true'>
     <div *ngFor='let room of rooms()' [style.padding-bottom]="'13px'">
-      <app-room-profile [room]='room' (click)='routeToRoom(room)'></app-room-profile>
+      <app-room-profile [room]='room' [isRoomAgentIn]='isRoomAgentIn(room)' (click)='routeToRoom(room)'>
+      </app-room-profile>
     </div>
   </app-list-any>
 </div>

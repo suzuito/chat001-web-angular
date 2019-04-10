@@ -30,6 +30,7 @@ export class WsService {
   private websocketNewer: WebSocketNewer;
   public secondsInterval: number;
   private closed: boolean;
+  private initialized: boolean;
 
   constructor(websocketNewer: WebSocketNewer) {
     this.closed = false;
@@ -37,6 +38,7 @@ export class WsService {
     this.ev = new EventEmitter();
     this.websocketNewer = websocketNewer;
     this.secondsInterval = 1;
+    this.initialized = false;
   }
 
   public get readyState(): number {
@@ -63,7 +65,12 @@ export class WsService {
         reject();
       };
       this.ws.onopen = (ev) => {
-        this.ev.emit('open', null);
+        if (!this.initialized) {
+          this.initialized = true;
+          this.ev.emit('open', null);
+        } else {
+          this.ev.emit('reopen', null);
+        }
         resolve();
       };
       this.ws.onerror = (ev) => {
@@ -84,4 +91,33 @@ export class WsService {
     if (this.ws) { this.ws.close(); }
     this.closed = true;
   }
+
+  public wsColor(): string {
+    switch (this.readyState) {
+      case 0: // connecting
+        return '#cddc39';
+      case 1: // open
+        return '#4caf50';
+      case 2: // closing
+        return '#ffeb3b';
+      case 3: // closed
+        return '#ff9800';
+    }
+    return '#ffffff';
+  }
+
+  public readyStateString(): string {
+    switch (this.readyState) {
+      case 0:
+        return 'connecting';
+      case 1:
+        return 'open';
+      case 2:
+        return 'closing';
+      case 3:
+        return 'closed';
+    }
+    return 'unknown';
+  }
+
 }

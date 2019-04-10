@@ -4,6 +4,9 @@
       [imgMode]="'medium'">
     </app-profile-text-all-with-icon>
     <mat-card-actions>
+      <button mat-icon-button [style.color]='wsColor()' (click)='clickWsColor()'>
+        <mat-icon>fiber_manual_record</mat-icon>
+      </button>
       <button mat-button color='primary' (click)='routeToProfileAvatarEditor()'>画像の更新</button>
       <button mat-button color='primary' (click)='openEditProfile()'>編集する</button>
     </mat-card-actions>
