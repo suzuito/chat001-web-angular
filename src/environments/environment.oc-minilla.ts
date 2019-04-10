@@ -23,5 +23,5 @@ export const environment = {
     hostname: 'node.ordiws-stg.net',
     port: 443,
   },
-  bucket: 'ocm12345',
+  bucket: 'oc-minilla.appspot.com',
 } as Environment;

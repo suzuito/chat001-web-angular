@@ -1,0 +1,48 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/rooms",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/agents",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/agents/avatar",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/agent-message",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/room-creator",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/room-entrance/*",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/room/*",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/error",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

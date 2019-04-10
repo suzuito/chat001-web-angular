@@ -95,7 +95,7 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     return this.roomService.roomId !== null;
   }
 
-  private isScreenWide(): boolean {
+  public isScreenWide(): boolean {
     return window.innerWidth > 600;
   }
 
