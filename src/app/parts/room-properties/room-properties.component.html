@@ -5,7 +5,10 @@
   <div class='mat-small'>
     <mat-icon>{{iconPassword()}}</mat-icon>
   </div>
-  <div class='mat-small'>
-    <mat-icon>{{iconPublic()}}</mat-icon>
+  <div class='mat-small' *ngIf='iconStatus()'>
+    <mat-icon>{{iconStatus()}}</mat-icon>
+  </div>
+  <div class='mat-small' *ngIf='iconRoomAgentIn()'>
+    <mat-icon>{{iconRoomAgentIn()}}</mat-icon>
   </div>
 </div>

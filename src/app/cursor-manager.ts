@@ -19,6 +19,12 @@ export abstract class CursorManager {
     this.cursors.set(id, cursor);
   }
 
+  public delete(id: string): void {
+    if (this.cursors.has(id)) {
+      this.cursors.delete(id);
+    }
+  }
+
   public async initialize(id: string): Promise<void> {
     if (!this.cursors.has(id)) {
       this.fetch(id);

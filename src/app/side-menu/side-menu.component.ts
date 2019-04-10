@@ -11,6 +11,8 @@ import { DataRoomsService } from '../data-rooms.service';
 import { Header001Service } from '../header001/header001.service';
 import { RoomMessageService } from '../room-message.service';
 import { SideMenuWidthService } from './side-menu-width.service';
+import { WsService } from '../ws.service';
+import { ErrorService } from '../error.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -28,6 +30,8 @@ export class SideMenuComponent implements OnInit {
     private dataRoomsService: DataRoomsService,
     private dialog: MatDialog,
     private header001Service: Header001Service,
+    private wsService: WsService,
+    private errorService: ErrorService,
   ) { }
 
   ngOnInit() {
@@ -110,5 +114,13 @@ export class SideMenuComponent implements OnInit {
       return '0';
     }
     return this.roomMessageService.unread(room.id);
+  }
+
+  public wsColor(): string {
+    return this.wsService.wsColor();
+  }
+
+  public clickWsColor(): void {
+    this.errorService.warn(`Web socketの接続ステータス: ${this.wsService.readyStateString()}`);
   }
 }

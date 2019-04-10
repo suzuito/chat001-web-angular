@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EventEmitter } from 'events';
+import { WsService } from '../ws.service';
 
 @Injectable({
   providedIn: 'root'

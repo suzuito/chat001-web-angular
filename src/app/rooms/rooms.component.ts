@@ -10,6 +10,7 @@ import { Header001Service } from '../header001/header001.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ParamAsNumber } from '../util';
 import { CursorManagerRoomsService } from './cursor-manager-rooms.service';
+import { AgentService } from '../agent.service';
 
 @Component({
   selector: 'app-rooms',
@@ -25,6 +26,7 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
     public searchOptService: RoomsSearchOptionService,
     private scrollService: SideMenuScrollService,
     private roomsService: RoomsService,
+    private agentService: AgentService,
     private cursorManagerRoomsService: CursorManagerRoomsService,
     private appService: AppService,
     private header001Service: Header001Service,
@@ -87,6 +89,10 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public routeToRoom(room: Room): void {
     this.appService.enterRoom(room);
+  }
+
+  public isRoomAgentIn(room: Room): boolean {
+    return this.agentService.isInRoom(room.id);
   }
 
 }

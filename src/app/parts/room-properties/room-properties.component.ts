@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Room } from 'src/app/model/room';
+import { Room, RoomStatus } from 'src/app/model/room';
 
 @Component({
   selector: 'app-room-properties',
@@ -10,6 +10,9 @@ export class RoomPropertiesComponent implements OnInit {
 
   @Input()
   public room: Room;
+
+  @Input()
+  public isRoomAgentIn: boolean;
 
   constructor() { }
 
@@ -28,6 +31,23 @@ export class RoomPropertiesComponent implements OnInit {
       return 'public';
     }
     return 'vpn_lock';
+  }
+
+  public iconRoomAgentIn(): string {
+    if (this.isRoomAgentIn) {
+      return 'person_pin';
+    }
+    return '';
+  }
+
+  public iconStatus(): string {
+    if (this.room.status > RoomStatus.Deletable) {
+      return 'delete';
+    }
+    if (this.room.status === RoomStatus.Active) {
+      return '';
+    }
+    return '';
   }
 
 }

@@ -10,6 +10,9 @@ import { getRealStyle } from 'src/app/util';
 export class RoomProfileComponent implements OnInit {
 
   @Input()
+  public isRoomAgentIn: boolean;
+
+  @Input()
   public width: string;
 
   @Input()

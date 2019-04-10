@@ -33,7 +33,13 @@ export class RoomMessageService {
     if (!this.messages.has(roomId)) {
       this.messages.set(roomId, new SortedArray<Message>(comp));
     }
-    this.messages.get(roomId).push(...msg);
+    const data = this.messages.get(roomId);
+    msg.forEach(v => {
+      if (data.data.find(vv => vv.id === v.id)) {
+        return;
+      }
+      data.push(v);
+    });
     this.ev.emit('message', roomId);
   }
 

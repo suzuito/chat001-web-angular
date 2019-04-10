@@ -29,6 +29,7 @@ import { DialogIntroducerComponent } from './parts/dialog-introducer/dialog-intr
 import { DialogRequesterComponent, DataDialogRequester } from './parts/dialog-requester/dialog-requester.component';
 import { RoomInfo } from './parts/room-info/room-info.component';
 import { DialogConfirmerComponent, DataDialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confirmer.component';
+import { CursorManagerRoomMessageService } from './room/cursor-manager-room-message.service';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -54,6 +55,7 @@ export class AppService {
     private dataEasyAgentsLatestService: DataEasyAgentsLatestService,
     private dataSyncherService: DataSyncherService,
     private errorService: ErrorService,
+    private roomMessageFetcher: CursorManagerRoomMessageService,
   ) {
     this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
@@ -99,6 +101,13 @@ export class AppService {
       const rmsg = msg.data as Room[];
       this.dataRoomsService.setRoom(...rmsg);
     });
+    this.wsService.addListener('reopen', () => {
+      this.getInit();
+      if (this.roomService.roomId) {
+        this.roomMessageFetcher.delete(this.roomService.roomId);
+        this.roomMessageFetcher.fetch(this.roomService.roomId);
+      }
+    });
   }
 
   private s(p: Promise<any>): Promise<any> {
@@ -122,6 +131,14 @@ export class AppService {
   }
 
   public async initialize(): Promise<void> {
+    return this.getInit().then(() => {
+      this.wsService.initialize(
+        this.agentService.get().id,
+      );
+    });
+  }
+
+  private async getInit(): Promise<void> {
     return this.apiService.getInit(this.localStorageService.get(LocalStorageKey.A)).then((v: Init) => {
       this.agentService.set(v.agent);
       this.localStorageService.set(LocalStorageKey.A, v.agent.id);
@@ -131,8 +148,10 @@ export class AppService {
         this.agentService.setRoom(roomAgentIn);
         this.dataEasyAgentsService.set(v.agent.externalId, v.agent);
       });
+      this.dataRoomsService.setRoom(...v.rooms);
+      this.dataEasyAgentsLatestService.clear();
+      this.dataEasyAgentsLatestService.setAgent(...v.agents);
       this.dataEasyAgentsService.setAgent(...v.agents);
-      this.wsService.initialize(v.agent.id);
     });
   }
 

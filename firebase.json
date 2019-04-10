@@ -24,7 +24,7 @@
         "destination": "/index.html"
       },
       {
-        "source": "/agent-message",
+        "source": "/agent-messages",
         "destination": "/index.html"
       },
       {
@@ -37,6 +37,10 @@
       },
       {
         "source": "/room/*",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/room/*/*",
         "destination": "/index.html"
       },
       {
