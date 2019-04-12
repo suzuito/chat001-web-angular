@@ -61,4 +61,8 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
   public isOwner(): boolean {
     return this.agentService.isOwner(this.room.id);
   }
+
+  public agentName(): string {
+    return this.agentService.get().name;
+  }
 }

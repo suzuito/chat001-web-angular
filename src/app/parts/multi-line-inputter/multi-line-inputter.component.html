@@ -1,9 +1,16 @@
 <div class='actions'>
-  <div>
-    <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledPost()'>Post</button>
+  <div class='actions-left'>
+    <div>
+      <button mat-icon-button (click)='cancel()'>
+        <mat-icon>vertical_align_bottom</mat-icon>
+      </button>
+    </div>
   </div>
-  <div>
-    <button mat-raised-button (click)='cancel()' color=''>キャンセル</button>
+  <div class='padding'></div>
+  <div class='actions-right'>
+    <div>
+      <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledPost()'>Post</button>
+    </div>
   </div>
 </div>
 <mat-form-field [hintLabel]='hintLabelMessage()'>

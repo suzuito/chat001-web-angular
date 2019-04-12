@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { MatBottomSheet, MatDialog, ErrorStateMatcher } from '@angular/material';
-import { MultiLineInputterComponent, DataMultiLineInputter } from 'src/app/parts/multi-line-inputter/multi-line-inputter.component';
-import { Message } from 'src/app/model/room_message';
+import {
+  MultiLineInputterComponent,
+  DataMultiLineInputter,
+  ResultMultiLineInputter,
+} from 'src/app/parts/multi-line-inputter/multi-line-inputter.component';
 import { RoomService } from '../room.service';
 import { fileToSrcURL } from 'src/app/util/image';
 import { DialogImgUploadConfirmerComponent } from 'src/app/parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
@@ -56,11 +59,11 @@ export class RoomInputterComponent implements OnInit {
         maxLengthMessage: this.maxLengthMessage,
       } as DataMultiLineInputter,
     });
-    const result = await ref.afterDismissed().toPromise();
-    if (!result) {
+    const result: ResultMultiLineInputter = await ref.afterDismissed().toPromise();
+    this.message = result.message;
+    if (!result.ok) {
       return;
     }
-    this.message = result;
     this.putRoomsMessages();
   }
 

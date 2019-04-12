@@ -1,3 +1,5 @@
+@import '../../common';
+
 mat-form-field {
   width: 100%;
 }
@@ -7,5 +9,25 @@ mat-form-field {
 
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+}
+
+.actions-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 50%;
+}
+
+.actions-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 50%;
+}
+
+.padding {
+  width: $padding-content;
 }

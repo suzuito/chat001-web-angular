@@ -28,9 +28,6 @@ export function validRoomInfoName(ri: RoomInfo): Error {
 }
 
 export function validRoomInfoDescription(ri: RoomInfo): Error {
-  if (ri.description.length <= 0) {
-    return new Error('説明を入力してください');
-  }
   if (ri.description.length > maxLengthDescription) {
     return new Error(`説明が長すぎます(最大${maxLengthDescription}文字)`);
   }
@@ -73,6 +70,9 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   @Input()
   public room: Room;
 
+  @Input()
+  public agentName: string;
+
   public get maxLengthName(): number {
     return maxLengthName;
   }
@@ -98,6 +98,9 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   @Input()
   public changable: boolean;
 
+  @Input()
+  public disabledName: boolean;
+
   public hidePassword: boolean;
 
   public info: RoomInfo;
@@ -113,6 +116,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
     this.maxMaxAgents = 100;
     this.hidePassword = true;
     this.done = new EventEmitter<RoomInfo>();
+    this.disabledName = false;
     this.textDoneButton = '保存する';
     this.info = {
       name: '',
@@ -161,7 +165,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
         this.selectedMaxAgents = this.info.maxAgents;
       }
       if (isRoomNull) {
-        this.info.name = randomRoomName();
+        this.info.name = randomRoomName(this.agentName);
         this.info.description = randomRoomDescription();
       }
     }
@@ -172,7 +176,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   }
 
   public renameAtRandom(): void {
-    this.info.name = randomRoomName();
+    this.info.name = randomRoomName(this.agentName);
   }
 
   public redescriptionAtRandom(): void {
@@ -281,11 +285,14 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   public disableOK(): boolean {
     if (!this.isChanged()) {
+      console.log('a');
       return true;
     }
     if (this.info.password && validRoomInfoPassword(this.info) !== null) {
+      console.log('b');
       return true;
     }
+    console.log('c');
     return validRoomInfoName(this.info) !== null
       || validRoomInfoDescription(this.info) !== null;
   }

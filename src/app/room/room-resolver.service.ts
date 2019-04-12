@@ -6,6 +6,7 @@ import { AppService } from '../app.service';
 import { AgentService } from '../agent.service';
 import { DataRoomsService } from '../data-rooms.service';
 import { ErrorService } from '../error.service';
+import { Room } from '../model/room';
 
 @Injectable({
   providedIn: 'root'
@@ -24,20 +25,38 @@ export class RoomResolverService implements Resolve<boolean> {
   public async resolve(
     route: ActivatedRouteSnapshot,
   ): Promise<any> {
+    console.log('resolve');
     const roomId = route.params.roomId;
-    if (!this.agentService.isInRoom(roomId)) {
-      this.router.navigate(['room-entrance', roomId]);
+    if (this.agentService.isInRoom(roomId)) {
+      this.roomService.roomId = roomId;
       return;
     }
     if (this.dataRoomsService.has(roomId)) {
-      this.roomService.roomId = roomId;
-      return;
+      return this.appService.enterRoom(
+        this.dataRoomsService.get(roomId)
+      ).catch(() => {
+        // Wrong password?
+        this.router.navigate(['room-entrance', roomId]);
+      });
     }
-    return this.appService.fetchRoom(roomId).then(() => {
-      this.roomService.roomId = roomId;
-    }).catch(err => {
-      this.errorService.fatal4XXNotFound('存在しないか削除された部屋です');
-      return false;
-    });
+    return this.appService.fetchRoom(roomId)
+      .then((fetchedRoom: Room) => {
+        return this.appService.enterRoom(
+          this.dataRoomsService.get(roomId)
+        ).catch(() => {
+          // Wrong password?
+          this.router.navigate(['room-entrance', roomId]);
+        });
+      })
+      .catch(err => {
+        if (err.status === 404) {
+          return this.appService.createRoomDefault(roomId)
+            .catch(() => {
+              this.errorService.fatal5XX('原因不明のエラーが発生しました');
+            });
+        } else {
+          this.errorService.fatal5XX('原因不明のエラーが発生しました');
+        }
+      });
   }
 }

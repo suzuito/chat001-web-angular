@@ -10,6 +10,7 @@ import { EasyAgent } from 'src/app/model/agent';
 import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { CursorManagerRoomMessageService } from '../cursor-manager-room-message.service';
 import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
+import { ErrorService } from 'src/app/error.service';
 
 @Component({
   selector: 'app-room-message',
@@ -28,6 +29,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     private scrollService: SideMenuScrollService,
     private appService: AppService,
     private dataEasyAgentsService: DataEasyAgentsService,
+    private errorService: ErrorService,
   ) {
     this.prevRoomId = null;
     this.roomMessageService.addListener('message', (roomId: string) => {
@@ -97,14 +99,19 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
 
   public openDialogProfile(externalId: string): void {
     if (!this.dataEasyAgentsService.has(externalId)) {
+      this.errorService.warn('既に存在しないユーザーです');
       return;
     }
     this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
   }
+
+  /*
   public openDialogRequester(externalId: string): void {
     if (!this.dataEasyAgentsService.has(externalId)) {
       return;
     }
     this.appService.openDialogRequester(this.dataEasyAgentsService.get(externalId));
   }
+  */
+
 }

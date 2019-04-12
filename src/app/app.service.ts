@@ -210,6 +210,7 @@ export class AppService {
       password,
     ).then((enterRoom: EnterRoom) => {
       this.agentService.setRoom(enterRoom.roomAgentIn);
+      this.dataRoomsService.setRoom(enterRoom.room);
       this.router.navigate(['room', room.id]);
       return;
     }).catch(err => {
@@ -241,15 +242,40 @@ export class AppService {
     }));
   }
 
-  public async createRoom(name: string, description: string, maxAgents: number, isPublic: boolean, passwordRaw: string): Promise<void> {
+  private createRoomReturned(cr: CreateRoom): void {
+    this.dataRoomsService.setRoom(cr.room);
+    this.dataAgentsInRoomService.setAgentInRoom(cr.room.id, newAgentInRoomOnlyID(cr.agentInRoom));
+    this.agentService.setRoom(cr.roomAgentIn);
+    this.router.navigate(['room', cr.room.id]);
+  }
+
+  public async createRoom(
+    id: string,
+    name: string,
+    description: string,
+    maxAgents: number,
+    isPublic: boolean,
+    passwordRaw: string,
+  ): Promise<void> {
     return this.s(this.apiService.postRooms(
       this.localStorageService.get(LocalStorageKey.A),
-      name, description, maxAgents, isPublic, passwordRaw,
+      id, name, description, maxAgents, isPublic, passwordRaw,
     ).then((cr: CreateRoom) => {
-      this.dataRoomsService.setRoom(cr.room);
-      this.dataAgentsInRoomService.setAgentInRoom(cr.room.id, newAgentInRoomOnlyID(cr.agentInRoom));
-      this.agentService.setRoom(cr.roomAgentIn);
-      this.router.navigate(['room', cr.room.id]);
+      this.createRoomReturned(cr);
+      return;
+    }).catch((err: HttpErrorResponse) => {
+      throw errByHttpError(err, new Map([
+        [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
+      ]));
+    }));
+  }
+
+  public async createRoomDefault(id: string): Promise<void> {
+    return this.s(this.apiService.postRooms(
+      this.localStorageService.get(LocalStorageKey.A),
+      id, id, '', 50, true, '',
+    ).then((cr: CreateRoom) => {
+      this.createRoomReturned(cr);
       return;
     }).catch((err: HttpErrorResponse) => {
       throw errByHttpError(err);
@@ -363,8 +389,9 @@ export class AppService {
       this.localStorageService.get(LocalStorageKey.A),
       roomId,
     ).then((room) => {
-      this.dataRoomsService.setRoom(room);
+      this.dataRoomsService.delete(room.id);
       this.errorService.warn('削除を予約しました。いずれかのタイミングでこの部屋は削除されます。');
+      this.exitRoom(room.id);
     }).catch(err => {
       throw errByHttpError(err);
     }));

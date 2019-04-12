@@ -6,6 +6,11 @@ export interface DataMultiLineInputter {
   readonly maxLengthMessage: number;
 }
 
+export interface ResultMultiLineInputter {
+  readonly ok: boolean;
+  readonly message: string;
+}
+
 class ErrorStateMatcherMessage implements ErrorStateMatcher {
   constructor(private c: MultiLineInputterComponent) { }
   public isErrorState(): boolean {
@@ -38,10 +43,16 @@ export class MultiLineInputterComponent implements OnInit {
   }
 
   public ok() {
-    this.ref.dismiss(this.message);
+    this.ref.dismiss({
+      ok: true,
+      message: this.message,
+    } as ResultMultiLineInputter);
   }
   public cancel() {
-    this.ref.dismiss(null);
+    this.ref.dismiss({
+      ok: false,
+      message: this.message,
+    } as ResultMultiLineInputter);
   }
 
 

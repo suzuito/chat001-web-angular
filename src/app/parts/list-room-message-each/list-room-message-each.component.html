@@ -1,6 +1,6 @@
 <div class='main' [style.flex-direction]='flexDirectionMain()' #domMain>
   <div class='user' [style.text-align]='textAlign()' #domUser>
-    <div class='user-name mat-caption' [matMenuTriggerFor]='menu'>
+    <div class='user-name mat-caption' (click)='clickUserName.emit()'>
       {{agentName()}}
     </div>
     <div>
@@ -14,16 +14,3 @@
     <app-lines [lines]='message.lines'></app-lines>
   </div>
 </div>
-<mat-menu #menu='matMenu'>
-  <button mat-menu-item (click)='clickMenuUserInfo.emit()' *ngIf='agent'>
-    <mat-icon>person</mat-icon>
-    <span>ユーザー</span>
-  </button>
-  <button mat-menu-item (click)='clickMenuRequest.emit()' *ngIf='agent'>
-    <mat-icon>message</mat-icon>
-    <span>リクエスト</span>
-  </button>
-  <button mat-menu-item *ngIf='!agent' disabled>
-    すでに存在しないユーザーです
-  </button>
-</mat-menu>
