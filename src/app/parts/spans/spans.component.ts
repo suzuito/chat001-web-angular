@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Span, SpanText, SpanURL } from 'src/app/model/span';
+import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Span, SpanText, SpanURL, SpanMention, parseSpanMention, SpanMentionRoom, parseSpanMentionRoom } from 'src/app/model/span';
 
 @Component({
   selector: 'app-spans',
@@ -11,7 +11,17 @@ export class SpansComponent implements OnInit {
   @Input()
   public spans: Span[];
 
-  constructor() { }
+  @Input()
+  public clickMention: EventEmitter<string>;
+
+  @Input()
+  public clickMentionRoom: EventEmitter<string>;
+
+  constructor(
+  ) {
+    this.clickMention = new EventEmitter<string>();
+    this.clickMentionRoom = new EventEmitter<string>();
+  }
 
   ngOnInit() {
   }
@@ -49,6 +59,22 @@ export class SpansComponent implements OnInit {
 
   public dataSpanYouTubeURLHeight(span: SpanURL): string {
     return `${window.innerWidth * 0.5}px`;
+  }
+
+  public dataSpanMention(span: SpanMention): string {
+    return span.data;
+  }
+
+  public clickMentionRaw(span: SpanMention): void {
+    this.clickMention.emit(parseSpanMention(span));
+  }
+
+  public dataSpanMentionRoom(span: SpanMentionRoom): string {
+    return span.data;
+  }
+
+  public clickMentionRoomRaw(span: SpanMentionRoom): void {
+    this.clickMentionRoom.emit(parseSpanMentionRoom(span));
   }
 
 }

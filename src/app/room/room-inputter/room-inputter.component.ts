@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { MatBottomSheet, MatDialog, ErrorStateMatcher } from '@angular/material';
+import { MatBottomSheet, MatDialog, ErrorStateMatcher, MatMenu, MatMenuTrigger } from '@angular/material';
 import {
   MultiLineInputterComponent,
   DataMultiLineInputter,
@@ -10,6 +10,11 @@ import { fileToSrcURL } from 'src/app/util/image';
 import { DialogImgUploadConfirmerComponent } from 'src/app/parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
 import { AppService } from 'src/app/app.service';
 import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
+import { getRealStyle } from 'src/app/util';
+import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
+import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
+import { AgentService } from 'src/app/agent.service';
+import { DataRoomsService } from 'src/app/data-rooms.service';
 
 const maxLengthMessage = 300;
 
@@ -40,6 +45,8 @@ export class RoomInputterComponent implements OnInit {
   constructor(
     private bsheet: MatBottomSheet,
     private roomService: RoomService,
+    private dataRoomsService: DataRoomsService,
+    private agentService: AgentService,
     private appService: AppService,
     private dialog: MatDialog,
     private sideMenuWidthService: SideMenuWidthService,
@@ -57,6 +64,8 @@ export class RoomInputterComponent implements OnInit {
       data: {
         message: this.message,
         maxLengthMessage: this.maxLengthMessage,
+        autoCompleteReply: this.roomService.getAgents(),
+        autoCompleteRooms: this.agentService.filterRoom().map(r => this.dataRoomsService.get(r.roomId)),
       } as DataMultiLineInputter,
     });
     const result: ResultMultiLineInputter = await ref.afterDismissed().toPromise();
@@ -156,4 +165,5 @@ export class RoomInputterComponent implements OnInit {
   public widthInputter(): string {
     return `${window.innerWidth - this.sideMenuWidthService.width()}px`;
   }
+
 }

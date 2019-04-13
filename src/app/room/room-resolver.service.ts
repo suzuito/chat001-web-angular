@@ -25,28 +25,35 @@ export class RoomResolverService implements Resolve<boolean> {
   public async resolve(
     route: ActivatedRouteSnapshot,
   ): Promise<any> {
-    console.log('resolve');
     const roomId = route.params.roomId;
     if (this.agentService.isInRoom(roomId)) {
+      // Route to room path
       this.roomService.roomId = roomId;
+      this.appService.getRoomMembers(roomId);
       return;
     }
     if (this.dataRoomsService.has(roomId)) {
+      if (this.dataRoomsService.get(roomId).password) {
+        // To entrance path
+        this.router.navigate(['room-entrance', roomId]);
+        return;
+      }
+      // enter path
       return this.appService.enterRoom(
         this.dataRoomsService.get(roomId)
-      ).catch(() => {
-        // Wrong password?
-        this.router.navigate(['room-entrance', roomId]);
-      });
+      );
     }
     return this.appService.fetchRoom(roomId)
       .then((fetchedRoom: Room) => {
+        if (fetchedRoom.password) {
+          // To entrance path
+          this.router.navigate(['room-entrance', roomId]);
+          return;
+        }
+        // enter path
         return this.appService.enterRoom(
           this.dataRoomsService.get(roomId)
-        ).catch(() => {
-          // Wrong password?
-          this.router.navigate(['room-entrance', roomId]);
-        });
+        );
       })
       .catch(err => {
         if (err.status === 404) {

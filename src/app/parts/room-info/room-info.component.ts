@@ -12,7 +12,7 @@ export interface RoomInfo {
   public: boolean;
 }
 
-const maxLengthName = 16;
+const maxLengthName = 120;
 const maxLengthDescription = 100;
 const maxLengthPassword = 20;
 const minLengthPassword = 4;
@@ -23,6 +23,9 @@ export function validRoomInfoName(ri: RoomInfo): Error {
   }
   if (ri.name.length > maxLengthName) {
     return new Error(`名前が長すぎます(最大${maxLengthName}文字)`);
+  }
+  if (new RegExp(`\\s+`).test(ri.name)) {
+    return new Error('名前に空白を含めてはいけません');
   }
   return null;
 }

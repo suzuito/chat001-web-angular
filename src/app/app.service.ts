@@ -4,7 +4,10 @@ import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init, RoomMessageImageLink } from './model/other';
 import { RoomAgentIn, EasyAgent, Agent, RoomAgentInOnlyID } from './model/agent';
-import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom, AgentRoleInRoom } from './model/room';
+import {
+  Rooms,
+  Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom, AgentRoleInRoom, AgentsInRoom
+} from './model/room';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
@@ -475,5 +478,24 @@ export class AppService {
       },
     );
     return await ref.afterClosed().toPromise();
+  }
+
+  public async getRoomMembers(roomId: string): Promise<void> {
+    return this.apiService.getRoomMembers(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+      '',
+      -1,
+    ).then((agentsInRoom: AgentsInRoom) => {
+      agentsInRoom.agents.forEach(v => {
+        this.dataEasyAgentsService.setAgent(v.agent);
+      });
+      this.dataAgentsInRoomService.setAgentInRoom(
+        roomId,
+        ...agentsInRoom.agents.map(v => {
+          return newAgentInRoomOnlyID(v);
+        }),
+      );
+    });
   }
 }

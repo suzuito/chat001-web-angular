@@ -20,6 +20,7 @@ import {
   MatSliderModule,
   MatSnackBarModule,
   MatProgressSpinnerModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -190,6 +191,7 @@ import { DialogRoleSelectorComponent } from './parts/dialog-role-selector/dialog
     MatSliderModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
   ],
   providers: [
   ],

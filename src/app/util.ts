@@ -26,7 +26,7 @@ export function randomRoomName(name: string): string {
     'エロあり',
   ];
   const i = getRandomInt(0, names.length - 1);
-  return `${names[i]} by ${name}`;
+  return `${names[i]}_by_${name}`;
 }
 
 export function randomRoomDescription(): string {
