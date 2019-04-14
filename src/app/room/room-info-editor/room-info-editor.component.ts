@@ -44,6 +44,9 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public changable(): boolean {
+    if (!this.room) {
+      return false;
+    }
     return this.agentService.isOwner(this.room.id);
   }
 
@@ -59,6 +62,9 @@ export class RoomInfoEditorComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   public isOwner(): boolean {
+    if (!this.room) {
+      return false;
+    }
     return this.agentService.isOwner(this.room.id);
   }
 

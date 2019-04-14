@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Span, SpanText, SpanURL, SpanMention, parseSpanMention, SpanMentionRoom, parseSpanMentionRoom } from 'src/app/model/span';
 
 @Component({
@@ -11,10 +11,10 @@ export class SpansComponent implements OnInit {
   @Input()
   public spans: Span[];
 
-  @Input()
+  @Output()
   public clickMention: EventEmitter<string>;
 
-  @Input()
+  @Output()
   public clickMentionRoom: EventEmitter<string>;
 
   constructor(

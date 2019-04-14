@@ -57,7 +57,7 @@ export class RoomResolverService implements Resolve<boolean> {
       })
       .catch(err => {
         if (err.status === 404) {
-          return this.appService.createRoomDefault(roomId)
+          return this.appService.createRoomDefault(roomId, 100, true)
             .catch(() => {
               this.errorService.fatal5XX('原因不明のエラーが発生しました');
             });

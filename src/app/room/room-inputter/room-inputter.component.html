@@ -1,20 +1,77 @@
-<mat-toolbar class='inputter' [style.width]='widthInputter()'>
-  <div>
-    <button mat-icon-button (click)='openMultiLineInputter()' [color]='colorOpenMultiLineInputter()'
-      [matBadge]='badgeOpenMultiLineInputter()' matBadgeColor='warn' matBadgePosition='above before'>
-      <mat-icon>vertical_align_top</mat-icon>
-    </button>
+<mat-card class='inputter' [style.width]='widthInputter()'>
+  <div class='inputter-form-multiple' *ngIf='mode === 2'>
+    <div class='inputter-form-multiple-actions'>
+      <div>
+        <button class='text-button' mat-icon-button (click)='uploadImage()'>
+          <mat-icon>photo</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button class='text-button' mat-icon-button [matMenuTriggerFor]='menuAutoCompleteReply'>
+          <mat-icon>reply</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button class='text-button' mat-icon-button [matMenuTriggerFor]='menuAutoCompleteRooms'>
+          <mat-icon>meeting_room</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button class='text-button' mat-icon-button (click)='modeSingle()'>
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class='inputter-input-multiple-form'>
+      <div class='inputter-input-multiple-form-textarea'>
+        <mat-form-field class='inputter-input-multiple-form-textarea-ff' [hintLabel]='hintLabelMessage()'>
+          <textarea matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='10' [(ngModel)]='message'
+            rows='3' matInput (input)='checkInput($event)' [errorStateMatcher]='errorStateMatcherMessage'></textarea>
+          <mat-hint align='end'>{{hintMessage()}}</mat-hint>
+          <mat-error>{{errorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class='inputter-input-multiple-form-button'>
+        <button mat-raised-button color='primary' (click)='putRoomsMessages()' [disabled]='disabledPost()'>投稿</button>
+      </div>
+    </div>
   </div>
-  <div class='inputter-form'>
-    <mat-form-field class='inputter-input'>
-      <textarea type="text" matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='1'
-        [(ngModel)]='message' matInput [style.font-size]="'15px'" (input)='checkInput($event)'></textarea>
-    </mat-form-field>
+  <div class='inputter-form-single' *ngIf='mode === 1'>
+    <div class='inputter-input-single'>
+      <textarea class='inputter-input-input-single' [(ngModel)]='message' (input)='checkInput($event)'
+        (keyup)='keyup($event)' matInput matTextareaAutosize='false'></textarea>
+    </div>
+    <div class='inputter-input-button-single'>
+      <button mat-icon-button [matMenuTriggerFor]='menuInputter'>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
   </div>
-  <div>
-    <button mat-icon-button (click)='uploadImage()'>
-      <mat-icon>photo</mat-icon>
-    </button>
-    <input type='file' hidden #fileInputter />
+</mat-card>
+<mat-menu #menuInputter='matMenu'>
+  <button mat-menu-item (click)='createRoom()'>
+    <mat-icon>add</mat-icon>部屋の作成
+  </button>
+  <button mat-menu-item (click)='uploadImage()'>
+    <mat-icon>photo</mat-icon>画像をアップロード
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]='menuAutoCompleteReply'>
+    <mat-icon>reply</mat-icon>リプライ
+  </button>
+  <button mat-menu-item [matMenuTriggerFor]='menuAutoCompleteRooms'>
+    <mat-icon>meeting_room</mat-icon>部屋
+  </button>
+  <button mat-menu-item (click)='modeMultiple()'>
+    <mat-icon>vertical_align_top</mat-icon>複数行入力
+  </button>
+</mat-menu>
+<input type='file' hidden #fileInputter />
+<mat-menu #menuAutoCompleteRooms='matMenu'>
+  <div mat-menu-item *ngFor='let room of autoCompleteRooms()' class='mat-body-2' (click)='textRoom(room)'>
+    #!{{room.name}}
   </div>
-</mat-toolbar>
+</mat-menu>
+<mat-menu #menuAutoCompleteReply='matMenu'>
+  <div mat-menu-item *ngFor='let agent of autoCompleteReply()' class='mat-body-2' (click)='textReply(agent)'>
+    @{{agentName(agent)}}</div>
+</mat-menu>

@@ -19,13 +19,13 @@ const minLengthPassword = 4;
 
 export function validRoomInfoName(ri: RoomInfo): Error {
   if (ri.name.length <= 0) {
-    return new Error('名前を入力してください');
+    return new Error('部屋名を入力してください');
   }
   if (ri.name.length > maxLengthName) {
-    return new Error(`名前が長すぎます(最大${maxLengthName}文字)`);
+    return new Error(`部屋名が長すぎます(最大${maxLengthName}文字)`);
   }
   if (new RegExp(`\\s+`).test(ri.name)) {
-    return new Error('名前に空白を含めてはいけません');
+    return new Error('部屋名に空白を含めてはいけません');
   }
   return null;
 }
@@ -60,6 +60,31 @@ class ErrorStateMatcherPassword implements ErrorStateMatcher {
   constructor(private roomInfo: RoomInfo) { }
   public isErrorState(): boolean {
     return validRoomInfoPassword(this.roomInfo) !== null;
+  }
+}
+
+
+export class ErrorStateMatcherName implements ErrorStateMatcher {
+
+  public err: Error;
+
+  constructor(private roomInfo: RoomInfo) {
+    this.err = null;
+  }
+  public isErrorState(): boolean {
+    const result = validRoomInfoName(this.roomInfo);
+    if (result) {
+      this.err = result;
+      return true;
+    }
+    this.err = null;
+    return false;
+  }
+  public string(): string {
+    if (!this.err) {
+      return '';
+    }
+    return this.err.message;
   }
 }
 
@@ -288,14 +313,11 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   public disableOK(): boolean {
     if (!this.isChanged()) {
-      console.log('a');
       return true;
     }
     if (this.info.password && validRoomInfoPassword(this.info) !== null) {
-      console.log('b');
       return true;
     }
-    console.log('c');
     return validRoomInfoName(this.info) !== null
       || validRoomInfoDescription(this.info) !== null;
   }

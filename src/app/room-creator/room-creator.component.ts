@@ -42,6 +42,7 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
       room.maxAgents,
       room.public,
       room.passwordRaw,
+      true,
     );
   }
 

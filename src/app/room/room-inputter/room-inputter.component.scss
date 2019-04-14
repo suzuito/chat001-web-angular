@@ -5,19 +5,70 @@
   left: 0px;
   bottom: 0px;
 
-  height: $height-header;
+  // height: $height-header;
+  // align-items: center;
 
-  display: flex;
-  flex-direction: row;
+  // display: flex;
+  // flex-direction: row;
   z-index: 4;
 
 }
-.inputter-form {
-  width: 90%;
+
+.inputter-form-multiple {
+  width: 95%;
+  padding-left: $padding-content;
+  padding-right: $padding-content;
+  // border: 1px solid red;
 }
 
-.inputter-input {
+.inputter-form-multiple-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.inputter-input-multiple-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  // border: 1px solid red;
+}
+
+.inputter-input-multiple-form-textarea {
   width: 100%;
+  padding-right: 10px;
+  // border: 1px solid red;
+}
+
+.inputter-input-multiple-form-textarea-ff {
+  width: 100%;
+}
+
+.inputter-input-multiple-form-button {
+  // border: 1px solid red;
+}
+
+.inputter-form-single {
+  width: 95%;
+  padding-left: $padding-content;
+  padding-right: $padding-content;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.inputter-input-single {
+  width: 100%;
+}
+
+.inputter-input-input-single {
+  width: 100%;
+}
+
+.inputter-input-button-single {
+  // border: 1px solid red;
 }
 
 .auto-complete-list {
@@ -27,4 +78,9 @@
   z-index: 10;
 
   border: 3px solid red;
+}
+
+mat-card {
+  padding: 0px;
+  margin: 0px;
 }

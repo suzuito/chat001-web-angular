@@ -1,8 +1,8 @@
 <span *ngFor='let span of spans' [ngSwitch]='span.type'>
   <span *ngSwitchCase='1'>{{dataSpanText(span)}}</span>
   <a *ngSwitchCase='2' target='_blank' [href]='dataSpanURLURL(span)'>{{dataSpanURLTitle(span)}}</a>
-  <a *ngSwitchCase='7' (click)='clickMentionRaw(span)'>{{dataSpanMention(span)}}</a>
-  <a *ngSwitchCase='8' (click)='clickMentionRoomRaw(span)'>{{dataSpanMentionRoom(span)}}</a>
+  <a *ngSwitchCase='7' class='mention' (click)='clickMentionRaw(span)'>{{dataSpanMention(span)}}</a>
+  <a *ngSwitchCase='8' class='mention-room' (click)='clickMentionRoomRaw(span)'>{{dataSpanMentionRoom(span)}}</a>
   <iframe *ngSwitchCase='100' [style.width]="dataSpanYouTubeURLWidth(span)"
     [style.height]="dataSpanYouTubeURLHeight(span)" [src]=" dataSpanURLURL(span) | safeIframeSource"></iframe>
   <a *ngSwitchCase='101' target='_blank' [href]='dataSpanImageURL(span)'><img [src]='dataSpanImageSrc(span)'

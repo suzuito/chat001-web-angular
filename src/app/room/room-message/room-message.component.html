@@ -6,7 +6,8 @@
   <div *ngFor='let message of messages()'>
     <app-list-room-message-each [message]='message' [agent]='messageAgent(message.agentExternalId)'
       (clickUserIcon)='openDialogProfile(message.agentExternalId)'
-      (clickUserName)='openDialogProfile(message.agentExternalId)'>
+      (clickUserName)='openDialogProfile(message.agentExternalId)' (clickMention)='clickMention($event)'
+      (clickMentionRoom)='clickMentionRoom($event)'>
     </app-list-room-message-each>
     <mat-divider></mat-divider>
   </div>

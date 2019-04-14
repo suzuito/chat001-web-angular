@@ -94,6 +94,7 @@ import { DialogProgressiveComponent } from './parts/dialog-progressive/dialog-pr
 import { LineRequestApprovedComponent } from './parts/line-request-approved/line-request-approved.component';
 import { DialogProfileRoomComponent } from './parts/dialog-profile-room/dialog-profile-room.component';
 import { DialogRoleSelectorComponent } from './parts/dialog-role-selector/dialog-role-selector.component';
+import { DialogRoomCreaterNameOnlyComponent } from './parts/dialog-room-creater-name-only/dialog-room-creater-name-only.component';
 
 @NgModule({
   declarations: [
@@ -166,6 +167,7 @@ import { DialogRoleSelectorComponent } from './parts/dialog-role-selector/dialog
     LineRequestApprovedComponent,
     DialogProfileRoomComponent,
     DialogRoleSelectorComponent,
+    DialogRoomCreaterNameOnlyComponent,
   ],
   imports: [
     BrowserModule,
@@ -209,6 +211,7 @@ import { DialogRoleSelectorComponent } from './parts/dialog-role-selector/dialog
     DialogProgressiveComponent,
     DialogProfileRoomComponent,
     DialogRoleSelectorComponent,
+    DialogRoomCreaterNameOnlyComponent,
   ],
   bootstrap: [AppComponent]
 })

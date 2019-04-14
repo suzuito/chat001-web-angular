@@ -11,6 +11,7 @@
   <div class='body mat-body-2'>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
   -->
   <div class='body mat-body-2' #domBody>
-    <app-lines [lines]='message.lines'></app-lines>
+    <app-lines [lines]='message.lines' (clickMentionRoom)='clickMentionRoom.emit($event)'
+      (clickMention)='clickMention.emit($event)'></app-lines>
   </div>
 </div>

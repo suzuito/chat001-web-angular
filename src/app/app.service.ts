@@ -113,13 +113,14 @@ export class AppService {
     });
   }
 
-  private s(p: Promise<any>): Promise<any> {
+  private s(p: Promise<any>, successMsg: string = 'ok'): Promise<any> {
     const ref = this.dialog.open(DialogProgressiveComponent, defaultDialogConfigProgressive);
     return p.then((a) => {
-      ref.componentInstance.success('');
+      ref.componentInstance.success(successMsg);
       return a;
     }).catch((err: Error) => {
       ref.componentInstance.fail(err.message);
+      throw err;
     }).finally(() => {
     });
   }
@@ -245,11 +246,13 @@ export class AppService {
     }));
   }
 
-  private createRoomReturned(cr: CreateRoom): void {
+  private createRoomReturned(cr: CreateRoom, routeToRoom: boolean): void {
     this.dataRoomsService.setRoom(cr.room);
     this.dataAgentsInRoomService.setAgentInRoom(cr.room.id, newAgentInRoomOnlyID(cr.agentInRoom));
     this.agentService.setRoom(cr.roomAgentIn);
-    this.router.navigate(['room', cr.room.id]);
+    if (routeToRoom) {
+      this.router.navigate(['room', cr.room.id]);
+    }
   }
 
   public async createRoom(
@@ -259,30 +262,37 @@ export class AppService {
     maxAgents: number,
     isPublic: boolean,
     passwordRaw: string,
+    routeToRoom: boolean,
   ): Promise<void> {
     return this.s(this.apiService.postRooms(
       this.localStorageService.get(LocalStorageKey.A),
       id, name, description, maxAgents, isPublic, passwordRaw,
     ).then((cr: CreateRoom) => {
-      this.createRoomReturned(cr);
+      this.createRoomReturned(cr, routeToRoom);
       return;
     }).catch((err: HttpErrorResponse) => {
       throw errByHttpError(err, new Map([
         [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
       ]));
-    }));
+    }), `'${name}' を作成しました`);
   }
 
-  public async createRoomDefault(id: string): Promise<void> {
+  public async createRoomDefault(
+    id: string,
+    maxAgents: number,
+    routeToRoom: boolean,
+  ): Promise<void> {
     return this.s(this.apiService.postRooms(
       this.localStorageService.get(LocalStorageKey.A),
-      id, id, '', 50, true, '',
+      id, id, '', maxAgents, true, '',
     ).then((cr: CreateRoom) => {
-      this.createRoomReturned(cr);
+      this.createRoomReturned(cr, routeToRoom);
       return;
     }).catch((err: HttpErrorResponse) => {
-      throw errByHttpError(err);
-    }));
+      throw errByHttpError(err, new Map([
+        [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
+      ]));
+    }), `'${id}' を作成しました`);
   }
 
   public async getUnknownAgentProfile(...inExtIDs: string[]) {

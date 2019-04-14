@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Room, AgentInRoom, newAgentInRoom } from '../model/room';
+import { Room, AgentInRoom, newAgentInRoom, AgentInRoomOnlyID } from '../model/room';
 import { EventEmitter } from 'events';
 import { AgentService } from '../agent.service';
 import { ApiService } from '../api.service';
@@ -61,6 +61,13 @@ export class RoomService {
       return newAgentInRoom(v, this.dataEasyAgentsService.get(v.externalID));
     });
     return ret2;
+  }
+
+  public getAgentsOnlyID(): AgentInRoomOnlyID[] {
+    if (!this.roomId) {
+      return [];
+    }
+    return this.dataAgentsInRoomService.getParent(this.roomId);
   }
 
 }
