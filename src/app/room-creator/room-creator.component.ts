@@ -5,6 +5,7 @@ import { SideMenuScrollService, ScrollIdRoomCreator } from '../side-menu/side-me
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { Header001Service } from '../header001/header001.service';
+import { AgentService } from '../agent.service';
 
 @Component({
   selector: 'app-room-creator',
@@ -16,6 +17,7 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private scrollService: SideMenuScrollService,
     private appService: AppService,
+    private agentService: AgentService,
     private router: Router,
     private header001Service: Header001Service,
   ) { }
@@ -33,7 +35,18 @@ export class RoomCreatorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public clickDoneRoomInfo(room: RoomInfo): void {
-    this.appService.createRoom(room.name, room.description, room.maxAgents, room.public, room.passwordRaw);
+    this.appService.createRoom(
+      room.name,
+      room.name,
+      room.description,
+      room.maxAgents,
+      room.public,
+      room.passwordRaw,
+      true,
+    );
   }
 
+  public agentName(): string {
+    return this.agentService.get().name;
+  }
 }

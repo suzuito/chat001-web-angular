@@ -1,9 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, ErrorStateMatcher } from '@angular/material';
+import { AgentInRoom, Room } from 'src/app/model/room';
 
 export interface DataMultiLineInputter {
   readonly message: string;
   readonly maxLengthMessage: number;
+  readonly autoCompleteRooms: Room[];
+  readonly autoCompleteReply: AgentInRoom[];
+}
+
+export interface ResultMultiLineInputter {
+  readonly ok: boolean;
+  readonly message: string;
 }
 
 class ErrorStateMatcherMessage implements ErrorStateMatcher {
@@ -22,6 +30,8 @@ export class MultiLineInputterComponent implements OnInit {
 
   public message: string;
   public maxLengthMessage: number;
+  public autoCompleteRooms: Room[];
+  public autoCompleteReply: AgentInRoom[];
 
   public errorStateMatcherMessage: ErrorStateMatcherMessage;
 
@@ -32,18 +42,29 @@ export class MultiLineInputterComponent implements OnInit {
     this.message = data.message;
     this.maxLengthMessage = data.maxLengthMessage;
     this.errorStateMatcherMessage = new ErrorStateMatcherMessage(this);
+    this.autoCompleteReply = data.autoCompleteReply;
+    this.autoCompleteRooms = data.autoCompleteRooms;
   }
 
   ngOnInit() {
   }
 
   public ok() {
-    this.ref.dismiss(this.message);
+    this.ref.dismiss({
+      ok: true,
+      message: this.message,
+    } as ResultMultiLineInputter);
   }
   public cancel() {
-    this.ref.dismiss(null);
+    this.ref.dismiss({
+      ok: false,
+      message: this.message,
+    } as ResultMultiLineInputter);
   }
 
+  public widthWindow(): string {
+    return `${window.innerWidth}px`;
+  }
 
   public hintLabelMessage(): string {
     return `最大${this.maxLengthMessage}文字`;

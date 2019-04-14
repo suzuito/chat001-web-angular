@@ -1,7 +1,8 @@
 <div class='ops'>
 </div>
 <app-room-info [room]="room" maxLengthName='16' maxLengthDescription='200' textDoneButton='更新'
-  (done)='clickDoneRoomInfo($event)' [changable]='changable()'></app-room-info>
+  (done)='clickDoneRoomInfo($event)' [changable]='changable()' [disabledName]='true' [agentName]='agentName()'>
+</app-room-info>
 <mat-card>
   <mat-card-actions>
     <div class='actions'>

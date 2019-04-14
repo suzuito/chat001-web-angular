@@ -100,6 +100,9 @@ export class RoomComponent implements OnInit {
   }
 
   public willDeleted(): boolean {
+    if (!this.roomService.room) {
+      return false;
+    }
     return this.roomService.room.status > RoomStatus.Deletable;
   }
 

@@ -66,7 +66,7 @@ export class DialogProgressiveComponent implements OnInit {
   public autoClose(): void {
     setTimeout(() => {
       this.close();
-    }, 500);
+    }, 1000);
   }
 
 }

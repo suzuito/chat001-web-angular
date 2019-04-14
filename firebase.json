@@ -44,6 +44,10 @@
         "destination": "/index.html"
       },
       {
+        "source": "/init",
+        "destination": "/index.html"
+      },
+      {
         "source": "/error",
         "destination": "/index.html"
       }

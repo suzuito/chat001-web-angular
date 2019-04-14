@@ -1,14 +1,22 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { MatBottomSheet, MatDialog, ErrorStateMatcher } from '@angular/material';
-import { MultiLineInputterComponent, DataMultiLineInputter } from 'src/app/parts/multi-line-inputter/multi-line-inputter.component';
-import { Message } from 'src/app/model/room_message';
 import { RoomService } from '../room.service';
 import { fileToSrcURL } from 'src/app/util/image';
 import { DialogImgUploadConfirmerComponent } from 'src/app/parts/dialog-img-upload-confirmer/dialog-img-upload-confirmer.component';
 import { AppService } from 'src/app/app.service';
 import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
+import { AgentService } from 'src/app/agent.service';
+import { DataRoomsService } from 'src/app/data-rooms.service';
+import { AgentInRoom, Room, AgentInRoomOnlyID } from 'src/app/model/room';
+import { ErrorStateMatcher, MatDialog } from '@angular/material';
+import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
+import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
+import { DialogRoomCreaterNameOnlyComponent } from 'src/app/parts/dialog-room-creater-name-only/dialog-room-creater-name-only.component';
+import { RoomInfo } from 'src/app/parts/room-info/room-info.component';
 
-const maxLengthMessage = 300;
+const enum InputMode {
+  Single = 1,
+  Multiple,
+}
 
 class ErrorStateMatcherMessage implements ErrorStateMatcher {
   constructor(private c: RoomInputterComponent) { }
@@ -17,6 +25,8 @@ class ErrorStateMatcherMessage implements ErrorStateMatcher {
   }
 }
 
+const maxLengthMessage = 300;
+
 @Component({
   selector: 'app-room-inputter',
   templateUrl: './room-inputter.component.html',
@@ -24,63 +34,71 @@ class ErrorStateMatcherMessage implements ErrorStateMatcher {
 })
 export class RoomInputterComponent implements OnInit {
 
-  public get maxLengthMessage(): number {
-    return maxLengthMessage;
-  }
-
   public message: string;
-  public errorStateMatcherMessage: ErrorStateMatcherMessage;
 
   @ViewChild('fileInputter')
   private domFile: ElementRef;
 
+  public mode: InputMode;
+
+  public maxLengthMessage: number;
+
+  public errorStateMatcherMessage: ErrorStateMatcherMessage;
+
   constructor(
-    private bsheet: MatBottomSheet,
     private roomService: RoomService,
+    private dataRoomsService: DataRoomsService,
+    private dataEasyAgentsService: DataEasyAgentsService,
+    private agentService: AgentService,
     private appService: AppService,
     private dialog: MatDialog,
     private sideMenuWidthService: SideMenuWidthService,
   ) {
     this.message = '';
+    this.mode = InputMode.Single;
+    this.maxLengthMessage = maxLengthMessage;
     this.errorStateMatcherMessage = new ErrorStateMatcherMessage(this);
   }
 
   ngOnInit() {
   }
 
-  public async openMultiLineInputter(): Promise<void> {
-    const ref = this.bsheet.open(MultiLineInputterComponent, {
-      disableClose: true,
-      data: {
-        message: this.message,
-        maxLengthMessage: this.maxLengthMessage,
-      } as DataMultiLineInputter,
-    });
-    const result = await ref.afterDismissed().toPromise();
-    if (!result) {
-      return;
+  public autoCompleteReply(): AgentInRoomOnlyID[] {
+    return this.roomService.getAgentsOnlyID().filter(a => this.dataEasyAgentsService.has(a.externalID));
+  }
+
+  public agentName(a: AgentInRoomOnlyID): string {
+    if (this.dataEasyAgentsService.has(a.externalID)) {
+      return this.dataEasyAgentsService.get(a.externalID).name;
     }
-    this.message = result;
-    this.putRoomsMessages();
+    return a.externalID;
+  }
+
+  public autoCompleteRooms(): Room[] {
+    return this.agentService.filterRoom().map(r => this.dataRoomsService.get(r.roomId));
   }
 
   public checkInput(event: any): void {
+    console.log(event);
     switch (event.inputType) {
       case 'insertFromPaste':
+        if (this.mode === InputMode.Multiple) {
+          return;
+        }
         const chk = /\n|\r\n/;
         if (!chk.test(this.message)) {
           return;
         }
-        this.openMultiLineInputter();
-        break;
-      case 'insertLineBreak':
-        this.message = this.message.replace(/\r\n$|\n$/, '');
-        this.putRoomsMessages();
+        this.modeMultiple();
         break;
     }
-    if (this.message.length > this.maxLengthMessage) {
-      this.openMultiLineInputter();
-      return;
+  }
+
+  public keyup(event: any) {
+    if (event.keyCode === 13) {
+      console.log(event);
+      this.message = this.message.replace(/\r\n$|\n$/, '');
+      this.putRoomsMessages();
     }
   }
 
@@ -136,21 +154,55 @@ export class RoomInputterComponent implements OnInit {
     });
   }
 
-  public colorOpenMultiLineInputter(): string {
-    if (this.errorStateMatcherMessage.isErrorState()) {
-      return 'warn';
-    }
-    return '';
-  }
-
-  public badgeOpenMultiLineInputter(): string {
-    if (this.errorStateMatcherMessage.isErrorState()) {
-      return '!';
-    }
-    return '';
-  }
-
   public widthInputter(): string {
     return `${window.innerWidth - this.sideMenuWidthService.width()}px`;
   }
+
+  public modeMultiple(): void {
+    this.mode = InputMode.Multiple;
+  }
+
+  public modeSingle(): void {
+    this.mode = InputMode.Single;
+  }
+
+  public textReply(agent: AgentInRoomOnlyID) {
+    let name = agent.externalID;
+    if (this.dataEasyAgentsService.has(agent.externalID)) {
+      name = this.dataEasyAgentsService.get(agent.externalID).name;
+    }
+    this.message += ` @${name} `;
+  }
+
+  public textRoom(room: Room) {
+    this.message += ` #!${room.name} `;
+  }
+
+  public hintLabelMessage(): string {
+    return `最大${this.maxLengthMessage}文字`;
+  }
+
+  public hintMessage(): string {
+    return `${this.message.length} / ${this.maxLengthMessage}`;
+  }
+
+  public errorMessage(): string {
+    return `長すぎです。${this.maxLengthMessage}文字より短くしてください。${this.message.length} / ${this.maxLengthMessage}`;
+  }
+
+  public disabledPost(): boolean {
+    return (this.message.length <= 0 || this.message.length > this.maxLengthMessage || /^\s*$/.test(this.message));
+  }
+
+  public async createRoom(): Promise<void> {
+    const ref = this.dialog.open(DialogRoomCreaterNameOnlyComponent);
+    const result: RoomInfo = await ref.afterClosed().toPromise();
+    if (!result) {
+      return;
+    }
+    this.appService.createRoomDefault(result.name, result.maxAgents, false).then(() => {
+      this.appService.putRoomsMessages(this.roomService.roomId, `@all #!${result.name} を作成しました！`);
+    });
+  }
+
 }

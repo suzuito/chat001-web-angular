@@ -1,9 +1,26 @@
 <div class='actions'>
-  <div>
-    <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledPost()'>Post</button>
+  <div class='actions-left'>
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]='menuAutoCompleteReply'>
+        <mat-icon>reply</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]='menuAutoCompleteRooms'>
+        <mat-icon>meeting_room</mat-icon>
+      </button>
+    </div>
   </div>
-  <div>
-    <button mat-raised-button (click)='cancel()' color=''>キャンセル</button>
+  <div class='padding'></div>
+  <div class='actions-right'>
+    <div>
+      <button mat-raised-button (click)='ok()' color='primary' [disabled]='disabledPost()'>Post</button>
+    </div>
+    <div>
+      <button mat-icon-button (click)='cancel()'>
+        <mat-icon>vertical_align_bottom</mat-icon>
+      </button>
+    </div>
   </div>
 </div>
 <mat-form-field [hintLabel]='hintLabelMessage()'>
@@ -12,3 +29,9 @@
   <mat-hint align='end'>{{hintMessage()}}</mat-hint>
   <mat-error>{{errorMessage()}}</mat-error>
 </mat-form-field>
+<mat-menu #menuAutoCompleteRooms='matMenu'>
+  <div mat-menu-item *ngFor='let room of autoCompleteRooms' class='mat-body-2'>#!{{room.name}}</div>
+</mat-menu>
+<mat-menu #menuAutoCompleteReply='matMenu'>
+  <div mat-menu-item *ngFor='let agent of autoCompleteReply' class='mat-body-2'>@{{agent.agent.name}}</div>
+</mat-menu>

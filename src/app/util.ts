@@ -16,7 +16,7 @@ function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export function randomRoomName(): string {
+export function randomRoomName(name: string): string {
   const names = [
     '暇人集合',
     'まったりチャット',
@@ -26,7 +26,7 @@ export function randomRoomName(): string {
     'エロあり',
   ];
   const i = getRandomInt(0, names.length - 1);
-  return names[i];
+  return `${names[i]}_by_${name}`;
 }
 
 export function randomRoomDescription(): string {

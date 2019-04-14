@@ -25,10 +25,13 @@ export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
   public clickUserIcon: EventEmitter<void>;
 
   @Output()
-  public clickMenuRequest: EventEmitter<void>;
+  public clickUserName: EventEmitter<void>;
 
   @Output()
-  public clickMenuUserInfo: EventEmitter<void>;
+  public clickMentionRoom: EventEmitter<string>;
+
+  @Output()
+  public clickMention: EventEmitter<string>;
 
   @ViewChild('domMain')
   public domMain: ElementRef;
@@ -42,8 +45,9 @@ export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
   constructor() {
     this.isLeft = true;
     this.clickUserIcon = new EventEmitter<void>();
-    this.clickMenuRequest = new EventEmitter<void>();
-    this.clickMenuUserInfo = new EventEmitter<void>();
+    this.clickUserName = new EventEmitter<void>();
+    this.clickMentionRoom = new EventEmitter<string>();
+    this.clickMention = new EventEmitter<string>();
   }
 
   ngOnInit() {

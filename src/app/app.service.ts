@@ -4,7 +4,10 @@ import { AgentService } from './agent.service';
 import { LocalStorageService, LocalStorageKey } from './local-storage.service';
 import { Init, RoomMessageImageLink } from './model/other';
 import { RoomAgentIn, EasyAgent, Agent, RoomAgentInOnlyID } from './model/agent';
-import { Rooms, Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom, AgentRoleInRoom } from './model/room';
+import {
+  Rooms,
+  Room, EnterRoom, ExitRoom, CreateRoom, newAgentInRoomOnlyID, AgentInRoom, AgentRoleInRoom, AgentsInRoom
+} from './model/room';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
@@ -110,13 +113,14 @@ export class AppService {
     });
   }
 
-  private s(p: Promise<any>): Promise<any> {
+  private s(p: Promise<any>, successMsg: string = 'ok'): Promise<any> {
     const ref = this.dialog.open(DialogProgressiveComponent, defaultDialogConfigProgressive);
     return p.then((a) => {
-      ref.componentInstance.success('');
+      ref.componentInstance.success(successMsg);
       return a;
     }).catch((err: Error) => {
       ref.componentInstance.fail(err.message);
+      throw err;
     }).finally(() => {
     });
   }
@@ -210,6 +214,7 @@ export class AppService {
       password,
     ).then((enterRoom: EnterRoom) => {
       this.agentService.setRoom(enterRoom.roomAgentIn);
+      this.dataRoomsService.setRoom(enterRoom.room);
       this.router.navigate(['room', room.id]);
       return;
     }).catch(err => {
@@ -241,19 +246,53 @@ export class AppService {
     }));
   }
 
-  public async createRoom(name: string, description: string, maxAgents: number, isPublic: boolean, passwordRaw: string): Promise<void> {
+  private createRoomReturned(cr: CreateRoom, routeToRoom: boolean): void {
+    this.dataRoomsService.setRoom(cr.room);
+    this.dataAgentsInRoomService.setAgentInRoom(cr.room.id, newAgentInRoomOnlyID(cr.agentInRoom));
+    this.agentService.setRoom(cr.roomAgentIn);
+    if (routeToRoom) {
+      this.router.navigate(['room', cr.room.id]);
+    }
+  }
+
+  public async createRoom(
+    id: string,
+    name: string,
+    description: string,
+    maxAgents: number,
+    isPublic: boolean,
+    passwordRaw: string,
+    routeToRoom: boolean,
+  ): Promise<void> {
     return this.s(this.apiService.postRooms(
       this.localStorageService.get(LocalStorageKey.A),
-      name, description, maxAgents, isPublic, passwordRaw,
+      id, name, description, maxAgents, isPublic, passwordRaw,
     ).then((cr: CreateRoom) => {
-      this.dataRoomsService.setRoom(cr.room);
-      this.dataAgentsInRoomService.setAgentInRoom(cr.room.id, newAgentInRoomOnlyID(cr.agentInRoom));
-      this.agentService.setRoom(cr.roomAgentIn);
-      this.router.navigate(['room', cr.room.id]);
+      this.createRoomReturned(cr, routeToRoom);
       return;
     }).catch((err: HttpErrorResponse) => {
-      throw errByHttpError(err);
-    }));
+      throw errByHttpError(err, new Map([
+        [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
+      ]));
+    }), `'${name}' を作成しました`);
+  }
+
+  public async createRoomDefault(
+    id: string,
+    maxAgents: number,
+    routeToRoom: boolean,
+  ): Promise<void> {
+    return this.s(this.apiService.postRooms(
+      this.localStorageService.get(LocalStorageKey.A),
+      id, id, '', maxAgents, true, '',
+    ).then((cr: CreateRoom) => {
+      this.createRoomReturned(cr, routeToRoom);
+      return;
+    }).catch((err: HttpErrorResponse) => {
+      throw errByHttpError(err, new Map([
+        [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
+      ]));
+    }), `'${id}' を作成しました`);
   }
 
   public async getUnknownAgentProfile(...inExtIDs: string[]) {
@@ -363,8 +402,9 @@ export class AppService {
       this.localStorageService.get(LocalStorageKey.A),
       roomId,
     ).then((room) => {
-      this.dataRoomsService.setRoom(room);
+      this.dataRoomsService.delete(room.id);
       this.errorService.warn('削除を予約しました。いずれかのタイミングでこの部屋は削除されます。');
+      this.exitRoom(room.id);
     }).catch(err => {
       throw errByHttpError(err);
     }));
@@ -448,5 +488,24 @@ export class AppService {
       },
     );
     return await ref.afterClosed().toPromise();
+  }
+
+  public async getRoomMembers(roomId: string): Promise<void> {
+    return this.apiService.getRoomMembers(
+      this.localStorageService.get(LocalStorageKey.A),
+      roomId,
+      '',
+      -1,
+    ).then((agentsInRoom: AgentsInRoom) => {
+      agentsInRoom.agents.forEach(v => {
+        this.dataEasyAgentsService.setAgent(v.agent);
+      });
+      this.dataAgentsInRoomService.setAgentInRoom(
+        roomId,
+        ...agentsInRoom.agents.map(v => {
+          return newAgentInRoomOnlyID(v);
+        }),
+      );
+    });
   }
 }

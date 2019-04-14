@@ -12,25 +12,25 @@ export interface RoomInfo {
   public: boolean;
 }
 
-const maxLengthName = 16;
+const maxLengthName = 120;
 const maxLengthDescription = 100;
 const maxLengthPassword = 20;
 const minLengthPassword = 4;
 
 export function validRoomInfoName(ri: RoomInfo): Error {
   if (ri.name.length <= 0) {
-    return new Error('名前を入力してください');
+    return new Error('部屋名を入力してください');
   }
   if (ri.name.length > maxLengthName) {
-    return new Error(`名前が長すぎます(最大${maxLengthName}文字)`);
+    return new Error(`部屋名が長すぎます(最大${maxLengthName}文字)`);
+  }
+  if (new RegExp(`\\s+`).test(ri.name)) {
+    return new Error('部屋名に空白を含めてはいけません');
   }
   return null;
 }
 
 export function validRoomInfoDescription(ri: RoomInfo): Error {
-  if (ri.description.length <= 0) {
-    return new Error('説明を入力してください');
-  }
   if (ri.description.length > maxLengthDescription) {
     return new Error(`説明が長すぎます(最大${maxLengthDescription}文字)`);
   }
@@ -63,6 +63,31 @@ class ErrorStateMatcherPassword implements ErrorStateMatcher {
   }
 }
 
+
+export class ErrorStateMatcherName implements ErrorStateMatcher {
+
+  public err: Error;
+
+  constructor(private roomInfo: RoomInfo) {
+    this.err = null;
+  }
+  public isErrorState(): boolean {
+    const result = validRoomInfoName(this.roomInfo);
+    if (result) {
+      this.err = result;
+      return true;
+    }
+    this.err = null;
+    return false;
+  }
+  public string(): string {
+    if (!this.err) {
+      return '';
+    }
+    return this.err.message;
+  }
+}
+
 @Component({
   selector: 'app-room-info',
   templateUrl: './room-info.component.html',
@@ -72,6 +97,9 @@ export class RoomInfoComponent implements OnInit, OnChanges {
 
   @Input()
   public room: Room;
+
+  @Input()
+  public agentName: string;
 
   public get maxLengthName(): number {
     return maxLengthName;
@@ -98,6 +126,9 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   @Input()
   public changable: boolean;
 
+  @Input()
+  public disabledName: boolean;
+
   public hidePassword: boolean;
 
   public info: RoomInfo;
@@ -113,6 +144,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
     this.maxMaxAgents = 100;
     this.hidePassword = true;
     this.done = new EventEmitter<RoomInfo>();
+    this.disabledName = false;
     this.textDoneButton = '保存する';
     this.info = {
       name: '',
@@ -161,7 +193,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
         this.selectedMaxAgents = this.info.maxAgents;
       }
       if (isRoomNull) {
-        this.info.name = randomRoomName();
+        this.info.name = randomRoomName(this.agentName);
         this.info.description = randomRoomDescription();
       }
     }
@@ -172,7 +204,7 @@ export class RoomInfoComponent implements OnInit, OnChanges {
   }
 
   public renameAtRandom(): void {
-    this.info.name = randomRoomName();
+    this.info.name = randomRoomName(this.agentName);
   }
 
   public redescriptionAtRandom(): void {

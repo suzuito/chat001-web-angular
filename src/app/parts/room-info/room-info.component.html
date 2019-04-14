@@ -3,13 +3,13 @@
     <div class='random-inputter'>
       <div class='random-inputter-text'>
         <mat-form-field class='name' [color]='colorName()' [hintLabel]='hintLabelName()'>
-          <input type='text' matInput [(ngModel)]='info.name' [placeholder]='placeholderName()' [readonly]='!changable'
-            [maxLength]='maxLengthName' required />
+          <input type='text' matInput [(ngModel)]='info.name' [placeholder]='placeholderName()'
+            [readonly]='!changable || disabledName' [maxLength]='maxLengthName' required />
           <mat-hint align='end'>{{hintName()}}</mat-hint>
         </mat-form-field>
       </div>
       <div>
-        <button mat-icon-button [disabled]='!changable'>
+        <button mat-icon-button [disabled]='!changable || disabledName'>
           <mat-icon (click)='renameAtRandom()'>replay</mat-icon>
         </button>
       </div>
@@ -19,7 +19,7 @@
       <div class='random-inputter'>
         <div class='random-inputter-text'>
           <mat-form-field class='description' [hintLabel]='hintLabelDescription()'>
-            <textarea matInput required cdkTextareaAutosize cdkAutosizeMinRows='1' cdkAutosizeMaxRows='10'
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows='1' cdkAutosizeMaxRows='10'
               [placeholder]='placeholderDescription()' [(ngModel)]='info.description' [maxLength]='maxLengthDescription'
               [readonly]='!changable'>
             </textarea>

@@ -21,7 +21,6 @@ export class SideMenuWidthService {
       return 0;
     }
     if (this.elem.opened && this.elem.mode === 'side') {
-      console.log(this.sideNavWidth);
       return this.sideNavWidth;
     }
     return 0;

@@ -10,6 +10,9 @@ import { EasyAgent } from 'src/app/model/agent';
 import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { CursorManagerRoomMessageService } from '../cursor-manager-room-message.service';
 import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service';
+import { ErrorService } from 'src/app/error.service';
+import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
+import { DataRoomsService } from 'src/app/data-rooms.service';
 
 @Component({
   selector: 'app-room-message',
@@ -28,6 +31,9 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     private scrollService: SideMenuScrollService,
     private appService: AppService,
     private dataEasyAgentsService: DataEasyAgentsService,
+    private dataAgentsInRoomService: DataAgentsInRoomService,
+    private dataRoomsService: DataRoomsService,
+    private errorService: ErrorService,
   ) {
     this.prevRoomId = null;
     this.roomMessageService.addListener('message', (roomId: string) => {
@@ -97,14 +103,31 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
 
   public openDialogProfile(externalId: string): void {
     if (!this.dataEasyAgentsService.has(externalId)) {
+      this.errorService.warn('存在しないユーザーです');
       return;
     }
     this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
   }
-  public openDialogRequester(externalId: string): void {
-    if (!this.dataEasyAgentsService.has(externalId)) {
+
+  public clickMention(agentName: string): void {
+    const agent = this.dataAgentsInRoomService
+      .getParent(this.room.id)
+      .filter(a => this.dataEasyAgentsService.has(a.externalID))
+      .map(a => this.dataEasyAgentsService.get(a.externalID))
+      .find(a => a.name === agentName)
+      ;
+    if (!agent) {
+      this.errorService.warn('存在しないユーザーです');
       return;
     }
-    this.appService.openDialogRequester(this.dataEasyAgentsService.get(externalId));
+    this.appService.openDialogProfile(agent, false);
   }
+
+  public clickMentionRoom(roomId: string): void {
+    // if (!this.dataRoomsService.has(roomId)) {
+    //   return;
+    // }
+    this.appService.routeToRoom(roomId);
+  }
+
 }

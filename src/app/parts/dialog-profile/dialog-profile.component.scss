@@ -5,3 +5,13 @@
   padding-bottom: $padding-content;
   padding-top: $padding-content;
 }
+
+.padding {
+  height: $padding-content;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

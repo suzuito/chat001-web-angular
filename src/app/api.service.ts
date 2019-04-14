@@ -158,6 +158,7 @@ export class ApiService {
 
   public async postRooms(
     atoken: string,
+    id: string,
     name: string,
     description: string,
     maxAgents: number,
@@ -167,6 +168,7 @@ export class ApiService {
     return this.http.post<CreateRoom>(
       url(`/api/rooms`),
       {
+        id,
         name,
         description,
         maxAgents,
