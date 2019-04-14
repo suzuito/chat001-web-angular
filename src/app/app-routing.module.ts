@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TopComponent } from './top/top.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { AgentsComponent } from './agents/agents.component';
 import { AppRootComponent } from './app-root/app-root.component';

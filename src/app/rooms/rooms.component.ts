@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ListRoomComponent } from '../parts/list-room/list-room.component';
-import { RoomsSearchOptionService, OrderId } from './rooms-search-option/rooms-search-option.service';
+import { RoomsSearchOptionService, OrderId, RoomType } from './rooms-search-option/rooms-search-option.service';
 import { Room } from '../model/room';
 import { SideMenuScrollService, ScrollIdRooms } from '../side-menu/side-menu-scroll.service';
 import { RoomsService } from './rooms.service';
@@ -33,26 +33,16 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
   ) {
     this.isSearchOptionOpened = false;
+    this.header001Service.title = '';
     this.route.queryParams.subscribe((params: Params) => {
-      switch (ParamAsNumber(params, 'd', -1)) {
-        case OrderId.Newed:
-          this.searchOptService.selectedOrderId = OrderId.Newed;
-          this.header001Service.title = '新着順';
-          break;
-        case OrderId.Boost:
-          this.searchOptService.selectedOrderId = OrderId.Boost;
-          this.header001Service.title = '人気順';
-          break;
-        default:
-          this.searchOptService.selectedOrderId = OrderId.Newed;
-          this.header001Service.title = '新着順';
-          break;
-      }
+      this.searchOptService.roomType = ParamAsNumber(params, 't', RoomType.Any);
+      this.searchOptService.selectedOrderId = ParamAsNumber(params, 'd', OrderId.Newed);
+      this.resetTitle();
     });
+    this.resetTitle();
   }
 
   ngOnInit() {
-    this.header001Service.title = '新着順';
     this.cursorManagerRoomsService.initialize(this.searchOptService.selectedOrderId.toString());
   }
 
@@ -62,6 +52,29 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.scrollService.saveScrollPos(ScrollIdRooms);
+  }
+
+  private resetTitle(): void {
+    this.header001Service.title = '';
+    switch (this.searchOptService.roomType) {
+      case RoomType.FixedOnly:
+        this.header001Service.title += '公式ルーム';
+        break;
+      default:
+        this.header001Service.title += 'ルーム一覧';
+        break;
+    }
+    switch (this.searchOptService.selectedOrderId) {
+      case OrderId.Newed:
+        this.header001Service.title += '（新着順）';
+        break;
+      case OrderId.Boost:
+        this.header001Service.title += '（人気順）';
+        break;
+      default:
+        this.header001Service.title += '（新着順）';
+        break;
+    }
   }
 
   public clickExpand(): void {

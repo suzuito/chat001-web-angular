@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataStore } from './data.store';
 import { Room } from './model/room';
-import { RoomsSearchOption, OrderId } from './rooms/rooms-search-option/rooms-search-option.service';
+import { RoomsSearchOption, OrderId, RoomType } from './rooms/rooms-search-option/rooms-search-option.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,12 @@ export class DataRoomsService extends DataStore<Room> {
         if (room.agents < opt.members) {
           return false;
         }
+      }
+      switch (opt.roomType) {
+        case RoomType.FixedOnly:
+          if (!room.fixed) {
+            return false;
+          }
       }
       return true;
     }).sort((a: Room, b: Room): number => {

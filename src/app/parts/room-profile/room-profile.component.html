@@ -2,10 +2,7 @@
   <div class='col-icon'>
     <button mat-icon-button>
       <mat-icon [matBadge]='unreadString()' [matBadgeHidden]='hiddenBadge()' [matBadgePosition]="'above after'">
-        <!--
-        <mat-icon>
-          -->
-        meeting_room
+        {{icon()}}
       </mat-icon>
     </button>
   </div>

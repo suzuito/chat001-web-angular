@@ -28,7 +28,6 @@ import { AppComponent } from './app.component';
 import { ButtonIconComponent } from './parts/button-icon/button-icon.component';
 import { ProfileTextAllComponent } from './parts/profile-text-all/profile-text-all.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { TopComponent } from './top/top.component';
 import { ProfileTextAllWithIconComponent } from './parts/profile-text-all-with-icon/profile-text-all-with-icon.component';
 import { ListHeaderComponent } from './parts/list-header/list-header.component';
 import { ListRoomComponent } from './parts/list-room/list-room.component';
@@ -102,7 +101,6 @@ import { DialogRoomCreaterNameOnlyComponent } from './parts/dialog-room-creater-
     ButtonIconComponent,
     ProfileTextAllComponent,
     SideMenuComponent,
-    TopComponent,
     ProfileTextAllWithIconComponent,
     ListHeaderComponent,
     ListRoomComponent,

@@ -5,6 +5,11 @@ export enum OrderId {
   Boost,
 }
 
+export enum RoomType {
+  Any = 0,
+  FixedOnly,
+}
+
 export function orderIdToQuery(id: OrderId): string {
   switch (id) {
     case OrderId.Newed:
@@ -24,6 +29,7 @@ export interface RoomsSearchOption {
   chkCanEnter: boolean;
   chkMembers: boolean;
   selectedOrderId: OrderId;
+  roomType: RoomType;
 }
 
 export const RoomSearchOptionNull: RoomsSearchOption = {
@@ -33,6 +39,7 @@ export const RoomSearchOptionNull: RoomsSearchOption = {
   chkUnlocked: false,
   chkMembers: false,
   selectedOrderId: OrderId.Newed,
+  roomType: RoomType.Any,
 };
 
 @Injectable({
@@ -50,6 +57,8 @@ export class RoomsSearchOptionService implements RoomsSearchOption {
   public selectOrder: Order[];
   public selectedOrderId: OrderId;
 
+  public roomType: RoomType;
+
   constructor() {
     this.selectOrder = [
       { id: OrderId.Newed, name: '新着順' },
@@ -61,6 +70,7 @@ export class RoomsSearchOptionService implements RoomsSearchOption {
     this.chkUnlocked = false;
     this.chkMembers = false;
     this.members = 2;
+    this.roomType = RoomType.Any;
 
     // setInterval(() => { console.log(this); }, 1000); // debug
   }

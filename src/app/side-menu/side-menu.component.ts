@@ -77,8 +77,8 @@ export class SideMenuComponent implements OnInit {
     this.appRootService.closeSideNav();
   }
 
-  public routeToBoostRooms(): void {
-    this.header001Service.routeToBoostRooms();
+  public routeToFormalRooms(): void {
+    this.header001Service.routeToFormalRooms();
     this.appRootService.closeSideNav();
   }
 

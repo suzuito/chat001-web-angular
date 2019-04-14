@@ -51,4 +51,11 @@ export class RoomProfileComponent implements OnInit {
     return this.room.name;
   }
 
+  public icon(): string {
+    if (this.room.fixed) {
+      return 'location_city';
+    }
+    return 'home';
+  }
+
 }
