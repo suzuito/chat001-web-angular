@@ -11,7 +11,7 @@ export class HeaderMainSubComponent implements OnInit {
   public clickNewRooms: EventEmitter<void>;
 
   @Output()
-  public clickBoostRooms: EventEmitter<void>;
+  public clickFormalRooms: EventEmitter<void>;
 
   @Output()
   public clickAgents: EventEmitter<void>;
@@ -24,7 +24,7 @@ export class HeaderMainSubComponent implements OnInit {
 
   constructor() {
     this.clickAgentMessages = new EventEmitter<void>();
-    this.clickBoostRooms = new EventEmitter<void>();
+    this.clickFormalRooms = new EventEmitter<void>();
     this.clickAgents = new EventEmitter<void>();
     this.clickNewRooms = new EventEmitter<void>();
     this.notifications = 0;

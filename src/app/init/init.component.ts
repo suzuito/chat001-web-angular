@@ -16,7 +16,7 @@ export class InitComponent implements OnInit {
   }
 
   public routeToTop() {
-    location.href = '';
+    location.href = 'room/暇（ヒマ）人集合';
   }
 
 }

@@ -81,6 +81,11 @@
         <app-checkbox-with-icon textOn='公開' textOff='非公開' iconOn='public' iconOff='vpn_lock' paddingBetween='5px'
           [(checked)]='info.public' [disabled]='!changable'></app-checkbox-with-icon>
       </div>
+      <div class='padding'></div>
+      <div>
+        <app-checkbox-with-icon textOn='公式' textOff='非公式' iconOn='location_city' iconOff='home' paddingBetween='5px'
+          [(checked)]='room.fixed' disabled></app-checkbox-with-icon>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color='primary' (click)='save()' [disabled]='disableOK()'>{{textDoneButton}}</button>
