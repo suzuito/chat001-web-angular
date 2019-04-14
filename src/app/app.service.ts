@@ -192,7 +192,16 @@ export class AppService {
   }
 
   public routeToRoom(roomId: string): void {
-    this.router.navigate(['room', roomId]);
+    if (!this.dataRoomsService.has(roomId)) {
+      this.errorService.error('既に削除されたか、存在しない部屋のようです');
+      return;
+    }
+    this.fetchRoom(roomId).then(() => {
+      this.router.navigate(['room', roomId]);
+    }).catch(() => {
+      this.errorService.error('既に削除されたか、存在しない部屋のようです');
+      return;
+    });
   }
 
   public async enterRoom(room: Room): Promise<void> {
