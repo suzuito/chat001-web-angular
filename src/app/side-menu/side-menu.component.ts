@@ -13,6 +13,7 @@ import { RoomMessageService } from '../room-message.service';
 import { SideMenuWidthService } from './side-menu-width.service';
 import { WsService } from '../ws.service';
 import { ErrorService } from '../error.service';
+import { SettingService } from '../setting.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -32,6 +33,7 @@ export class SideMenuComponent implements OnInit {
     private header001Service: Header001Service,
     private wsService: WsService,
     private errorService: ErrorService,
+    private settingService: SettingService,
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class SideMenuComponent implements OnInit {
         name: agent.name,
         description: agent.description,
         isPublic: agent.isPublic,
+        settingSoundOn: !this.settingService.mute,
       } as DataProfileEditorComponent,
       autoFocus: false,
     });
@@ -51,6 +54,7 @@ export class SideMenuComponent implements OnInit {
     if (!result) {
       return;
     }
+    this.settingService.mute = !result.settingSoundOn;
     return this.appService.updateAgentProperties(
       result.name,
       result.description,
@@ -114,6 +118,10 @@ export class SideMenuComponent implements OnInit {
       return '0';
     }
     return this.roomMessageService.unread(room.id);
+  }
+
+  public includeYourMention(room: Room): boolean {
+    return this.roomMessageService.includeYourMention(room.id);
   }
 
   public wsColor(): string {

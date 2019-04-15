@@ -1,16 +1,18 @@
-<div class='main' [style.flex-direction]='flexDirectionMain()' #domMain>
-  <div class='user' [style.text-align]='textAlign()' #domUser>
-    <div class='user-name mat-caption' (click)='clickUserName.emit()'>
-      {{agentName()}}
-    </div>
-    <div>
+<div class='main' [style.flex-direction]='flexDirectionMain()'>
+  <div class='user' [style.text-align]='textAlign()'>
+    <div class='user-actions'>
       <app-profile-img mode='small' [src]='agentURLImage()' (click)='clickUserIcon.emit()'></app-profile-img>
     </div>
   </div>
-  <!--
-  <div class='body mat-body-2'>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-  -->
-  <div class='body mat-body-2' #domBody>
+  <div class='body mat-body-1'>
+    <div class='message-actions'>
+      <div class='message-actions-user-name mat-body-2' (click)='clickUserName.emit()'>
+        {{agentName()}}
+      </div>
+      <div class='message-actions-buttons' (click)='clickReply.emit()'>
+        <mat-icon>reply</mat-icon>
+      </div>
+    </div>
     <app-lines [lines]='message.lines' (clickMentionRoom)='clickMentionRoom.emit($event)'
       (clickMention)='clickMention.emit($event)'></app-lines>
   </div>

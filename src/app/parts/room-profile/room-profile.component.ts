@@ -27,10 +27,14 @@ export class RoomProfileComponent implements OnInit {
   @Input()
   public nameOnly: boolean;
 
+  @Input()
+  public includeYourMention: boolean;
+
   constructor() {
     this.linesDescription = 1;
     this.unread = 0;
     this.nameOnly = false;
+    this.includeYourMention = false;
   }
 
   ngOnInit() {
@@ -42,6 +46,13 @@ export class RoomProfileComponent implements OnInit {
 
   public hiddenBadge(): boolean {
     return this.unread <= 0;
+  }
+
+  public colorBadge(): string {
+    if (this.includeYourMention) {
+      return 'accent';
+    }
+    return 'primary';
   }
 
   public roomName(): string {

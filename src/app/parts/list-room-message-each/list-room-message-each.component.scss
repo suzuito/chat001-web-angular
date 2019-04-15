@@ -9,9 +9,17 @@
 .user {
   overflow: hidden;
   padding: 5px;
-  width: 30%;
+  width: 10%;
 
   // border: 1px solid red;
+}
+
+
+.user-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .body {
@@ -22,14 +30,30 @@
   -ms-hyphens: auto;
   hyphens: auto;
   padding: 5px;
-  width: 70%;
+  width: 90%;
 
   // border: 1px solid red;
 }
 
-.user-name {
+.message-actions {
+  display: flex;
+  flex-direction: row;
+  // border: 1px solid red;
+}
+
+.message-actions-user-name {
   font-weight: normal;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
+  width: 80%;
+}
+
+.message-actions-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  // border: 1px solid red;
+  width: 20%;
 }

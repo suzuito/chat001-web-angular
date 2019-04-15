@@ -33,14 +33,8 @@ export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
   @Output()
   public clickMention: EventEmitter<string>;
 
-  @ViewChild('domMain')
-  public domMain: ElementRef;
-
-  @ViewChild('domUser')
-  public domUser: ElementRef;
-
-  @ViewChild('domBody')
-  public domBody: ElementRef;
+  @Output()
+  public clickReply: EventEmitter<string>;
 
   constructor() {
     this.isLeft = true;
@@ -48,22 +42,13 @@ export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
     this.clickUserName = new EventEmitter<void>();
     this.clickMentionRoom = new EventEmitter<string>();
     this.clickMention = new EventEmitter<string>();
+    this.clickReply = new EventEmitter<string>();
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    /*
-    const cssMain = getRealStyle(this.domMain);
-    const cssUser = getRealStyle(this.domUser);
-    const cssBody = getRealStyle(this.domBody);
-    const widthUser = parseInt(cssMain.width, 10) * 0.3;
-    const widthBody = parseInt(cssMain.width, 10) * 0.7;
-    console.log(cssMain.width, widthUser, widthBody);
-    this.domUser.nativeElement.style.width = `${widthUser}px`;
-    this.domBody.nativeElement.style.width = `${widthBody}px`;
-    */
   }
 
   public agentName(): string {

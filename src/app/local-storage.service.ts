@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 export enum LocalStorageKey {
   A = 'at',
+  SETTING = 'setting',
 }
 
 @Injectable({

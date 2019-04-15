@@ -7,25 +7,17 @@ import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service'
 import { AgentService } from 'src/app/agent.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
 import { AgentInRoom, Room, AgentInRoomOnlyID } from 'src/app/model/room';
-import { ErrorStateMatcher, MatDialog } from '@angular/material';
+import { ErrorStateMatcher, MatDialog, MatInput } from '@angular/material';
 import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
 import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { DialogRoomCreaterNameOnlyComponent } from 'src/app/parts/dialog-room-creater-name-only/dialog-room-creater-name-only.component';
 import { RoomInfo } from 'src/app/parts/room-info/room-info.component';
+import { RoomInputterService } from './room-inputter.service';
 
 const enum InputMode {
   Single = 1,
   Multiple,
 }
-
-class ErrorStateMatcherMessage implements ErrorStateMatcher {
-  constructor(private c: RoomInputterComponent) { }
-  public isErrorState(): boolean {
-    return this.c.message.length > this.c.maxLengthMessage;
-  }
-}
-
-const maxLengthMessage = 300;
 
 @Component({
   selector: 'app-room-inputter',
@@ -34,16 +26,16 @@ const maxLengthMessage = 300;
 })
 export class RoomInputterComponent implements OnInit {
 
-  public message: string;
-
   @ViewChild('fileInputter')
   private domFile: ElementRef;
 
+  @ViewChild('textareaSingle', { read: MatInput })
+  private domTextareaSingle: MatInput;
+
+  @ViewChild('textareaMultiple', { read: MatInput })
+  private domTextareaMultiple: MatInput;
+
   public mode: InputMode;
-
-  public maxLengthMessage: number;
-
-  public errorStateMatcherMessage: ErrorStateMatcherMessage;
 
   constructor(
     private roomService: RoomService,
@@ -53,11 +45,12 @@ export class RoomInputterComponent implements OnInit {
     private appService: AppService,
     private dialog: MatDialog,
     private sideMenuWidthService: SideMenuWidthService,
+    private s: RoomInputterService,
   ) {
-    this.message = '';
     this.mode = InputMode.Single;
-    this.maxLengthMessage = maxLengthMessage;
-    this.errorStateMatcherMessage = new ErrorStateMatcherMessage(this);
+    this.s.addListener('focus', () => {
+      this.focus();
+    });
   }
 
   ngOnInit() {
@@ -85,8 +78,7 @@ export class RoomInputterComponent implements OnInit {
         if (this.mode === InputMode.Multiple) {
           return;
         }
-        const chk = /\n|\r\n/;
-        if (!chk.test(this.message)) {
+        if (!this.s.includeLineBreak()) {
           return;
         }
         this.modeMultiple();
@@ -97,17 +89,17 @@ export class RoomInputterComponent implements OnInit {
   public keyup(event: any) {
     if (event.keyCode === 13) {
       console.log(event);
-      this.message = this.message.replace(/\r\n$|\n$/, '');
+      this.s.trim();
       this.putRoomsMessages();
     }
   }
 
   private putRoomsMessages(): void {
-    if (this.message.length <= 0) {
+    if (this.s.length() <= 0) {
       return;
     }
-    this.appService.putRoomsMessages(this.roomService.roomId, this.message);
-    this.message = '';
+    this.appService.putRoomsMessages(this.roomService.roomId, this.s.message);
+    this.s.message = '';
   }
 
   public inputMessage(event: any) {
@@ -167,31 +159,33 @@ export class RoomInputterComponent implements OnInit {
   }
 
   public textReply(agent: AgentInRoomOnlyID) {
-    let name = agent.externalID;
-    if (this.dataEasyAgentsService.has(agent.externalID)) {
-      name = this.dataEasyAgentsService.get(agent.externalID).name;
-    }
-    this.message += ` @${name} `;
+    this.s.textReply(agent.externalID);
+    this.focus();
   }
 
   public textRoom(room: Room) {
-    this.message += ` #!${room.name} `;
+    this.s.textRoom(room);
+    this.focus();
   }
 
   public hintLabelMessage(): string {
-    return `最大${this.maxLengthMessage}文字`;
+    return `最大${this.s.maxLengthMessage}文字`;
   }
 
   public hintMessage(): string {
-    return `${this.message.length} / ${this.maxLengthMessage}`;
+    return `${this.s.length()} / ${this.s.maxLengthMessage}`;
   }
 
   public errorMessage(): string {
-    return `長すぎです。${this.maxLengthMessage}文字より短くしてください。${this.message.length} / ${this.maxLengthMessage}`;
+    const err = this.s.error();
+    if (err) {
+      return err.message;
+    }
+    return '';
   }
 
   public disabledPost(): boolean {
-    return (this.message.length <= 0 || this.message.length > this.maxLengthMessage || /^\s*$/.test(this.message));
+    return !this.s.canPost();
   }
 
   public async createRoom(): Promise<void> {
@@ -203,6 +197,19 @@ export class RoomInputterComponent implements OnInit {
     this.appService.createRoomDefault(result.name, result.maxAgents, false).then(() => {
       this.appService.putRoomsMessages(this.roomService.roomId, `@all #!${result.name} を作成しました！`);
     });
+  }
+
+  private focus(): void {
+    switch (this.mode) {
+      case InputMode.Multiple:
+        this.domTextareaMultiple.focus();
+        break;
+      case InputMode.Single:
+        this.domTextareaSingle.focus();
+        break;
+      default:
+        break;
+    }
   }
 
 }

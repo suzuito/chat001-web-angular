@@ -17,3 +17,4 @@ export interface LineDataRoomIntroduction {
   readonly agent: EasyAgent;
   readonly room: Room;
 }
+
