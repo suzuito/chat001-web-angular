@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { WsService } from './ws.service';
-import { WSMessage } from './model/ws';
+import { WSMessage, WSRoomMessage } from './model/ws';
 import { RoomMessage, MessageType, attachObjectToMessage, attachObjectToAgentMessage, isYourMention } from './model/room_message';
 import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
@@ -64,31 +64,31 @@ export class AppService {
   ) {
     this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_system39.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
-      const rmsg = msg.data as RoomMessage;
+      const rmsg = msg.data as WSRoomMessage;
       attachObjectToMessage(rmsg.message);
       switch (rmsg.message.type) {
         case MessageType.Message:
-          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
+          this.roomMessageService.pushMessage(rmsg.room.room.id, rmsg.message);
+          this.dataAgentsInRoomService.set(rmsg.room.room.id, rmsg.message.agentExternalId, newAgentInRoomOnlyID(rmsg.agent));
           break;
         case MessageType.EnterRoom:
-          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
-          const agentInRoom = rmsg.message.extra.agentInRoom as AgentInRoom;
-          this.dataAgentsInRoomService.set(rmsg.roomId, rmsg.message.agentExternalId, newAgentInRoomOnlyID(agentInRoom));
+          this.roomMessageService.pushMessage(rmsg.room.room.id, rmsg.message);
+          this.dataAgentsInRoomService.set(rmsg.room.room.id, rmsg.message.agentExternalId, newAgentInRoomOnlyID(rmsg.agent));
           break;
         case MessageType.ExitRoom:
-          this.roomMessageService.pushMessage(rmsg.roomId, rmsg.message);
-          this.dataAgentsInRoomService.delete(rmsg.roomId, rmsg.message.agentExternalId);
+          this.roomMessageService.pushMessage(rmsg.room.room.id, rmsg.message);
+          this.dataAgentsInRoomService.delete(rmsg.room.room.id, rmsg.message.agentExternalId);
           break;
       }
-      if (rmsg.roomId !== this.roomService.roomId) {
+      if (rmsg.room.room.id !== this.roomService.roomId) {
         if (isYourMention(rmsg.message, this.agentService.get().name)) {
           this.playSoundAgentRoomMessageMentionRecieved();
         }
         this.roomMessageService.setIncludeYourMention(
-          rmsg.roomId,
+          rmsg.room.room.id,
           isYourMention(rmsg.message, this.agentService.get().name),
         );
-        this.roomMessageService.incrementUnread(rmsg.roomId, 1);
+        this.roomMessageService.incrementUnread(rmsg.room.room.id, 1);
       }
     });
     this.wsService.addRoute('/agent/message', (msg: WSMessage) => {
@@ -133,7 +133,6 @@ export class AppService {
       return;
     }
     this.soundReciveAgentMessage.play();
-
   }
 
   private s(p: Promise<any>, successMsg: string = 'ok'): Promise<any> {
