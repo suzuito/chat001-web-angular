@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material';
 import { DialogPasswordInputterComponent } from './parts/dialog-password-inputter/dialog-password-inputter.component';
 import { WsService } from './ws.service';
 import { WSMessage } from './model/ws';
-import { RoomMessage, MessageType, attachObjectToMessage, attachObjectToAgentMessage } from './model/room_message';
+import { RoomMessage, MessageType, attachObjectToMessage, attachObjectToAgentMessage, isYourMention } from './model/room_message';
 import { RoomMessageService } from './room-message.service';
 import { DataRoomsService } from './data-rooms.service';
 import { DataEasyAgentsService } from './data-easy-agents.service';
@@ -33,6 +33,7 @@ import { DialogRequesterComponent, DataDialogRequester } from './parts/dialog-re
 import { RoomInfo } from './parts/room-info/room-info.component';
 import { DialogConfirmerComponent, DataDialogConfirmerComponent } from './parts/dialog-confirmer/dialog-confirmer.component';
 import { CursorManagerRoomMessageService } from './room/cursor-manager-room-message.service';
+import { SettingService } from './setting.service';
 
 export const errCannotEnterRoomError = new Error('');
 
@@ -59,8 +60,9 @@ export class AppService {
     private dataSyncherService: DataSyncherService,
     private errorService: ErrorService,
     private roomMessageFetcher: CursorManagerRoomMessageService,
+    private settingService: SettingService,
   ) {
-    this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_onepoint28.wav');
+    this.soundReciveAgentMessage = new Audio('assets/se_maoudamashii_system39.wav');
     this.wsService.addRoute('/room/message', (msg: WSMessage) => {
       const rmsg = msg.data as RoomMessage;
       attachObjectToMessage(rmsg.message);
@@ -79,6 +81,13 @@ export class AppService {
           break;
       }
       if (rmsg.roomId !== this.roomService.roomId) {
+        if (isYourMention(rmsg.message, this.agentService.get().name)) {
+          this.playSoundAgentRoomMessageMentionRecieved();
+        }
+        this.roomMessageService.setIncludeYourMention(
+          rmsg.roomId,
+          isYourMention(rmsg.message, this.agentService.get().name),
+        );
         this.roomMessageService.incrementUnread(rmsg.roomId, 1);
       }
     });
@@ -88,7 +97,7 @@ export class AppService {
       this.agentService.unreadMessages = rmsg.unreadMessages;
       if (rmsg.message) {
         this.agentService.setMessage(rmsg.message);
-        this.soundReciveAgentMessage.play();
+        this.playSoundAgentMessageRecieved();
       }
     });
     this.wsService.addRoute('/agent/access', (msg: WSMessage) => {
@@ -111,6 +120,20 @@ export class AppService {
         this.roomMessageFetcher.fetch(this.roomService.roomId);
       }
     });
+  }
+
+  private playSoundAgentMessageRecieved(): void {
+    if (this.settingService.mute) {
+      return;
+    }
+    this.soundReciveAgentMessage.play();
+  }
+  private playSoundAgentRoomMessageMentionRecieved(): void {
+    if (this.settingService.mute) {
+      return;
+    }
+    this.soundReciveAgentMessage.play();
+
   }
 
   private s(p: Promise<any>, successMsg: string = 'ok'): Promise<any> {
@@ -302,27 +325,6 @@ export class AppService {
         [409001, `'${id}'という名前の部屋は既に存在します。違う名前をつけてください。`],
       ]));
     }), `'${id}' を作成しました`);
-  }
-
-  public async getUnknownAgentProfile(...inExtIDs: string[]) {
-    const extIDs: string[] = [];
-    inExtIDs.forEach((id: string) => {
-      if (extIDs.find((v: string) => v === id)) {
-        return;
-      }
-      extIDs.push(id);
-    });
-    extIDs.forEach((extID: string) => {
-      if (this.dataEasyAgentsService.has(extID)) {
-        return;
-      }
-      this.apiService.getEasyAgent(
-        this.localStorageService.get(LocalStorageKey.A),
-        extID,
-      ).then((v: EasyAgent) => {
-        this.dataEasyAgentsService.setAgent(v);
-      });
-    });
   }
 
   public async updateProfileAvatar(f: File): Promise<void> {

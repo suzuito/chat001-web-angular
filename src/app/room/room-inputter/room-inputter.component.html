@@ -25,8 +25,8 @@
     <div class='inputter-input-multiple-form'>
       <div class='inputter-input-multiple-form-textarea'>
         <mat-form-field class='inputter-input-multiple-form-textarea-ff' [hintLabel]='hintLabelMessage()'>
-          <textarea matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='10' [(ngModel)]='message'
-            rows='3' matInput (input)='checkInput($event)' [errorStateMatcher]='errorStateMatcherMessage'></textarea>
+          <textarea matTextareaAutosize='true' matAutosizeMinRows='1' matAutosizeMaxRows='10' [(ngModel)]='s.message'
+            rows='3' matInput (input)='checkInput($event)' [errorStateMatcher]='s' #textareaMultiple></textarea>
           <mat-hint align='end'>{{hintMessage()}}</mat-hint>
           <mat-error>{{errorMessage()}}</mat-error>
         </mat-form-field>
@@ -38,8 +38,8 @@
   </div>
   <div class='inputter-form-single' *ngIf='mode === 1'>
     <div class='inputter-input-single'>
-      <textarea class='inputter-input-input-single' [(ngModel)]='message' (input)='checkInput($event)'
-        (keyup)='keyup($event)' matInput matTextareaAutosize='false'></textarea>
+      <textarea class='inputter-input-input-single' [(ngModel)]='s.message' (input)='checkInput($event)'
+        (keyup)='keyup($event)' matInput matTextareaAutosize='false' #textareaSingle></textarea>
     </div>
     <div class='inputter-input-button-single'>
       <button mat-icon-button [matMenuTriggerFor]='menuInputter'>
@@ -67,11 +67,13 @@
 </mat-menu>
 <input type='file' hidden #fileInputter />
 <mat-menu #menuAutoCompleteRooms='matMenu'>
-  <div mat-menu-item *ngFor='let room of autoCompleteRooms()' class='mat-body-2' (click)='textRoom(room)'>
+  <div mat-menu-item *ngFor='let room of autoCompleteRooms()' class='mat-body-2'
+    (click)='$event.stopPropagation();textRoom(room);'>
     #!{{room.name}}
   </div>
 </mat-menu>
 <mat-menu #menuAutoCompleteReply='matMenu'>
-  <div mat-menu-item *ngFor='let agent of autoCompleteReply()' class='mat-body-2' (click)='textReply(agent)'>
+  <div mat-menu-item *ngFor='let agent of autoCompleteReply()' class='mat-body-2'
+    (click)='$event.stopPropagation();textReply(agent);'>
     @{{agentName(agent)}}</div>
 </mat-menu>

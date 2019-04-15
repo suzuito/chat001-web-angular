@@ -15,11 +15,13 @@ export class RoomMessageService {
   private messages: Map<string, SortedArray<Message>>;
   private unreadMessages: Map<string, number>;
   private ev: EventEmitter;
+  private includeYourMention_: Map<string, boolean>;
 
   constructor() {
     this.messages = new Map<string, SortedArray<Message>>();
     this.unreadMessages = new Map<string, number>();
     this.ev = new EventEmitter();
+    this.includeYourMention_ = new Map<string, boolean>();
   }
 
   public getMessages(roomId: string): SortedArray<Message> {
@@ -57,6 +59,12 @@ export class RoomMessageService {
     );
   }
 
+  public setIncludeYourMention(roomId: string, b: boolean): void {
+    if (!this.includeYourMention_.get(roomId)) {
+      this.includeYourMention_.set(roomId, b);
+    }
+  }
+
   public unread(roomId: string): string {
     if (!this.unreadMessages.has(roomId)) {
       return '0';
@@ -66,5 +74,19 @@ export class RoomMessageService {
 
   public clearUnread(roomId: string): void {
     this.unreadMessages.set(roomId, 0);
+  }
+
+  public clearIncludeYourMention(roomId: string): void {
+    this.includeYourMention_.set(roomId, false);
+  }
+
+  public includeYourMention(roomId: string): boolean {
+    if (!this.includeYourMention_.has(roomId)) {
+      return false;
+    }
+    if (this.includeYourMention_.get(roomId)) {
+      return true;
+    }
+    return false;
   }
 }

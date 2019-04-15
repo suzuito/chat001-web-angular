@@ -28,6 +28,11 @@
         iconOff='vpn_lock' textOff='アクティビティ非公開'>
       </app-checkbox-with-icon>
     </div>
+    <div class='checkbox'>
+      <app-checkbox-with-icon [(checked)]='data.settingSoundOn' paddingBetween='5px' iconOn='volume_up' textOn='通知音オン'
+        iconOff='volume_mute' textOff='通知音オフ'>
+      </app-checkbox-with-icon>
+    </div>
   </div>
 </div>
 <div mat-dialog-actions>

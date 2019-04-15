@@ -13,6 +13,7 @@ import { SideMenuWidthService } from 'src/app/side-menu/side-menu-width.service'
 import { ErrorService } from 'src/app/error.service';
 import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
+import { RoomInputterService } from '../room-inputter/room-inputter.service';
 
 @Component({
   selector: 'app-room-message',
@@ -34,6 +35,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     private dataAgentsInRoomService: DataAgentsInRoomService,
     private dataRoomsService: DataRoomsService,
     private errorService: ErrorService,
+    private roomInputterService: RoomInputterService,
   ) {
     this.prevRoomId = null;
     this.roomMessageService.addListener('message', (roomId: string) => {
@@ -86,6 +88,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
 
   public messages(): Message[] {
     this.roomMessageService.clearUnread(this.room.id);
+    this.roomMessageService.clearIncludeYourMention(this.room.id);
     return this.roomMessageService.getMessages(this.room.id).data;
   }
 
@@ -109,6 +112,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
   }
 
+  /*
   public clickMention(agentName: string): void {
     const agent = this.dataAgentsInRoomService
       .getParent(this.room.id)
@@ -122,12 +126,15 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     }
     this.appService.openDialogProfile(agent, false);
   }
+  */
 
   public clickMentionRoom(roomId: string): void {
-    // if (!this.dataRoomsService.has(roomId)) {
-    //   return;
-    // }
     this.appService.routeToRoom(roomId);
+  }
+
+  public clickReply(externalId: string): void {
+    this.roomInputterService.textReply(externalId);
+    this.roomInputterService.focus();
   }
 
 }

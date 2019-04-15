@@ -1,6 +1,7 @@
 export enum SpanType {
   Text = 1,
   URL = 2,
+  Mention = 7,
 }
 
 export interface Link {

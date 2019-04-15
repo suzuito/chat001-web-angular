@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { fileToSrcURL } from 'src/app/util/image';
 
@@ -6,6 +6,7 @@ export interface DataProfileEditorComponent {
   name: string;
   description: string;
   isPublic: boolean;
+  settingSoundOn: boolean;
 }
 
 const maxLengthName = 30;
@@ -62,6 +63,7 @@ export class ProfileEditorComponent implements OnInit, AfterViewInit {
     return (this.data.name === this.src.name)
       && (this.data.description === this.src.description)
       && (this.data.isPublic === this.src.isPublic)
+      && (this.data.settingSoundOn === this.src.settingSoundOn)
       ;
   }
 

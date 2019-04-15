@@ -1,7 +1,8 @@
 <div class='main' [style.width]='width'>
   <div class='col-icon'>
     <button mat-icon-button>
-      <mat-icon [matBadge]='unreadString()' [matBadgeHidden]='hiddenBadge()' [matBadgePosition]="'above after'">
+      <mat-icon [matBadge]='unreadString()' [matBadgeHidden]='hiddenBadge()' [matBadgePosition]="'above after'"
+        [matBadgeColor]='colorBadge()'>
         {{icon()}}
       </mat-icon>
     </button>
