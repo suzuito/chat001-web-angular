@@ -73,7 +73,6 @@ export class RoomInputterComponent implements OnInit {
   }
 
   public checkInput(event: any): void {
-    console.log(event);
     switch (event.inputType) {
       case 'insertFromPaste':
         if (this.mode === InputMode.Multiple) {
@@ -87,7 +86,7 @@ export class RoomInputterComponent implements OnInit {
     }
   }
 
-  public keyup(event: any) {
+  public keydown(event: any) {
     window.scrollBy(0, 100);
     // https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event
     if (event.isComposing && event.keyCode === 229) {

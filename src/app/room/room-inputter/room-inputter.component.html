@@ -29,7 +29,7 @@
   <div class='inputter-form-single' *ngIf='mode === 1'>
     <div class='inputter-input-single'>
       <textarea class='inputter-input-input-single' [(ngModel)]='s.message' (input)='checkInput($event)'
-        (keyup)='keyup($event)' matInput matTextareaAutosize='false' #textareaSingle></textarea>
+        (keydown)='keydown($event)' matInput matTextareaAutosize='false' #textareaSingle></textarea>
     </div>
     <div class='inputter-input-button-single'>
       <button mat-icon-button [matMenuTriggerFor]='menuInputter'>
