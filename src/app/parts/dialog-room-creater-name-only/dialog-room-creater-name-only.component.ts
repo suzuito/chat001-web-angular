@@ -37,4 +37,14 @@ export class DialogRoomCreaterNameOnlyComponent implements OnInit {
     this.ref.close(this.room);
   }
 
+  public enter(event: any): void {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event
+    if (event.isComposing && event.keyCode === 229) {
+      return;
+    }
+    if (event.keyCode === 13) {
+      this.create();
+    }
+  }
+
 }

@@ -13,6 +13,7 @@ import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
 import { DialogRoomCreaterNameOnlyComponent } from 'src/app/parts/dialog-room-creater-name-only/dialog-room-creater-name-only.component';
 import { RoomInfo } from 'src/app/parts/room-info/room-info.component';
 import { RoomInputterService } from './room-inputter.service';
+import { SideMenuScrollService } from 'src/app/side-menu/side-menu-scroll.service';
 
 const enum InputMode {
   Single = 1,
@@ -87,8 +88,12 @@ export class RoomInputterComponent implements OnInit {
   }
 
   public keyup(event: any) {
+    window.scrollBy(0, 100);
+    // https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event
+    if (event.isComposing && event.keyCode === 229) {
+      return;
+    }
     if (event.keyCode === 13) {
-      console.log(event);
       this.s.trim();
       this.putRoomsMessages();
     }
@@ -160,11 +165,6 @@ export class RoomInputterComponent implements OnInit {
 
   public textReply(agent: AgentInRoomOnlyID) {
     this.s.textReply(agent.externalID);
-    this.focus();
-  }
-
-  public textRoom(room: Room) {
-    this.s.textRoom(room);
     this.focus();
   }
 

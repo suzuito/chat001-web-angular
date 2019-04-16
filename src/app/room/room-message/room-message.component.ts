@@ -112,22 +112,6 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
   }
 
-  /*
-  public clickMention(agentName: string): void {
-    const agent = this.dataAgentsInRoomService
-      .getParent(this.room.id)
-      .filter(a => this.dataEasyAgentsService.has(a.externalID))
-      .map(a => this.dataEasyAgentsService.get(a.externalID))
-      .find(a => a.name === agentName)
-      ;
-    if (!agent) {
-      this.errorService.warn('存在しないユーザーです');
-      return;
-    }
-    this.appService.openDialogProfile(agent, false);
-  }
-  */
-
   public clickMentionRoom(roomId: string): void {
     this.appService.routeToRoom(roomId);
   }
