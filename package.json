@@ -6,6 +6,8 @@
     "start": "ng serve --port 4200 --host 0.0.0.0",
     "build-oc-minilla": "ng build --configuration=oc-minilla && cp src/404.html dist && cp src/sitemap.xml dist",
     "deploy-oc-minilla": "npm run build-oc-minilla && firebase deploy --project=oc-minilla",
+    "build-oc-godzilla": "ng build --configuration=oc-godzilla && cp src/404.html dist && cp src/sitemap.xml dist",
+    "deploy-oc-godzilla": "npm run build-oc-godzilla && firebase deploy --project=oc-godzilla",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
