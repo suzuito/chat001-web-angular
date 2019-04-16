@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from '../model/room';
 import { MetaService, defaultKeyWords, defaultImageURL, defaultTitle, defaultSubTitle } from '../meta.service';
 import { Title } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ export class InitRoomComponent implements OnInit {
     private route: ActivatedRoute,
     private metaService: MetaService,
     private titleService: Title,
+    private router: Router,
   ) {
     this.route.data.subscribe((data) => {
       if (data.room) {
@@ -47,6 +48,10 @@ export class InitRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public enterRoom(): void {
+    this.router.navigate(['room', this.room.id]);
   }
 
 }
