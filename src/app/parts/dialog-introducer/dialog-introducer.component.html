@@ -1,6 +1,11 @@
 <div>
   <div mat-dialog-title>招待</div>
-  <div mat-dialog-content>
+  <div mat-dialog-content *ngIf='disabledSelect()'>
+    <div class='mat-body-1'>
+      招待できる部屋が1つもありません。招待するためには、招待したい部屋へあなた自身が入室してください。
+    </div>
+  </div>
+  <div mat-dialog-content *ngIf='!disabledSelect()'>
     <div class='padding'></div>
     <div class='mat-body-1'>
       ユーザー
@@ -14,18 +19,22 @@
       を部屋
     </div>
     <div class='padding'></div>
-    <mat-select [(ngModel)]='roomSelected'>
-      <mat-option *ngFor='let room of rooms' [value]='room'>
-        {{room.name}} ({{room.agents}}/{{room.maxAgents}})
-        <mat-icon>{{iconLock(room)}}</mat-icon>
-      </mat-option>
-    </mat-select>
+    <mat-form-field>
+      <mat-select [(ngModel)]='roomSelected'>
+        <mat-option *ngFor='let room of rooms' [value]='room'>
+          {{room.name}} ({{room.agents}}/{{room.maxAgents}})
+          <mat-icon>{{iconLock(room)}}</mat-icon>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class='padding'></div>
     <div class='mat-body-1'>
       に招待します
     </div>
   </div>
-  <div mat-dialog-actions>
-    <button mat-raised-button color='primary' (click)='clickYes()' [disabled]='disabledYes()'>はい</button>
+  <div class='actions' mat-dialog-actions>
+    <div>
+      <button mat-raised-button color='primary' (click)='clickYes()' [disabled]='disabledYes()'>はい</button>
+    </div>
   </div>
 </div>

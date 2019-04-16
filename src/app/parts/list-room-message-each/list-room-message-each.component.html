@@ -1,16 +1,16 @@
 <div class='main' [style.flex-direction]='flexDirectionMain()'>
   <div class='user' [style.text-align]='textAlign()'>
-    <div class='user-actions'>
+    <div class='user-actions' *ngIf='displayUserImage'>
       <app-profile-img mode='small' [src]='agentURLImage()' (click)='clickUserIcon.emit()'></app-profile-img>
     </div>
   </div>
   <div class='body mat-body-1'>
-    <div class='message-actions'>
+    <div class='message-actions' *ngIf='displayUserActions'>
       <div class='message-actions-user-name mat-body-2' (click)='clickUserName.emit()'>
         {{agentName()}}
       </div>
       <div class='message-actions-buttons' (click)='clickReply.emit()'>
-        <mat-icon>reply</mat-icon>
+        <mat-icon *ngIf='displayReply'>reply</mat-icon>
       </div>
     </div>
     <app-lines [lines]='message.lines' (clickMentionRoom)='clickMentionRoom.emit($event)'

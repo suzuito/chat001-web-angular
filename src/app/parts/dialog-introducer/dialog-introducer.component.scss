@@ -3,3 +3,9 @@
 .padding {
   padding-top: $padding-content;
 }
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}

@@ -108,4 +108,8 @@ export class RoomsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.agentService.isInRoom(room.id);
   }
 
+  public isOwner(room: Room): boolean {
+    return this.agentService.isOwner(room.id);
+  }
+
 }

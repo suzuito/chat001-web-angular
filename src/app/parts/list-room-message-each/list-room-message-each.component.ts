@@ -21,6 +21,15 @@ export class ListRoomMessageEachComponent implements OnInit, AfterViewInit {
   @Input()
   public isLeft: boolean;
 
+  @Input()
+  public displayUserActions: boolean;
+
+  @Input()
+  public displayUserImage: boolean;
+
+  @Input()
+  public displayReply: boolean;
+
   @Output()
   public clickUserIcon: EventEmitter<void>;
 

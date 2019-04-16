@@ -1,18 +1,20 @@
 import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList, AfterViewInit, OnDestroy, EventEmitter } from '@angular/core';
-import { Room, AgentInRoom, AgentRoleInRoom, roleName, roleColor } from 'src/app/model/room';
+import { Room, AgentInRoom, AgentRoleInRoom, roleName, roleColor, newAgentInRoom, AgentInRoomOnlyID } from 'src/app/model/room';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RoomService, CurrentRoomRoute } from '../room.service';
 import { RoomMemberSearchOptionService } from './room-member-search-option/room-member-search-option.service';
 import { MatDialog } from '@angular/material';
 import { DialogIntroducerComponent, DataIntroducer } from 'src/app/parts/dialog-introducer/dialog-introducer.component';
 import { AgentService } from 'src/app/agent.service';
-import { RoomAgentIn, RoomAgentInOnlyID } from 'src/app/model/agent';
+import { RoomAgentIn, RoomAgentInOnlyID, EasyAgent } from 'src/app/model/agent';
 import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from 'src/app/side-menu/side-menu-scroll.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
 import { CursorManagerRoomMemberService } from '../cursor-manager-room-member.service';
 import { AppService } from 'src/app/app.service';
 import { DialogRoleSelectorComponent, DataDialogRoleSelector } from 'src/app/parts/dialog-role-selector/dialog-role-selector.component';
 import { DialogConfirmerComponent, DataDialogConfirmerComponent } from 'src/app/parts/dialog-confirmer/dialog-confirmer.component';
+import { DataEasyAgentsService } from 'src/app/data-easy-agents.service';
+import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
 
 @Component({
   selector: 'app-room-member',
@@ -31,6 +33,7 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     private dialog: MatDialog,
     private agentService: AgentService,
     private dataRoomsService: DataRoomsService,
+    private dataEasyAgentsService: DataEasyAgentsService,
     private appService: AppService,
   ) {
     this.checkedMap = new Map<string, boolean>();
@@ -53,19 +56,25 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.roomService.room;
   }
 
-  public getAgentsInRoom(): AgentInRoom[] {
-    return this.roomService.getAgents();
+  public getAgentsInRoomOnlyID(): AgentInRoomOnlyID[] {
+    return this.roomService.getAgentsOnlyID()
+      .filter(a => this.dataEasyAgentsService.has(a.externalID))
+      ;
   }
 
-  public clearChecked(): void {
+  public getAgent(a: AgentInRoomOnlyID): EasyAgent {
+    if (!this.dataEasyAgentsService.has(a.externalID)) {
+      return null;
+    }
+    return this.dataEasyAgentsService.get(a.externalID);
   }
 
   public disableButtonIntr(): boolean {
-    const agentsInRoom = this.roomService.getAgents();
-    if (agentsInRoom.length <= 0) { return; }
+    const agentsInRoomOnlyID = this.getAgentsInRoomOnlyID();
+    if (agentsInRoomOnlyID.length <= 0) { return; }
     let result = true;
-    agentsInRoom.forEach((agentInRoom: AgentInRoom) => {
-      if (this.checkedMap.get(agentInRoom.agent.externalId)) {
+    agentsInRoomOnlyID.forEach((agentInRoomOnlyID: AgentInRoomOnlyID) => {
+      if (this.checkedMap.get(agentInRoomOnlyID.externalID)) {
         result = false;
       }
     });
@@ -73,72 +82,71 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public async intr(): Promise<void> {
-    const agentsInRoom = this.roomService.getAgents();
-    if (agentsInRoom.length <= 0) { return; }
-    const agentsInRoomSelected: AgentInRoom[] = [];
-    agentsInRoom.forEach((agentInRoom: AgentInRoom) => {
-      if (this.checkedMap.get(agentInRoom.agent.externalId)) {
-        agentsInRoomSelected.push(agentInRoom);
+    const agentsInRoomOnlyID = this.getAgentsInRoomOnlyID();
+    if (agentsInRoomOnlyID.length <= 0) { return; }
+    const agentsInRoomSelected: AgentInRoomOnlyID[] = [];
+    agentsInRoomOnlyID.forEach((agentInRoomOnlyID: AgentInRoomOnlyID) => {
+      if (this.checkedMap.get(agentInRoomOnlyID.externalID)) {
+        agentsInRoomSelected.push(agentInRoomOnlyID);
       }
     });
     this.appService.openDialogIntr(
-      agentsInRoomSelected.map(a => a.agent),
+      agentsInRoomSelected
+        .filter(a => this.dataEasyAgentsService.has(a.externalID))
+        .map(a => this.dataEasyAgentsService.get(a.externalID)),
       this.agentService.filterRoom()
         .filter(r => r.roomId !== this.room.id)
         .map(v => this.dataRoomsService.get(v.roomId)),
     );
   }
 
-  public roleName(agentInRoom: AgentInRoom): string {
-    return roleName(agentInRoom.role);
+  public roleName(agentInRoomOnlyID: AgentInRoomOnlyID): string {
+    return roleName(agentInRoomOnlyID.role);
   }
 
-  public roleColor(agentInRoom: AgentInRoom): string {
-    return roleColor(agentInRoom.role);
-  }
-
-  public clickMore(): void {
-
-  }
-
-  public clickChecked(agentInRoom: AgentInRoom): void {
-    if (this.isYourSelf(agentInRoom)) {
+  public clickChecked(agentInRoomOnlyID: AgentInRoomOnlyID): void {
+    if (this.isYourSelf(agentInRoomOnlyID)) {
       return;
     }
-    if (this.checkedMap.get(agentInRoom.agent.externalId) === true) {
-      this.checkedMap.set(agentInRoom.agent.externalId, false);
+    if (this.checkedMap.get(agentInRoomOnlyID.externalID) === true) {
+      this.checkedMap.set(agentInRoomOnlyID.externalID, false);
     } else {
-      this.checkedMap.set(agentInRoom.agent.externalId, true);
+      this.checkedMap.set(agentInRoomOnlyID.externalID, true);
     }
   }
 
-  public checked(agentInRoom: AgentInRoom): boolean {
-    if (!this.checkedMap.has(agentInRoom.agent.externalId)) {
-      this.checkedMap.set(agentInRoom.agent.externalId, false);
+  public checked(agentInRoomOnlyID: AgentInRoomOnlyID): boolean {
+    if (!this.checkedMap.has(agentInRoomOnlyID.externalID)) {
+      this.checkedMap.set(agentInRoomOnlyID.externalID, false);
     }
-    return this.checkedMap.get(agentInRoom.agent.externalId);
+    return this.checkedMap.get(agentInRoomOnlyID.externalID);
   }
 
-  public clickMember(agentInRoom: AgentInRoom): void {
-    this.appService.openDialogProfile(agentInRoom.agent, true);
+  public clickMember(a: AgentInRoomOnlyID): void {
+    if (!this.dataEasyAgentsService.has(a.externalID)) {
+      return;
+    }
+    this.appService.openDialogProfile(
+      this.dataEasyAgentsService.get(a.externalID), true,
+    );
   }
 
   public disabledRoleSelector(): boolean {
     return !this.agentService.isOwner(this.room.id);
   }
 
-  public async clickRoleSelector(agentInRoom: AgentInRoom): Promise<void> {
+  public async clickRoleSelector(agentInRoomOnlyID: AgentInRoomOnlyID): Promise<void> {
     const ref1 = this.dialog.open(DialogRoleSelectorComponent, {
       data: {
-        role: agentInRoom.role,
+        role: agentInRoomOnlyID.role,
       } as DataDialogRoleSelector,
     });
     const result1: AgentRoleInRoom = await ref1.afterClosed().toPromise();
     if (!result1) {
       return;
     }
-    if (!this.isYourSelf(agentInRoom)) {
-      this.appService.putRoomsMembersRole(this.room.id, agentInRoom.agent.externalId, result1);
+    if (!this.isYourSelf(agentInRoomOnlyID)) {
+      this.appService.putRoomsMembersRole(this.room.id, agentInRoomOnlyID.externalID, result1);
       return;
     }
     const ref2 = this.dialog.open(DialogConfirmerComponent, {
@@ -150,13 +158,13 @@ export class RoomMemberComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     const result2 = await ref2.afterClosed().toPromise();
     if (result2) {
-      this.appService.putRoomsMembersRole(this.room.id, agentInRoom.agent.externalId, result1);
+      this.appService.putRoomsMembersRole(this.room.id, agentInRoomOnlyID.externalID, result1);
       return;
     }
   }
 
-  public isYourSelf(agentInRoom: AgentInRoom): boolean {
-    return this.agentService.get().externalId === agentInRoom.agent.externalId;
+  public isYourSelf(agentInRoomOnlyID: AgentInRoomOnlyID): boolean {
+    return this.agentService.get().externalId === agentInRoomOnlyID.externalID;
   }
 
 }
