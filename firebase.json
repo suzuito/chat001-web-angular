@@ -48,6 +48,10 @@
         "destination": "/index.html"
       },
       {
+        "source": "/init/room/*",
+        "destination": "/index.html"
+      },
+      {
         "source": "/error",
         "destination": "/index.html"
       }

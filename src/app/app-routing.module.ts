@@ -19,6 +19,8 @@ import { ProfileAvatarEditorComponent } from './profile-avatar-editor/profile-av
 import { InitComponent } from './init/init.component';
 import { ExampleComponent } from './example/example.component';
 import { DeactivateProfileAvatarEditorGuard } from './profile-avatar-editor/deactivate-profile-avatar-editor.guard';
+import { InitRoomComponent } from './init-room/init-room.component';
+import { InitRoomResolverService } from './init-room/init-room-resolver.service';
 
 const routes: Routes = [
   {
@@ -92,6 +94,13 @@ const routes: Routes = [
   {
     path: 'init',
     component: InitComponent,
+  },
+  {
+    path: 'init/room/:roomId',
+    component: InitRoomComponent,
+    resolve: {
+      room: InitRoomResolverService,
+    },
   },
   {
     path: 'example',

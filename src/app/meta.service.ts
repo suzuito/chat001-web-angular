@@ -20,6 +20,8 @@ export const defaultKeyWords = [
 ];
 
 export const defaultImageURL = `${locationRootURL()}/assets/ss.png`;
+export const defaultTitle = '暇（ヒマ）';
+export const defaultSubTitle = 'アカウントのいらない昔ながらのチャットサービス';
 
 export interface MetaBase {
   description: string;
@@ -57,7 +59,7 @@ export const defaultMetaBase: MetaBase = {
 
 export const defaultMetaOG: MetaOG = {
   url: `${locationRootURL()}/init`,
-  title: '暇（ヒマ）｜アカウントのいらない昔ながらのチャットサービス',
+  title: defaultTitle + '|' + defaultSubTitle,
   description: 'アカウント登録不要。1対1でもグループでも楽しめる。あなただけのチャットルームを作って、お友達をどんどん誘っちゃおう！',
   image: defaultImageURL,
   type: 'website',
@@ -68,7 +70,7 @@ export const defaultMetaOG: MetaOG = {
 export const defaultMetaTwitter: MetaTwitter = {
   card: 'summary',
   url: `${locationRootURL()}/init`,
-  title: '暇（ヒマ）｜アカウントのいらない昔ながらのチャットサービス',
+  title: defaultTitle + '|' + defaultSubTitle,
   description: 'アカウント登録不要。1対1でもグループでも楽しめる。あなただけのチャットルームを作って、お友達をどんどん誘っちゃおう！',
   image: defaultImageURL,
 };

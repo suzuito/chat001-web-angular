@@ -251,5 +251,11 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
+  public async getLandingRooms(roomId: string): Promise<Room> {
+    return this.http.get<Room>(
+      url(`/landing/rooms/${roomId}`), new OptBuilder().jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
 }
 
