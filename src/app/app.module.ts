@@ -94,6 +94,9 @@ import { LineRequestApprovedComponent } from './parts/line-request-approved/line
 import { DialogProfileRoomComponent } from './parts/dialog-profile-room/dialog-profile-room.component';
 import { DialogRoleSelectorComponent } from './parts/dialog-role-selector/dialog-role-selector.component';
 import { DialogRoomCreaterNameOnlyComponent } from './parts/dialog-room-creater-name-only/dialog-room-creater-name-only.component';
+import { InitRoomComponent } from './init-room/init-room.component';
+import { InitHeaderComponent } from './parts/init-header/init-header.component';
+import { InitFooterComponent } from './parts/init-footer/init-footer.component';
 
 @NgModule({
   declarations: [
@@ -166,6 +169,9 @@ import { DialogRoomCreaterNameOnlyComponent } from './parts/dialog-room-creater-
     DialogProfileRoomComponent,
     DialogRoleSelectorComponent,
     DialogRoomCreaterNameOnlyComponent,
+    InitRoomComponent,
+    InitHeaderComponent,
+    InitFooterComponent,
   ],
   imports: [
     BrowserModule,

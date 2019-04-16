@@ -37,14 +37,8 @@
   height: $height-header;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  height: $height-header;
-}
-
-.footer-text {
-  text-align: center;
+app-init-footer {
+  position: absolute;
+  bottom : 0px;
   width: 100%;
 }
