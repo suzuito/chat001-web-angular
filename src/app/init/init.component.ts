@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MetaService, defaultMetaBase, defaultMetaOG, defaultMetaTwitter } from '../meta.service';
 
 @Component({
   selector: 'app-init',
@@ -9,10 +10,16 @@ import { Router } from '@angular/router';
 export class InitComponent implements OnInit {
 
   constructor(
-    private router: Router
-  ) { }
+    private router: Router,
+    private metaService: MetaService,
+  ) {
+  }
 
-  ngOnInit() {
+  ngOnInit(
+  ) {
+    this.metaService.setBase(defaultMetaBase);
+    this.metaService.setOG(defaultMetaOG);
+    this.metaService.setTwitter(defaultMetaTwitter);
   }
 
   public routeToTop() {
