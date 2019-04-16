@@ -446,7 +446,9 @@ export class AppService {
     } else if (result === ResultDialogProfile.Intr) {
       this.openDialogIntr(
         [agent],
-        this.agentService.filterRoom().map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId)),
+        this.agentService.filterRoom()
+          .map((v: RoomAgentInOnlyID) => this.dataRoomsService.get(v.roomId))
+          .filter((v: Room) => v.id !== this.roomService.roomId),
       );
     }
   }

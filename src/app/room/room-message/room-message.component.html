@@ -3,13 +3,14 @@
   <div class='ops'>
     <button mat-button color='primary' (click)='clickMore()'>もっと読み込む...</button>
   </div>
-  <div class='message-box' *ngFor='let message of messages()'>
+  <div class='message-box' *ngFor='let message of messages(); let i = index'>
+    <mat-divider *ngIf='displayTopMessageDivider(message, i)'></mat-divider>
     <app-list-room-message-each [message]='message' [agent]='messageAgent(message.agentExternalId)'
       (clickUserIcon)='openDialogProfile(message.agentExternalId)'
       (clickUserName)='openDialogProfile(message.agentExternalId)' (clickMentionRoom)='clickMentionRoom($event)'
-      (clickReply)='clickReply(message.agentExternalId)'>
+      (clickReply)='clickReply(message.agentExternalId)' [displayUserActions]='displayUserActions(message, i)'
+      [displayUserImage]='displayUserImage(message, i)' [displayReply]='displayReply(message)'>
     </app-list-room-message-each>
-    <mat-divider></mat-divider>
   </div>
 </div>
 <div class='padding-inputter'></div>

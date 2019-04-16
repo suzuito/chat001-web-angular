@@ -10,6 +10,7 @@
   <div class='col-profile'>
     <div appRoomName>{{roomName()}}</div>
     <div appRoomDescription *ngIf='!nameOnly' [linesDescription]='linesDescription'>{{room.description}}</div>
-    <app-room-properties *ngIf='!nameOnly' [room]='room' [isRoomAgentIn]='isRoomAgentIn'></app-room-properties>
+    <app-room-properties *ngIf='!nameOnly' [room]='room' [isRoomAgentIn]='isRoomAgentIn' [owner]='owner'>
+    </app-room-properties>
   </div>
 </div>

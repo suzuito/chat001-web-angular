@@ -30,6 +30,9 @@ export class RoomProfileComponent implements OnInit {
   @Input()
   public includeYourMention: boolean;
 
+  @Input()
+  public owner: boolean;
+
   constructor() {
     this.linesDescription = 1;
     this.unread = 0;

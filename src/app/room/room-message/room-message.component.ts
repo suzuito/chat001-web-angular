@@ -14,6 +14,7 @@ import { ErrorService } from 'src/app/error.service';
 import { DataAgentsInRoomService } from 'src/app/data-agents-in-room.service';
 import { DataRoomsService } from 'src/app/data-rooms.service';
 import { RoomInputterService } from '../room-inputter/room-inputter.service';
+import { AgentService } from 'src/app/agent.service';
 
 @Component({
   selector: 'app-room-message',
@@ -36,6 +37,7 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
     private dataRoomsService: DataRoomsService,
     private errorService: ErrorService,
     private roomInputterService: RoomInputterService,
+    private agentService: AgentService,
   ) {
     this.prevRoomId = null;
     this.roomMessageService.addListener('message', (roomId: string) => {
@@ -109,24 +111,9 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
       this.errorService.warn('存在しないユーザーです');
       return;
     }
-    this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), false);
+    const readonly = this.agentService.get().externalId === externalId;
+    this.appService.openDialogProfile(this.dataEasyAgentsService.get(externalId), readonly);
   }
-
-  /*
-  public clickMention(agentName: string): void {
-    const agent = this.dataAgentsInRoomService
-      .getParent(this.room.id)
-      .filter(a => this.dataEasyAgentsService.has(a.externalID))
-      .map(a => this.dataEasyAgentsService.get(a.externalID))
-      .find(a => a.name === agentName)
-      ;
-    if (!agent) {
-      this.errorService.warn('存在しないユーザーです');
-      return;
-    }
-    this.appService.openDialogProfile(agent, false);
-  }
-  */
 
   public clickMentionRoom(roomId: string): void {
     this.appService.routeToRoom(roomId);
@@ -135,6 +122,34 @@ export class RoomMessageComponent implements OnInit, AfterViewInit, OnDestroy, A
   public clickReply(externalId: string): void {
     this.roomInputterService.textReply(externalId);
     this.roomInputterService.focus();
+  }
+
+  public displayUserActions(message: Message, i: number): boolean {
+    return !this.isSameBeforeUser(message, i);
+  }
+
+  public displayUserImage(message: Message, i: number): boolean {
+    return !this.isSameBeforeUser(message, i);
+  }
+
+  public displayTopMessageDivider(message: Message, i: number): boolean {
+    return !this.isSameBeforeUser(message, i);
+  }
+
+  public displayReply(message: Message): boolean {
+    return this.agentService.get().externalId !== message.agentExternalId;
+  }
+
+  private isSameBeforeUser(message: Message, i: number): boolean {
+    if (i === 0) {
+      return false;
+    }
+    const messages = this.messages();
+    if (messages.length <= 1) {
+      return false;
+    }
+    const j = i - 1;
+    return messages[j].agentExternalId === messages[i].agentExternalId;
   }
 
 }

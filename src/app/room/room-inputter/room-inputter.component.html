@@ -7,16 +7,6 @@
         </button>
       </div>
       <div>
-        <button class='text-button' mat-icon-button [matMenuTriggerFor]='menuAutoCompleteReply'>
-          <mat-icon>reply</mat-icon>
-        </button>
-      </div>
-      <div>
-        <button class='text-button' mat-icon-button [matMenuTriggerFor]='menuAutoCompleteRooms'>
-          <mat-icon>meeting_room</mat-icon>
-        </button>
-      </div>
-      <div>
         <button class='text-button' mat-icon-button (click)='modeSingle()'>
           <mat-icon>clear</mat-icon>
         </button>
@@ -55,25 +45,8 @@
   <button mat-menu-item (click)='uploadImage()'>
     <mat-icon>photo</mat-icon>画像をアップロード
   </button>
-  <button mat-menu-item [matMenuTriggerFor]='menuAutoCompleteReply'>
-    <mat-icon>reply</mat-icon>リプライ
-  </button>
-  <button mat-menu-item [matMenuTriggerFor]='menuAutoCompleteRooms'>
-    <mat-icon>meeting_room</mat-icon>部屋
-  </button>
   <button mat-menu-item (click)='modeMultiple()'>
     <mat-icon>vertical_align_top</mat-icon>複数行入力
   </button>
 </mat-menu>
 <input type='file' hidden #fileInputter />
-<mat-menu #menuAutoCompleteRooms='matMenu'>
-  <div mat-menu-item *ngFor='let room of autoCompleteRooms()' class='mat-body-2'
-    (click)='$event.stopPropagation();textRoom(room);'>
-    #!{{room.name}}
-  </div>
-</mat-menu>
-<mat-menu #menuAutoCompleteReply='matMenu'>
-  <div mat-menu-item *ngFor='let agent of autoCompleteReply()' class='mat-body-2'
-    (click)='$event.stopPropagation();textReply(agent);'>
-    @{{agentName(agent)}}</div>
-</mat-menu>

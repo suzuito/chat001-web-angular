@@ -50,4 +50,14 @@ export class DialogIntroducerComponent implements OnInit {
     return this.roomSelected === null;
   }
 
+  public disabledSelect(): boolean {
+    if (!this.rooms) {
+      return true;
+    }
+    if (this.rooms.length <= 0) {
+      return true;
+    }
+    return false;
+  }
+
 }

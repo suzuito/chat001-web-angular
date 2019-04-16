@@ -14,6 +14,9 @@ export class RoomPropertiesComponent implements OnInit {
   @Input()
   public isRoomAgentIn: boolean;
 
+  @Input()
+  public owner: boolean;
+
   constructor() { }
 
   ngOnInit() {
@@ -46,6 +49,13 @@ export class RoomPropertiesComponent implements OnInit {
     }
     if (this.room.status === RoomStatus.Active) {
       return '';
+    }
+    return '';
+  }
+
+  public iconOwner(): string {
+    if (this.owner) {
+      return 'outlined_flag';
     }
     return '';
   }

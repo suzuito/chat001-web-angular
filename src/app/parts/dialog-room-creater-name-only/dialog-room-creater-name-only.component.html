@@ -1,7 +1,7 @@
 <div mat-dialog-title>部屋の作成</div>
 <div mat-dialog-content>
   <mat-form-field>
-    <input matInput required [(ngModel)]='room.name' [errorStateMatcher]='errorStatusName' />
+    <input matInput required [(ngModel)]='room.name' [errorStateMatcher]='errorStatusName' (keydown)='enter($event)' />
     <mat-error>{{errorStatusName.string()}}</mat-error>
   </mat-form-field>
 </div>
