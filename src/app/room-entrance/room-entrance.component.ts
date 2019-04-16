@@ -5,6 +5,7 @@ import { SideMenuScrollService, ScrollIdRoomMembers, byRoomId } from '../side-me
 import { Scroll } from '@angular/router';
 import { AppService } from '../app.service';
 import { DataRoomsService } from '../data-rooms.service';
+import { MetaService, defaultMetaBase, defaultMetaOG, defaultMetaTwitter, defaultKeyWords, defaultImageURL } from '../meta.service';
 
 @Component({
   selector: 'app-room-entrance',
@@ -18,9 +19,31 @@ export class RoomEntranceComponent implements OnInit, OnDestroy, AfterViewInit {
     private dataRoomsService: DataRoomsService,
     private appService: AppService,
     private scrollService: SideMenuScrollService,
-  ) { }
+    private metaService: MetaService,
+  ) {
+  }
 
   ngOnInit() {
+    this.metaService.setBase({
+      description: this.room.description,
+      keywords: defaultKeyWords.concat(this.room.name).join(','),
+    });
+    this.metaService.setOG({
+      title: this.room.name,
+      image: defaultImageURL,
+      url: `${location.href}`,
+      description: this.room.description,
+      type: 'website',
+      locale: 'ja_jp',
+      site_name: this.room.name,
+    });
+    this.metaService.setTwitter({
+      card: 'summary',
+      title: this.room.name,
+      image: defaultImageURL,
+      url: `${location.href}`,
+      description: this.room.description,
+    });
   }
 
   ngOnDestroy() {

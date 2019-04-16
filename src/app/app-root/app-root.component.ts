@@ -5,6 +5,7 @@ import { AppRootService } from './app-root.service';
 import { RoomService } from '../room/room.service';
 import { SideMenuScrollService } from '../side-menu/side-menu-scroll.service';
 import { SideMenuWidthService } from '../side-menu/side-menu-width.service';
+import { MetaService, defaultMetaBase, defaultMetaOG, defaultMetaTwitter } from '../meta.service';
 
 const sideNavWideWidth = 300;
 
@@ -27,6 +28,7 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     private roomService: RoomService,
     private scrollService: SideMenuScrollService,
     private sideMenuWidthService: SideMenuWidthService,
+    private metaService: MetaService,
   ) {
     this.appRootService.event.addListener('toggleSideNav', () => {
       this.toggleSideNav();
@@ -46,6 +48,10 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     this.scrollService.init(this.sidenavContent);
     this.sideMenuWidthService.elem = this.sidenav;
     this.sideMenuWidthService.sideNavWidth = sideNavWideWidth;
+
+    this.metaService.setBase(defaultMetaBase);
+    this.metaService.setOG(defaultMetaOG);
+    this.metaService.setTwitter(defaultMetaTwitter);
   }
 
   ngAfterViewInit(): void {
