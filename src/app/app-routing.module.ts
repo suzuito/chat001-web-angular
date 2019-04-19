@@ -21,6 +21,8 @@ import { ExampleComponent } from './example/example.component';
 import { DeactivateProfileAvatarEditorGuard } from './profile-avatar-editor/deactivate-profile-avatar-editor.guard';
 import { InitRoomComponent } from './init-room/init-room.component';
 import { InitRoomResolverService } from './init-room/init-room-resolver.service';
+import { InitAgentComponent } from './init-agent/init-agent.component';
+import { InitAgentResolverService } from './init-agent/init-agent-resolver.service';
 
 const routes: Routes = [
   {
@@ -100,6 +102,13 @@ const routes: Routes = [
     component: InitRoomComponent,
     resolve: {
       room: InitRoomResolverService,
+    },
+  },
+  {
+    path: 'init/agent/:externalId',
+    component: InitAgentComponent,
+    resolve: {
+      agent: InitAgentResolverService,
     },
   },
   {

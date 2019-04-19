@@ -257,5 +257,11 @@ export class ApiService {
     ).toPromise().then((res: any) => res);
   }
 
+  public async getLandingAgents(externalId: string): Promise<EasyAgent> {
+    return this.http.get<EasyAgent>(
+      url(`/landing/agents/${externalId}`), new OptBuilder().jsonResponseBody().gen(),
+    ).toPromise().then((res: any) => res);
+  }
+
 }
 
