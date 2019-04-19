@@ -1,0 +1,14 @@
+<app-init-header></app-init-header>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{agent.name}}</mat-card-title>
+    <mat-card-subtitle>{{agent.description}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    この人とお話ししたければ早速チャットを始めよう!
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color='primary' (click)='begin()'>チャットを開始する</button>
+  </mat-card-actions>
+</mat-card>
+<app-init-footer></app-init-footer>

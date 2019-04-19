@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api.service';
-import { Room } from '../model/room';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { EasyAgent } from '../model/agent';
+import { ApiService } from '../api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class InitRoomResolverService implements Resolve<Room> {
+export class InitAgentResolverService implements Resolve<EasyAgent> {
 
   constructor(
     private apiService: ApiService,
@@ -14,13 +14,12 @@ export class InitRoomResolverService implements Resolve<Room> {
 
   public async resolve(
     route: ActivatedRouteSnapshot,
-  ): Promise<Room> {
-    const roomId = route.params.roomId;
-    return this.apiService.getLandingRooms(roomId)
+  ): Promise<EasyAgent> {
+    const externalId = route.params.externalId;
+    return this.apiService.getLandingAgents(externalId)
       .catch(() => {
         window.location.href = '';
         return null;
       });
   }
-
 }

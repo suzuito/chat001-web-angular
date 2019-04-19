@@ -97,6 +97,7 @@ import { DialogRoomCreaterNameOnlyComponent } from './parts/dialog-room-creater-
 import { InitRoomComponent } from './init-room/init-room.component';
 import { InitHeaderComponent } from './parts/init-header/init-header.component';
 import { InitFooterComponent } from './parts/init-footer/init-footer.component';
+import { InitAgentComponent } from './init-agent/init-agent.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +173,7 @@ import { InitFooterComponent } from './parts/init-footer/init-footer.component';
     InitRoomComponent,
     InitHeaderComponent,
     InitFooterComponent,
+    InitAgentComponent,
   ],
   imports: [
     BrowserModule,
