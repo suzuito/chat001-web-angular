@@ -32,6 +32,9 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     private metaService: MetaService,
     private titleService: Title
   ) {
+    this.metaService.setBase(defaultMetaBase);
+    this.metaService.setOG(defaultMetaOG);
+    this.metaService.setTwitter(defaultMetaTwitter);
     this.titleService.setTitle(defaultTitle);
     this.appRootService.event.addListener('toggleSideNav', () => {
       this.toggleSideNav();
@@ -51,10 +54,6 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     this.scrollService.init(this.sidenavContent);
     this.sideMenuWidthService.elem = this.sidenav;
     this.sideMenuWidthService.sideNavWidth = sideNavWideWidth;
-
-    this.metaService.setBase(defaultMetaBase);
-    this.metaService.setOG(defaultMetaOG);
-    this.metaService.setTwitter(defaultMetaTwitter);
   }
 
   ngAfterViewInit(): void {

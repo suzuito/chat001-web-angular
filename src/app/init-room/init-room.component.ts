@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Room } from '../model/room';
-import { MetaService, defaultKeyWords, defaultImageURL, defaultTitle, defaultSubTitle } from '../meta.service';
+import { defaultTitle } from '../meta.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -15,7 +15,6 @@ export class InitRoomComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private metaService: MetaService,
     private titleService: Title,
     private router: Router,
   ) {
@@ -23,26 +22,6 @@ export class InitRoomComponent implements OnInit {
       if (data.room) {
         this.room = data.room;
         this.titleService.setTitle(defaultTitle + ' - ' + this.room.name);
-        this.metaService.setBase({
-          description: defaultTitle + '|' + defaultSubTitle + '|' + this.room.name + '|' + this.room.description,
-          keywords: defaultKeyWords.concat(this.room.name).join(','),
-        });
-        this.metaService.setOG({
-          title: defaultTitle + '|' + this.room.name,
-          image: defaultImageURL,
-          url: `${location.href}`,
-          description: this.room.description,
-          type: 'website',
-          locale: 'ja_jp',
-          site_name: this.room.name,
-        });
-        this.metaService.setTwitter({
-          card: 'summary',
-          title: defaultTitle + '|' + this.room.name,
-          image: defaultImageURL,
-          url: `${location.href}`,
-          description: this.room.description,
-        });
       }
     });
   }
