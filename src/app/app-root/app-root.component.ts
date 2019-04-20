@@ -5,8 +5,8 @@ import { AppRootService } from './app-root.service';
 import { RoomService } from '../room/room.service';
 import { SideMenuScrollService } from '../side-menu/side-menu-scroll.service';
 import { SideMenuWidthService } from '../side-menu/side-menu-width.service';
-import { MetaService, defaultMetaBase, defaultMetaOG, defaultMetaTwitter, defaultTitle } from '../meta.service';
 import { Title } from '@angular/platform-browser';
+import { defaultTitle } from '../meta.service';
 
 const sideNavWideWidth = 300;
 
@@ -29,12 +29,8 @@ export class AppRootComponent implements OnInit, AfterViewInit {
     private roomService: RoomService,
     private scrollService: SideMenuScrollService,
     private sideMenuWidthService: SideMenuWidthService,
-    private metaService: MetaService,
     private titleService: Title
   ) {
-    this.metaService.setBase(defaultMetaBase);
-    this.metaService.setOG(defaultMetaOG);
-    this.metaService.setTwitter(defaultMetaTwitter);
     this.titleService.setTitle(defaultTitle);
     this.appRootService.event.addListener('toggleSideNav', () => {
       this.toggleSideNav();
