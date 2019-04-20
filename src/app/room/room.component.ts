@@ -8,7 +8,6 @@ import { Header002Service } from '../header002/header002.service';
 import { AgentService } from '../agent.service';
 import { RoomStatus, Room } from '../model/room';
 import { SideMenuWidthService } from '../side-menu/side-menu-width.service';
-import { MetaService, defaultKeyWords, defaultImageURL } from '../meta.service';
 
 @Component({
   selector: 'app-room',
@@ -28,7 +27,6 @@ export class RoomComponent implements OnInit {
     private route: ActivatedRoute,
     private header002Service: Header002Service,
     private sideMenuWidthService: SideMenuWidthService,
-    private metaService: MetaService,
   ) {
     this.prevRoomId = null;
     this.route.params.subscribe((params: Params): void => {
@@ -47,26 +45,6 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(
   ) {
-    this.metaService.setBase({
-      description: this.room.description,
-      keywords: defaultKeyWords.concat(this.room.name).join(','),
-    });
-    this.metaService.setOG({
-      title: this.room.name,
-      image: defaultImageURL,
-      url: `${location.href}`,
-      description: this.room.description,
-      type: 'website',
-      locale: 'ja_jp',
-      site_name: this.room.name,
-    });
-    this.metaService.setTwitter({
-      card: 'summary',
-      title: this.room.name,
-      image: defaultImageURL,
-      url: `${location.href}`,
-      description: this.room.description,
-    });
   }
 
   public routeToAnyRoomRoute(): void {

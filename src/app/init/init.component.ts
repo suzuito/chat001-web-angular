@@ -13,13 +13,13 @@ export class InitComponent implements OnInit {
     private router: Router,
     private metaService: MetaService,
   ) {
+    this.metaService.setBase(defaultMetaBase);
+    this.metaService.setOG(defaultMetaOG);
+    this.metaService.setTwitter(defaultMetaTwitter);
   }
 
   ngOnInit(
   ) {
-    this.metaService.setBase(defaultMetaBase);
-    this.metaService.setOG(defaultMetaOG);
-    this.metaService.setTwitter(defaultMetaTwitter);
   }
 
   public routeToTop() {
